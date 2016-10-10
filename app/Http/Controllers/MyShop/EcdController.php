@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\MyShop;
-
+//测试
 class EcdController
 {    
     private $url;	//接口地址
