@@ -31,8 +31,6 @@
 		return view("Shop.register");
 	});
         //注册验证码
-        
-        //123
         Route::post("/code","MyShop\RegisterController@code");
 //Shop_list商品列表视图路由
 // Route::get("/shop_list","MyShop\Shop_listController@shop_list");
