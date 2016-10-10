@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MyShop\EcdController;
 
 class RegisterController extends Controller
-{    
+{   
+    //接口配置
     const url = "http://www.etuocloud.com/gatetest.action";
     const app_key = 'be8ISLguq1zGDpl4fABYW0rkk9jEkJvE';
     const app_secret = 'a5X6UQ71vxhmCR4TJiOuNhWh8Fn8FbHA3oSwDzn5vUHXUDNVns0HRphkrfV5PrCN';
