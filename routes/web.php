@@ -26,7 +26,6 @@
 	});
 	
 //Register注册视图路由
-// Route::get("/register","MyShop\RegisterController@register");
 	Route::get("/register",function(){
 		return view("Shop.register");
 	});
