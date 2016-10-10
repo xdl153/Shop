@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 		<meta name="description" content="首页" />
 		<meta name="viewport" content="user-scalable=no">
-		
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
 		<meta name="baidu-site-verification" content="IYCrtVH0i1" />
 		<meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
@@ -604,13 +604,15 @@
 				var sj = $("#aaa").val();
 				alert(sj);
 				$.ajax({
-					url:'./yzm/yzm.php',
+					url:'/code',
 					type:'post',
 					async:true,
 					data:{id:sj},
-					dataType:'json',
-					success:function(data){
-						if(data>0){
+                                        headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success:function(data){
+						if(data === 'y'){
 							alert('发送成功!');
 						}
 					},
@@ -619,6 +621,10 @@
 					}
 				})
 			}
+                        $('#aaa').blur(function(){
+                            alert('111');
+                            $("#bbb").css("display","");
+                        });
 		</script>
 	</body>
 </html>

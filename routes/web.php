@@ -11,9 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-    // return view('welcome');
-// });
 
 //前台***********************项目
 //Index首页视图路由
@@ -33,7 +30,8 @@
 	Route::get("/register",function(){
 		return view("Shop.register");
 	});
-	
+        //注册验证码
+        Route::post("/code","MyShop\RegisterController@code");
 //Shop_list商品列表视图路由
 // Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	Route::get("/shop_list",function(){
@@ -144,12 +142,4 @@
 	Route::get("/pwd_success",function(){
 		return view("Shop.pwd_success");
 	});
-       
-
-
-	   
 //后台***********************项目
-//Index首页视图路由
-	// Route::get("/index",function(){
-		// return view("Admin.index");
-	// });

@@ -126,6 +126,4 @@ body{background: #f7f7f7}
     .other-way a{color: #74A148;text-decoration: none}
     #againSendMail{background: #009900;color: white;border: none;height: 30px;border-radius: 3px;}
     #againSendMail[disabled] {background: #cccccc}
-.captcha-wrap{width: 300px;overflow: hidden; height :50px;}
-.captcha-box{width: 600px;}
-.captcha-item{float: left;width: 296px; margin-right: 4px}
+    .captcha-wrap{width: 300px;overflow: hidden; height :50px;}

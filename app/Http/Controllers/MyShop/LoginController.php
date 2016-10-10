@@ -9,9 +9,8 @@ use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    // Login登录视图
-	public function login()
-	{
-		return view("Shop.login");
-	}
+    public function login()
+    {
+        return view("Shop.login");
+    }
 }
