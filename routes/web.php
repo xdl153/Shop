@@ -29,8 +29,13 @@
 	Route::get("/register",function(){
 		return view("Shop.register");
 	});
+        //查询手机号码
+        Route::post("/demand","MyShop\RegisterController@demand");
         //注册验证码
         Route::post("/code","MyShop\RegisterController@code");
+        //判断验证码
+        Route::post("/demandcode","MyShop\RegisterController@demandcode");
+        
 //Shop_list商品列表视图路由
 	Route::get("/shop_list",function(){
 		return view("Shop.shop_list");

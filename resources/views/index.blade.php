@@ -11,6 +11,8 @@
 		<meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
 		<link rel="icon" type="image/png" href="{{ asset('Shop/images/favicon.ico') }}"/>
 		<script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
+<!--                <script src="{{ asset('Shop/js/jquery-1.8.1.js') }}"></script>
+                <script src="{{ asset('Shop/js/jquery-1.7.2.min.js') }}"></script>-->
 		<script type="text/javascript">
 			(function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
 		</script>
@@ -72,11 +74,7 @@
 							
 								<li ng-click="setCityAndRedirect('fuzhou', '/fuzhou/');">
 									<a href="javascript:;">福州站</a>
-								</li>
-							
-								<li ng-click="setCityAndRedirect('hangzhou', '/hangzhou/');">
-									<a href="javascript:;">杭州站</a>
-								</li>
+                                                                </li>
 							
 								<li ng-click="setCityAndRedirect('qingdao', '/qingdao/');">
 									<a href="javascript:;">青岛站</a>
@@ -409,18 +407,14 @@
 				<label for="">手机号码</label>
 				<div>
 					<input type="text" id="aaa" ng-class="{error:user.usernameMessage}" maxlength="11" placeholder="请输入您的手机号码" ng-model="user.username"/>
+                                        <label for="" id="bbb" style="display:none">该手机号码已经注册！<a href="javascript:;" ng-click="locationLogin()" class="link">立即登录</a></label>
+                         
 					<span class="vaildate-error" ng-if="user.usernameMessage">
 							<span ng-bind="user.usernameMessage"></span>
 					</span>
-					<span class="vaildate-error" ng-if="user.isRegistered">
-						该手机号码已经注册！<a href="javascript:;" ng-click="locationLogin()" class="link">立即登录</a>
-					</span>
 				</div>
 			</div>
-
-
-
-			<div class="form-group captcha-wrap">
+                    <div class="form-group captcha-wrap">
 				<div class="clearfix captcha-box">
 					<div class="fl form-group captcha-item">
 						<div class="fl w50p">
@@ -433,7 +427,8 @@
 					</div>
 					<div class="fl form-group captcha-item">
 						<div class="fl w50p">
-							<input type="text" ng-model="user.imgCaptcha" maxlength="4" ng-disabled="imgCaptchaIsDisabled" ng-class="{error:user.imgCaptchaMessage}" placeholder="请输入验证码">
+                                                    <input type="text" id='abc' maxlength="4" ng-disabled="imgCaptchaIsDisabled" ng-class="{error:user.imgCaptchaMessage}" placeholder="请输入验证码">
+                                                    <label id="pd" style="color:red;display:none">　验证码错误 请重新输入</label>
 							<span class="vaildate-error" ng-if="user.imgCaptchaMessage">
 								<span ng-bind="user.imgCaptchaMessage"></span>
 							</span>
@@ -446,14 +441,14 @@
 			</div>
 			<div class="form-group mb10">
 				<label for="">登录密码</label>
-				<div><input type="password" ng-class="{error:user.passwordMessage}" ng-focus="user.passwordMessage=''"  maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password" />
+				<div><input type="password" id="pwd1" ng-class="{error:user.passwordMessage}" ng-focus="user.passwordMessage=''"  maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password" />
 					<span class="vaildate-error" ng-if="user.passwordMessage">
 						<span ng-bind="user.passwordMessage"></span>
 					</span>
 				</div>
 			</div>
 			<div class="form-group mb10">
-				<div><input type="password" ng-class="{error:user.password2Message}" ng-focus="user.password2Message=''" maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password2"/>
+                            <div><input type="password" id="pwd2" ng-class="{error:user.password2Message}" ng-focus="user.password2Message=''" maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password2"/>
 					<span class="vaildate-error" ng-if="user.password2Message">
 						<span ng-bind="user.password2Message"></span>
 					</span>
@@ -599,8 +594,8 @@
 					settime(obj)
 				},1000)
 			}
-			function yzm(){            
-
+                         //判断验证码是否正确
+			function yzm(){
 				var sj = $("#aaa").val();
 				alert(sj);
 				$.ajax({
@@ -621,9 +616,52 @@
 					}
 				})
 			}
+                        //鼠标失去判断去数据库查询是是否存
                         $('#aaa').blur(function(){
-                            alert('111');
-                            $("#bbb").css("display","");
+                            //获取输入的值
+                            var sj = $("#aaa").val();
+                            $.ajax({
+                                url:'/demand',
+                                type:'post',
+                                async:true,
+                                data:{phone:sj},
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success:function(a){
+                                        if(a === 'y'){
+                                           $("#bbb").css("display","");
+                                        }else{
+                                            
+                                        }
+                                },
+                                error:function(){
+                                        alert('失败');
+                                }
+                             })
+                        });
+                        $('#abc').blur(function(){ 
+                              var code = $("#abc").val();
+                              $("#bbb").css("display","none");
+                                $.ajax({
+                                url:'/demandcode',
+                                type:'post',
+                                async:true,
+                                data:{code:code},
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success:function(a){
+                                        if(a === 'y'){
+                                            
+                                        }else{
+                                            $("#pd").css("display","");
+                                        }
+                                },
+                                error:function(){
+                                        alert('失败');
+                                }
+                             })
                         });
 		</script>
 	</body>
