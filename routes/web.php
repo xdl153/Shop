@@ -24,8 +24,8 @@
 	Route::get("/login",function(){
 		return view("Shop.login");
 	});
-	
-//Register注册视图路由
+            
+        //注册视图路由
 	Route::get("/register",function(){
 		return view("Shop.register");
 	});
@@ -35,6 +35,8 @@
         Route::post("/code","MyShop\RegisterController@code");
         //判断验证码
         Route::post("/demandcode","MyShop\RegisterController@demandcode");
+        //注册用户名
+        Route::post("/enroll","MyShop\RegisterController@enroll");
         
 //Shop_list商品列表视图路由
 	Route::get("/shop_list",function(){

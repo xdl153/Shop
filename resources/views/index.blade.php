@@ -11,8 +11,6 @@
 		<meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
 		<link rel="icon" type="image/png" href="{{ asset('Shop/images/favicon.ico') }}"/>
 		<script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
-<!--                <script src="{{ asset('Shop/js/jquery-1.8.1.js') }}"></script>
-                <script src="{{ asset('Shop/js/jquery-1.7.2.min.js') }}"></script>-->
 		<script type="text/javascript">
 			(function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
 		</script>
@@ -428,7 +426,7 @@
 					<div class="fl form-group captcha-item">
 						<div class="fl w50p">
                                                     <input type="text" id='abc' maxlength="4" ng-disabled="imgCaptchaIsDisabled" ng-class="{error:user.imgCaptchaMessage}" placeholder="请输入验证码">
-                                                    <label id="pd" style="color:red;display:none">　验证码错误 请重新输入</label>
+                                                    <label id="pd" style="color:red;display:none">验证码错误 请重新输入</label>
 							<span class="vaildate-error" ng-if="user.imgCaptchaMessage">
 								<span ng-bind="user.imgCaptchaMessage"></span>
 							</span>
@@ -454,11 +452,12 @@
 					</span>
 				</div>
 			</div>
+                    <label id="mima" style="color:red;display: none">请确保密码相同</label><br>
 			<div class="clearfix mb10">
 				<dh-checkbox model="user.remember" title="我同意" class="fl"></dh-checkbox>
 				<a href="/terms-and-conditions/" target="_blank" class="fs12 fl link"> " 注册条款 "</a>
 			</div>
-			<button ng-disabled="!user.remember || registerBtnDisabled" ng-click="registerVaildate()" class="big-btn btn-green btn mb10" ng-bind="registerBtn"></button>
+			<button id="button" onclick="register();" class="big-btn btn-green btn mb10">确定注册</button>
 		</form>
 	</dh-dialog>
 	<script>
@@ -597,7 +596,6 @@
                          //判断验证码是否正确
 			function yzm(){
 				var sj = $("#aaa").val();
-				alert(sj);
 				$.ajax({
 					url:'/code',
 					type:'post',
@@ -631,6 +629,7 @@
                                 success:function(a){
                                         if(a === 'y'){
                                            $("#bbb").css("display","");
+                                           $("#button").attr("disabled", true);
                                         }else{
                                             
                                         }
@@ -640,6 +639,12 @@
                                 }
                              })
                         });
+                        //鼠标光标定位到验证码文本框
+                        $('#abc').focus(function(){
+                            $('#pd').css("display","none");
+                        });
+                        
+                        //判断验证码
                         $('#abc').blur(function(){ 
                               var code = $("#abc").val();
                               $("#bbb").css("display","none");
@@ -655,7 +660,8 @@
                                         if(a === 'y'){
                                             
                                         }else{
-                                            $("#pd").css("display","");
+                                            $('#pd').css({"color":"#FF6343","font-size":"13px","line-height":"15px","display":""});
+                                            //$("#button").attr("disabled", true);
                                         }
                                 },
                                 error:function(){
@@ -663,6 +669,50 @@
                                 }
                              })
                         });
+                        //鼠标光标定位到密码文本框
+                        $('#pwd1').focus(function(){
+                            $('#mima').css("display","none");
+                        });
+                        $('#pwd2').blur(function(){ 
+                            var pwd1 = $("#pwd1").val();
+                            var pwd2 = $("#pwd2").val();
+                            if(pwd1 === pwd2){
+                                $('#mima').css("display","none");
+                                $("#button").removeAttr("disabled");
+                            }else{
+                                $('#mima').html("请确保密码相同");
+                                $('#mima').css({"display":"","color":"#FF6343","font-size":"13px","line-height":"15px"});
+                                $("#button").attr("disabled", true);
+                            }
+                        });
+                        //发送注册用户名数据
+                        function register(){
+                            //user  手机号码
+                            //password 密码
+                            var user = $("#aaa").val();
+                            var pwd = $("#pwd2").val();
+                            alert(user);
+                            alert(pwd);
+                                $.ajax({
+                                    url:'/enroll',
+                                    type:'post',
+                                    async:true,
+                                    data:{user:user,pwd :pwd},
+                                    headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success:function(b){
+                                            if( b === 'y'){
+                                                alert('ok');
+                                            }else{
+                                                alert('no');
+                                            }
+                                    },
+                                    error:function(){
+                                            alert('失败');
+                                    }
+                             });
+                        }
 		</script>
 	</body>
 </html>
