@@ -590,7 +590,7 @@
 					settime(obj)
 				},1000)
 			}
-                         //判断验证码是否正确
+                         //发送验证码
 			function yzm(){
 				var sj = $("#aaa").val();
 				$.ajax({
@@ -603,7 +603,7 @@
                                         },
                                         success:function(data){
 						if(data === 'y'){
-                                                    alert('发送成功!');
+                                                    //alert('发送成功!');
 						}
 					},
 					error:function(){
