@@ -14,10 +14,13 @@
 
 //前台***********************项目
 //Index首页视图路由
-Route::get("/",function(){
-    return view("index");
-});
-	
+Route::get("/","MyShop\IndexController@index");
+// Route::get("/",function(){
+    // return view("index");
+// });
+//Index首页用户手动输入ajax路由
+Route::post("/addseek","MyShop\IndexController@addseek");	
+
 //Login登录视图路由
 Route::get("/login","MyShop\LoginController@login");
 Route::post("/dologin","MyShop\LoginController@dologin");
