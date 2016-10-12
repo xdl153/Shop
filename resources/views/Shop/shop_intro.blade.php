@@ -33,8 +33,10 @@
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
         <section class="common-back" id="wrapBackground">
+			@extends('shop_list')
 
-                <header id="header">
+			@section('content')
+                <!--<header id="header">
                     <div class="common-width clearfix">
                         <h1 class="fl">
                             <a class="logo base-logo" href="/">外卖超人</a>
@@ -49,7 +51,7 @@
                             </ul>
 
                     </div>
-                </header>
+                </header>-->
 
             <div id="main-box">
                  <!--二维码-->

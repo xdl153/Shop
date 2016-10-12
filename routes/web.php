@@ -98,15 +98,18 @@
 	});
 
 //shop_comment餐厅评论视图路由
-// Route::get("/shop_comment","MyShop\Shop_CommentController@shop_comment");
-	Route::get("/shop_comment",function(){
-		return view("Shop.shop_comment");
-	});
+ Route::get("/shop_comment","MyShop\Shop_CommentController@shop_comment");
+//	Route::get("/shop_comment",function(){
+//		return view("Shop.shop_comment");
+//	});
  
 //shop_order大家都在点页面视图路由
 	Route::get("/shop_order",function(){
 		return view("Shop.shop_order");
 	});
+
+//feedback用户反馈
+Route::post("/feedback","MyShop\FeedbackControoler@store");
         
 //help帮助中心视图路由
 	Route::get("/help",function(){
