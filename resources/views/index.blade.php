@@ -43,13 +43,21 @@
 		
 		<section class="member-wrap" id="member-wrap">
 			<div class="common-width posr">
-				
+				<!-- 这里登录退出 -->
 					<div class="member-box fs12" login-box info="loginInfo">
-						<a href="javascript:void(0)" ng-click="logoinDialogShow()">登录</a>
+                                            @if(session("username"))
+                                            <a  href="{{ URL('/member_index')}}">{{session("username")}}</a>
+                                                <span>|</span>
+                                                <a href="{{ URL('/member_order') }}">查看订单</a>
+                                                <span>|</span>
+                                                <a online="exit();">退出</a>
+                                            @else
+                                                <a href="javascript:void(0)" ng-click="logoinDialogShow()">登录</a>
 						<span>/</span>
 						<a href="javascript:void(0)" ng-click="registerDialogShow()">注册</a>
-						<span>|</span>
-						<a href="{{ URL('/member_order') }}">查看订单</a>
+                                            @endif
+						
+						
 					</div>
 				
 			</div>
@@ -354,9 +362,10 @@
 	<dh-dialog class="disnone" type='login' height="500" header="登录" show="loginShow" >
 		<form class="login-form" novalidate name="loginForm" ng-controller="loginCtrl">
 			<div class="form-group">
+                            <!-- 这里登录 -->
 				<label for="">手机号码</label>
 				<div>
-					<input type="text" ng-model="user.username" ng-class="{error:user.usernameMessage}" ng-focus="user.usernameMessage=''" maxlength="11" placeholder="请输入你的手机号码" />
+					<input type="text" id="lPhone" ng-model="user.username" ng-class="{error:user.usernameMessage}" ng-focus="user.usernameMessage=''" maxlength="11" placeholder="请输入你的手机号码" />
 					<span class="vaildate-error" ng-if="user.usernameMessage">
 						<span ng-bind="user.usernameMessage"></span>
 					</span>
@@ -368,7 +377,7 @@
 			<div class="form-group mb10">
 				<label for="">登录密码</label>
 				<div>
-					<input type="password" onpaste="return false" ng-model="user.password" ng-focus="user.passwordMessage=''"  ng-class="{error:user.passwordMessage}" maxlength="10" placeholder="请输入登录密码" />
+					<input type="password" id="lPass" onpaste="return false" ng-model="user.password" ng-focus="user.passwordMessage=''"  ng-class="{error:user.passwordMessage}" maxlength="10" placeholder="请输入登录密码" />
 					<span class="vaildate-error" ng-if="user.passwordMessage">
 						<span ng-bind="user.passwordMessage"></span>
 					</span>
@@ -389,7 +398,7 @@
 				<dh-checkbox model="user.rememberme" title="记住我" class="fl"></dh-checkbox>
 				<a href="/account/password/reset_via_mobile/" target="_blank" class="fs12 fr link">忘记密码</a>
 			</div>
-			<button class="big-btn btn-green btn mb10" ng-click="loginVaildate()" ng-disabled="loginBtnDisabled" ng-bind="loginBtn"></button>
+			<button class="big-btn btn-green btn mb10"  onclick="login();" ng-click="loginVaildate()" ng-disabled="loginBtnDisabled" ng-bind="loginBtn"></button>
 			<div class="clearfix">
 				<span class="fr fs12">
 					没有账号?
@@ -711,6 +720,31 @@
                                     }
                              });
                         }
+                            function login(){
+                                var name = $("#lPhone").val();
+                                var password = $("#lPass").val();
+                                alert(name);
+                                alert(password);
+                                $.ajax({
+                                   url:'/dologin',
+                                   type:'post',
+                                   async:true,
+                                   data:{name:name,password:password},
+                                   headers: {
+                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                   },
+                                   success:function(a){
+                                       if( a === 'y'){
+                                           location.href = "/";
+                                       }else{
+                                           alert('登录失败');
+                                       }
+                                   },
+                                   error:function(){
+                                       alert('ajax失败');
+                                   }
+                            });
+                          }
 		</script>
 	</body>
 </html>
