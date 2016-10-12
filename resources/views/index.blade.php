@@ -494,7 +494,7 @@
 					</span>
 				</div>
 				<div class="form-group row mb10">
-					<label class="col-3">密　 码：</label>
+					<label class="col-3">密　码：</label>
 					<div class="col-8">
 						<input type="password" model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change" placeholder="输入您的密码">
 					</div>
