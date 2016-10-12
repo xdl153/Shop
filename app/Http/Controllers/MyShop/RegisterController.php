@@ -80,7 +80,6 @@ class RegisterController extends Controller
         if($results >0){
             return 'y';
         }else{
-            
             return 'n';
         }
     }
