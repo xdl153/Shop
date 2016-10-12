@@ -79,6 +79,7 @@ class RegisterController extends Controller
         $results = \DB::table('user')->insert($array);
         if($results >0){
             return 'y';
+            
         }else{
             return 'n';
         }
