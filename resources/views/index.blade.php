@@ -483,29 +483,23 @@
 			</div>
 		</dh-dialog>
 		<dh-dialog class="disnone" height="500" type="merchants" header="商户入驻申请" show="merchantsShow">
-			<div class="inline" ng-controller="merchantCtrl">
+			<form class="inline" ng-controller="merchantCtrl">
 				<div class="form-group row mb10">
-					<label class="col-3" >商户名称：</label>
+					<label class="col-3" >用户名：</label>
 					<div class="col-8">
-						<input type="text" ng-class="{error:merchants.nameMessage}" maxlength="11" placeholder="输入店铺的名称，例：美美小厨" ng-model="merchants.name"/>
+						<input type="text" ng-class="{error:merchants.nameMessage}" maxlength="11" placeholder="输入您的用户名/手机号码" ng-model="merchants.name"/>
 					</div>
 					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.nameMessage">
 						<span ng-bind="merchants.nameMessage"></span>
 					</span>
 				</div>
 				<div class="form-group row mb10">
-					<label class="col-3">所属城市：</label>
+					<label class="col-3">密　码：</label>
 					<div class="col-8">
-						<select model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change"></select>
+						<input type="password" model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change" placeholder="输入您的密码">
 					</div>
 					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.cityMessage">
 						<span ng-bind="merchants.cityMessage"></span>
-					</span>
-				</div>
-				<div class="form-group row mb10">
-					<label class="col-3">行政分区：</label>
-					<span class="col-8">
-						<select  id="areaSelect"></select>
 					</span>
 				</div>
 				<div class="form-group row mb10">
@@ -533,7 +527,7 @@
 					<button class="btn normal-btn btn-success" ng-click="merchantSubmit()" ng-disabled="!merchants.checkbox">确认</button>
 					<button class="btn normal-btn btn-cancel" ng-click="merchantCancel()">取消</button>
 				</div>
-			</div>
+			</form>
 		</dh-dialog>
 
 		<dh-dialog class="disnone" type="alert" index="1001" header="" show="requestSuccess">
