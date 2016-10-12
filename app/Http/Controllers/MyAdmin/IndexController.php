@@ -13,7 +13,7 @@ class IndexController extends Controller
 	// public function index()
 	// {
         // 
-        // helllows
+        // helllowssss
         // 
 	// 	return view("Adminstrator.index");
 	// }
