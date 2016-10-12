@@ -14,30 +14,28 @@
 
 //前台***********************项目
 //Index首页视图路由
-// Route::get("/","MyShop\IndexController@index");
-	Route::get("/",function(){
-		return view("index");
-	});
+Route::get("/",function(){
+    return view("index");
+});
 	
 //Login登录视图路由
-// Route::get("/login","MyShop\LoginController@login");
-	Route::get("/login",function(){
-		return view("Shop.login");
-	});
+Route::get("/login","MyShop\LoginController@login");
+Route::post("/dologin","MyShop\LoginController@dologin");
             
-        //注册视图路由
-	Route::get("/register",function(){
-		return view("Shop.register");
-	});
-        //查询手机号码
-        Route::post("/demand","MyShop\RegisterController@demand");
-        //注册验证码
-        Route::post("/code","MyShop\RegisterController@code");
-        //判断验证码
-        Route::post("/demandcode","MyShop\RegisterController@demandcode");
-        //注册用户名
-        Route::post("/enroll","MyShop\RegisterController@enroll");
-        
+//注册
+
+//注册视图
+Route::get("/register","MyShop\RegisterController@register");
+//查询手机号码
+Route::post("/demand","MyShop\RegisterController@demand");
+//注册验证码
+Route::post("/code","MyShop\RegisterController@code");
+//判断验证码
+Route::post("/demandcode","MyShop\RegisterController@demandcode");
+//注册用户名
+Route::post("/enroll","MyShop\RegisterController@enroll");
+ 
+//注册完
 //Shop_list商品列表视图路由
 	Route::get("/shop_list",function(){
 		return view("Shop.shop_list");

@@ -606,7 +606,7 @@
                                         },
                                         success:function(data){
 						if(data === 'y'){
-							alert('发送成功!');
+                                                    alert('发送成功!');
 						}
 					},
 					error:function(){
@@ -635,7 +635,7 @@
                                         }
                                 },
                                 error:function(){
-                                        alert('失败');
+                                        alert('ajax失败');
                                 }
                              })
                         });
@@ -661,11 +661,11 @@
                                             
                                         }else{
                                             $('#pd').css({"color":"#FF6343","font-size":"13px","line-height":"15px","display":""});
-                                            //$("#button").attr("disabled", true);
+                                            $("#button").attr("disabled", true);
                                         }
                                 },
                                 error:function(){
-                                        alert('失败');
+                                        alert('ajax失败');
                                 }
                              })
                         });
@@ -691,8 +691,6 @@
                             //password 密码
                             var user = $("#aaa").val();
                             var pwd = $("#pwd2").val();
-                            alert(user);
-                            alert(pwd);
                                 $.ajax({
                                     url:'/enroll',
                                     type:'post',
@@ -703,13 +701,13 @@
                                     },
                                     success:function(b){
                                             if( b === 'y'){
-                                                alert('ok');
+                                                location.href = "/login";
                                             }else{
-                                                alert('no');
+                                                alert('注册失败');
                                             }
                                     },
                                     error:function(){
-                                            alert('失败');
+                                            alert('ajax失败');
                                     }
                              });
                         }

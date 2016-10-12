@@ -49,7 +49,7 @@ class RegisterController extends Controller
         }
     }
     //返回视图
-    public function index()
+    public function register()
     {
         return view("Shop.register");
     }

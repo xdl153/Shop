@@ -4,12 +4,13 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <title>登录 | 外卖超人</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta dynamic-meta name="keywords" content="外卖—网上订餐_外卖_外卖超人订餐官网">
     <meta name="description" content="上海外卖超人专业品质外卖网，饿了么，饿了定外卖就上外卖超人。覆盖全市各大热门商圈,为您实时提供周边外卖网上订餐服务.中餐,快餐,西餐,茶点,各色料理,助您本地美食全搜罗!" />
     <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
     <link rel="stylesheet" type="text/css" href="{{ asset('Shop/static/css/reset.css') }}" />
     <link rel="stylesheet" href="{{ asset('Shop/static/css/common.css') }}"/>
-    
+    <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('Shop/static/css/login.css') }}"/>
 
     <!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="{{ asset('Shop/static/css/frontPage-ie8-fix.css') }}" /><![endif]-->
@@ -54,7 +55,7 @@
                     <div class="login-header"></div>
                     <div class="form-group w275">
                         <label for="lPhone">手机号码</label>
-                        <span class="fs12 fr">没有注册 ？ <a href="{{ URL('Shop/register') }}" class="yo">立即注册</a></span>
+                        <span class="fs12 fr">没有注册 ？ <a href="{{ URL('/register') }}" class="yo">立即注册</a></span>
                         <input id="lPhone" maxlength="11" type="text" class="form-text" placeholder="输入您的手机号码"/></label>
                     </div>
                     <div class="form-error-message"></div>
@@ -80,7 +81,7 @@
                             <span class="fr fs12"><a class="yo" target="_black" href="">忘记密码</a></span>
                         </div>
                         <div>
-                            <button class="form-btn" id="loginPageBtn">登录</button>
+                            <button onclick="login();" class="form-btn">登录</button>
                         </div>
                         <div class="code-box clearfix">
                             <img src="{{ asset('Shop/static/img/downLodNew.png') }}" style="width: 262px;height: 93px;margin-left: 15px;" />
@@ -231,18 +232,36 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
 </script>
 <!-- End Baidu Remarketing code -->
 
-<!-- Google Analytics Code -->
+<!-- 登录 -->
+<script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-33138478-1', 'waimaichaoren.com');
-  ga('send', 'pageview');
-  ga('require', 'ecommerce', 'ecommerce.js');
+    function login(){
+         var name = $("#lPhone").val();
+         var password = $("#lPass").val();
+         alert(name);
+         alert(password);
+         $.ajax({
+            url:'/dologin',
+            type:'post',
+            async:true,
+            data:{name:name,password:password},
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(a){
+                if( a === 'y'){
+                    location.href = "/shop_list";
+                }else{
+                    alert('登录失败');
+                }
+            },
+            error:function(){
+                alert('ajax失败');
+            }
+     });
+   }
 </script>
-<!-- End Google Analytics Code -->
+<!-- 登录 -->
 
 </body>
 </html>
