@@ -14,5 +14,8 @@ class IndexController extends Controller
 	// {
 	// 	return view("Adminstrator.index");
 	// }
+    
+    
+    
 }
 
