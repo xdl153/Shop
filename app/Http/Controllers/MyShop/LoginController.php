@@ -23,7 +23,7 @@ class LoginController extends Controller
             if($ob->password == $password){
             //查询到的用户信息写入session
             session()->set("userid",$ob->id);
-\           session()->set("username",$ob->name);
+            session()->set("username",$ob->name);
             return 'y';
             }
         }else{
