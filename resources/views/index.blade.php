@@ -70,74 +70,81 @@
 				<div class="city-list-box back-yellow">
 					<div class="dropdown-box">
 						<div class="dropdown-select">
-							<span class="dropdown-text" id="cityName" cityName="Shanghai">上海站</span>
-							<span class="caret"></span></div>
+							<span class="dropdown-text" id="cityName" cityName="Shanghai">@foreach($district as $list){{ $list->name }}@endforeach</span>
+							<span class="caret"></span>
+							<input type="hidden" id="inputid" value=" @foreach($district as $list){{ $list->id }}@endforeach " >
+						</div>
 						<ul class="dropdown-menu">
-							
-								<li ng-click="setCityAndRedirect('suzhou', '/suzhou/');">
-									<a href="javascript:;">苏州站</a>
+								<li ng-click="setCityAndRedirect('fuzhou', '/?id=9')">
+									<a href="javascript:;">上海市</a>
+								</li>
+								<li ng-click="setCityAndRedirect('fuzhou', '/?id=166')">
+									<a href="javascript:;">苏州市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('fuzhou', '/fuzhou/');">
-									<a href="javascript:;">福州站</a>
-                                                                </li>
-							
-								<li ng-click="setCityAndRedirect('qingdao', '/qingdao/');">
-									<a href="javascript:;">青岛站</a>
+								<li ng-click="setCityAndRedirect('fuzhou', '/?id=203');">
+									<a href="javascript:;">福州市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('ningbo', '/ningbo/');">
-									<a href="javascript:;">宁波站</a>
+								<li ng-click="setCityAndRedirect('hangzhou', '/?id=175');">
+									<a href="javascript:;">杭州市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('nanjing', '/nanjing/');">
-									<a href="javascript:;">南京站</a>
+								<li ng-click="setCityAndRedirect('qingdao', '/?id=224');">
+									<a href="javascript:;">青岛市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('chongqing', '/chongqing/');">
-									<a href="javascript:;">重庆站</a>
+								<li ng-click="setCityAndRedirect('ningbo', '/?id=176');">
+									<a href="javascript:;">宁波市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('xiamen', '/xiamen/');">
-									<a href="javascript:;">厦门站</a>
+								<li ng-click="setCityAndRedirect('nanjing', '/?id=162');">
+									<a href="javascript:;">南京市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('chengdu', '/chengdu/');">
-									<a href="javascript:;">成都站</a>
+								<li ng-click="setCityAndRedirect('chongqing', '/?id=22');">
+									<a href="javascript:;">重庆市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('jinan', '/jinan/');">
-									<a href="javascript:;">济南站</a>
+								<li ng-click="setCityAndRedirect('xiamen', '/?id=204');">
+									<a href="javascript:;">厦门市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('guangzhou', '/guangzhou/');">
-									<a href="javascript:;">广州站</a>
+								<li ng-click="setCityAndRedirect('chengdu', '/?id=385');">
+									<a href="javascript:;">成都市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('shenzhen', '/shenzhen/');">
-									<a href="javascript:;">深圳站</a>
+								<li ng-click="setCityAndRedirect('jinan', '/?id=223');">
+									<a href="javascript:;">济南市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('zhengzhou', '/zhengzhou/');">
-									<a href="javascript:;">郑州站</a>
+								<li ng-click="setCityAndRedirect('guangzhou', '/?id=289');">
+									<a href="javascript:;">广州市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('tianjin', '/tianjin/');">
-									<a href="javascript:;">天津站</a>
+								<li ng-click="setCityAndRedirect('shenzhen', '/?id=291');">
+									<a href="javascript:;">深圳市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('beijing', '/beijing/');">
-									<a href="javascript:;">北京站</a>
+								<li ng-click="setCityAndRedirect('zhengzhou', '/?id=240');">
+									<a href="javascript:;">郑州市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('wuhan', '/wuhan/');">
-									<a href="javascript:;">武汉站</a>
+								<li ng-click="setCityAndRedirect('tianjin', '/?id=2');">
+									<a href="javascript:;">天津市</a>
 								</li>
 							
-								<li ng-click="setCityAndRedirect('changsha', '/changsha/');">
-									<a href="javascript:;">长沙站</a>
+								<li ng-click="setCityAndRedirect('beijing', '/?id=1');">
+									<a href="javascript:;">北京市</a>
 								</li>
 							
+								<li ng-click="setCityAndRedirect('wuhan', '/?id=258');">
+									<a href="javascript:;">武汉市</a>
+								</li>
+							
+								<li ng-click="setCityAndRedirect('changsha', '/?id=275');">
+									<a href="javascript:;">长沙市</a>
+								</li>
 						</ul>
 					</div>
 				</div>
@@ -156,11 +163,9 @@
 								<div class="clearfix">
 									<div class="search-input-box">
 										<div class="search-input-inner">
-											<input type="text" ng-model="keyword" autocomplete placeholder="我在哪儿？" class="search-input" ng-initial value="" onkeyup="this.setAttribute('value',this.value);"/>
-											<ul ng-class="{disblock:searchResultIsShow}" class="search-result-box">
-												<li ng-class="{active:currentActiveIndex==$index}" ng-repeat="item in datas track by $index" ng-click="searchResultSelect($index)">
-													<h5 ng-bind="item"></h5>
-												</li>
+											<input type="text" id="Search" name="Search" ng-model="keyword" autocomplete placeholder="我在哪儿？" class="search-input" ng-initial value=""/>
+											<ul id="uladdress" style="max-height: 372px; position: absolute; background: #ffffff;width: 100%;border: 1px solid #bcbcbc;margin-top: -2px;overflow: auto;display: none;">
+												
 											</ul>
 										</div>
 									</div>
@@ -171,17 +176,9 @@
 									
 										<h3 class="fl">热门区域:</h3>
 										<ul class="fl clearfix">
-											
-												<li><a href="{{ URL('/shop_list') }}">五角场</a></li>
-											
-												<li><a href="shop_list.html">徐家汇</a></li>
-											
-												<li><a href="shop_list.html">漕河泾开发区</a></li>
-											
-												<li><a href="shop_list.html">静安寺</a></li>
-											
-												<li><a href="shop_list.html">浦东软件园</a></li>
-											
+											@foreach($town as $info)
+												<li><a href="/shop_list?id={{ $info->id }}" > {{ $info->name }}</a></li>
+											@endforeach
 										</ul>
 									
 								</div>
@@ -739,6 +736,52 @@
                                    }
                             });
                           }
+                           //实时获取用户输入搜索地址
+            $('#Search').keyup('input', function () {
+
+    			var address = $("input[name=Search]").val();
+    			$("#uladdress").find("h5").remove();
+    			//判断输入框是否有值
+				var pid =$('#inputid').val();
+    			if(address){
+    				$("#uladdress").css('display','block');
+    				
+					$.ajax({
+						//请求地址
+						url:"/addseek",
+						//请求方式
+						type:'post',
+						//是否异步
+						async:true,
+						//发送的数据
+						data:{name:address,id:pid},
+						//响应的数据类型
+			
+						
+						headers: {
+	                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	                    },
+	                    dataType:"json",
+						success:function(data){
+
+						//成功回调函数
+						//alert(data[0][0].name);
+							for(var i = 0; i < data.length; i++){
+								$('#uladdress').append("<h5  name='h5address' style='height:30px;border-bottom: 1px solid #e0e0e0;cursor: pointer;font-size: .75em;color: #999999; margin-top:15px;'>"+data[i].name+"</h5>");
+							}
+						}
+					});
+				}
+			});
+
+			//当用户移除鼠标
+			$("#Search").blur(function(){
+				$("#uladdress").css('display','none');
+			})
+			//获取鼠标焦点
+			$("#Search").focus(function(){
+				$("#uladdress").css('display','block');
+			})
 		</script>
 	</body>
 </html>
