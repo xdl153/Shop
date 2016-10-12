@@ -185,14 +185,14 @@ app.controller("merchantCtrl", ["$scope", "formVaildate", "$http","commonApi", f
         var vaildate = true;
         var mes = fem.vaildate.empty(scope.merchants.name);
         if (mes) {
-            scope.merchants.nameMessage = "商户名称不能为空";
+            scope.merchants.nameMessage = "用户名不能为空";
             vaildate = false;
         } else {
             scope.merchants.nameMessage = ''
         }
         mes = fem.vaildate.city(scope.city);
         if(mes){
-            scope.merchants.cityMessage = "所属城市不能为空";
+            scope.merchants.cityMessage = "密码不能为空";
             vaildate = false;
         }else{
              scope.merchants.cityMessage = "";
