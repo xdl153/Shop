@@ -17,11 +17,19 @@
 Route::get("/",function(){
     return view("index");
 });
-	
+//登录
+//
 //Login登录视图路由
 Route::get("/login","MyShop\LoginController@login");
+//登录
 Route::post("/dologin","MyShop\LoginController@dologin");
-            
+
+
+//登录完
+//退出清除session
+Route::post("/logout","MyShop\logoutController@logout");
+
+//退出完
 //注册
 
 //注册视图
