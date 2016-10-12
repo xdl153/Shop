@@ -12,6 +12,9 @@ class IndexController extends Controller
     //首页视图
 	// public function index()
 	// {
+        // 
+        // 
+        // 
 	// 	return view("Adminstrator.index");
 	// }
 }
