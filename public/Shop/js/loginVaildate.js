@@ -18,7 +18,7 @@
         rPassError : '密码为6 - 10位字符',
         passAgain : '二次密码输入不一致',
         agree : '请同意外卖超人"注册条款"',
-        otherError : '未知错误，请稍后再尝试'
+        otherError : '登录中'
     },
     agreeClickFunc = null,
     timeId = null,
