@@ -51,11 +51,11 @@
 				<!-- 这里登录退出 -->
 					<div class="member-box fs12" login-box info="loginInfo">
                                             @if(session("username"))
-                                            <a  href="{{ URL('/member_index')}}">{{session("username")}}</a>
+                                            <a  id="exitsession" href="{{ URL('/member_index')}}">{{session("username")}}</a>
                                                 <span>|</span>
                                                 <a href="{{ URL('/member_order') }}">查看订单</a>
                                                 <span>|</span>
-                                                <a online="exit();">退出</a>
+                                                <a onclick="exit();">退出<a>
                                             @else
                                                 <a href="javascript:void(0)" ng-click="logoinDialogShow()">登录</a>
 						<span>/</span>
@@ -368,9 +368,6 @@
 				<label for="">手机号码</label>
 				<div>
 					<input type="text" id="lPhone" ng-model="user.username" ng-class="{error:user.usernameMessage}" ng-focus="user.usernameMessage=''" maxlength="11" placeholder="请输入你的手机号码" />
-					<span class="vaildate-error" ng-if="user.usernameMessage">
-						<span ng-bind="user.usernameMessage"></span>
-					</span>
 					<span class="vaildate-error" ng-if="user.isLogined">
 						该手机号码尚未注册！<a href="javascript:;" ng-click="locationRegister()" class="link">立即注册</a>
 					</span>
@@ -417,7 +414,7 @@
 				<div>
 					<input type="text" id="aaa" ng-class="{error:user.usernameMessage}" maxlength="11" placeholder="请输入您的手机号码" ng-model="user.username"/>
                                         <label for="" id="bbb" style="display:none">该手机号码已经注册！<a href="javascript:;" ng-click="locationLogin()" class="link">立即登录</a></label>
-                         
+                                        <label for="" id="ok" style="display:none">该手机号码尚未注册！</label>
 					<span class="vaildate-error" ng-if="user.usernameMessage">
 							<span ng-bind="user.usernameMessage"></span>
 					</span>
@@ -592,7 +589,7 @@
 					obj.value="获取验证码"; 
 					countdown = 60;
 					return;
-				} else { 
+				} else {
 					obj.setAttribute("disabled", true); 
 					obj.value="重新发送(" + countdown + ")"; 
 					countdown--; 
@@ -601,7 +598,7 @@
 					settime(obj)
 				},1000)
 			}
-                         //判断验证码是否正确
+                         //发送验证码
 			function yzm(){
 				var sj = $("#aaa").val();
 				$.ajax({
@@ -614,7 +611,7 @@
                                         },
                                         success:function(data){
 						if(data === 'y'){
-                                                    alert('发送成功!');
+                                                    //alert('发送成功!');
 						}
 					},
 					error:function(){
@@ -626,6 +623,7 @@
                         $('#aaa').blur(function(){
                             //获取输入的值
                             var sj = $("#aaa").val();
+                            if(sj !== ""){
                             $.ajax({
                                 url:'/demand',
                                 type:'post',
@@ -639,23 +637,33 @@
                                            $("#bbb").css("display","");
                                            $("#button").attr("disabled", true);
                                         }else{
-                                            
+                                           $("#ok").css("display","");
+                                           $("#button").attr("disabled", true);
                                         }
                                 },
                                 error:function(){
                                         alert('ajax失败');
                                 }
                              })
+                            }
                         });
+                        //
+                        $('#aaa').focus(function(){
+                            $("#bbb").css("display","none");
+                        });
+                        $('#aaa').focus(function(){
+                            $("#ok").css("display","none");
+                        });
+                       
                         //鼠标光标定位到验证码文本框
                         $('#abc').focus(function(){
                             $('#pd').css("display","none");
                         });
-                        
                         //判断验证码
-                        $('#abc').blur(function(){ 
-                              var code = $("#abc").val();
-                              $("#bbb").css("display","none");
+                        $('#abc').blur(function(){
+                            $('#pd').css("display","none");
+                            var code = $("#abc").val();
+                            if(code !== ""){
                                 $.ajax({
                                 url:'/demandcode',
                                 type:'post',
@@ -676,17 +684,21 @@
                                         alert('ajax失败');
                                 }
                              })
+                            }
                         });
                         //鼠标光标定位到密码文本框
                         $('#pwd1').focus(function(){
                             $('#mima').css("display","none");
                         });
-                        $('#pwd2').blur(function(){ 
+                        $('#pwd2').blur(function(){
                             var pwd1 = $("#pwd1").val();
                             var pwd2 = $("#pwd2").val();
                             if(pwd1 === pwd2){
                                 $('#mima').css("display","none");
                                 $("#button").removeAttr("disabled");
+                                if($("#bbb").css("display") !== 'none'){
+                                    $("#button").attr("disabled", true);
+                                }
                             }else{
                                 $('#mima').html("请确保密码相同");
                                 $('#mima').css({"display":"","color":"#FF6343","font-size":"13px","line-height":"15px"});
@@ -709,7 +721,8 @@
                                     },
                                     success:function(b){
                                             if( b === 'y'){
-                                                location.href = "/login";
+                                                alert('注册成功');
+                                                location.href = "/";
                                             }else{
                                                 alert('注册失败');
                                             }
@@ -722,8 +735,6 @@
                             function login(){
                                 var name = $("#lPhone").val();
                                 var password = $("#lPass").val();
-                                alert(name);
-                                alert(password);
                                 $.ajax({
                                    url:'/dologin',
                                    type:'post',
@@ -744,6 +755,26 @@
                                    }
                             });
                           }
+                          function exit(){
+                              $.ajax({
+                                   url:'/logout',
+                                   type:'post',
+                                   async:true,
+                                   headers: {
+                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                   },
+                                   success:function(a){
+                                       if( a === 'y'){
+                                           location.href = "/";
+                                       }else{
+                                           alert('退出失败');
+                                       }
+                                   },
+                                   error:function(){
+                                       alert('ajax失败');
+                                   }
+                            });
+                          };
                            //实时获取用户输入搜索地址
             $('#Search').keyup('input', function () {
 
