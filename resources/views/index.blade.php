@@ -18,7 +18,11 @@
 		
 		<link rel="stylesheet" href="{{ asset('Shop/css/frontPage.css') }}"/>
 		
-
+		<link rel="stylesheet" href="{{ asset('Shop/css/reveal.css') }}">
+		<style type="text/css">
+			body { font-family: "HelveticaNeue","Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
+			.big-link { display:block; margin-top: 100px; text-align: center; font-size: 70px; color: #06f; }
+		</style>
 		<!--[if lte IE 7]><script>window.onload=function(){location.href="/ie6warning/"}</script><![endif]-->
 		<!--[if lt IE 9]>
 		<script src="{{ asset('Shop/js/respond.js') }}"></script>
@@ -27,6 +31,8 @@
 			 var i= e.length;while (i--){document.createElement(e[i])}
 		</script>
 		<![endif]-->
+		
+		
 		<title>首页</title>
 	</head>
 	<body class="day " ng-controller="bodyCtrl"  day-or-night>
@@ -39,7 +45,6 @@
 					<em ng-click="qrCodeStatus=true">X</em>
 				</div>
 			
-				
 		
 		<section class="member-wrap" id="member-wrap">
 			<div class="common-width posr">
@@ -169,7 +174,7 @@
 											</ul>
 										</div>
 									</div>
-									<button class="btn btn-success fs18 fl" ng-click="searachRestaurant()" ng-disabled="searchBtnDisabled" ng-bind="searchBtnName">查找餐厅</button>
+									<button class="btn btn-success fs18 fl" data-reveal-id="myModal" data-animation="fade">查找餐厅</button>
 									
 								</div>
 								<div class="hot-area clearfix fs12">
@@ -390,9 +395,9 @@
 			</div>
 			<div class="clearfix mb10">
 				<dh-checkbox model="user.rememberme" title="记住我" class="fl"></dh-checkbox>
-				<a href="/account/password/reset_via_mobile/" target="_blank" class="fs12 fr link">忘记密码</a>
+				<a href="/FindPassword" target="_blank" class="fs12 fr link">忘记密码</a>
 			</div>
-			<button class="big-btn btn-green btn mb10"  onclick="login();" ng-click="loginVaildate()" ng-disabled="loginBtnDisabled" ng-bind="loginBtn"></button>
+			<button id="yhdl" class="big-btn btn-green btn mb10"  onclick="login();" ng-click="loginVaildate()"  ng-bind="loginBtn"></button>
 			<div class="clearfix">
 				<span class="fr fs12">
 					没有账号?
@@ -435,11 +440,11 @@
 							</span>
 						</div>
 						<label class="fr">
-							<button onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="display: inline-block;padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
+							<button id="yzmyzm"onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
 						</label>
 					</div>
 				</div>
-			</div>
+		</div>
 			<div class="form-group mb10">
 				<label for="">登录密码</label>
 				<div><input type="password" id="pwd1" ng-class="{error:user.passwordMessage}" ng-focus="user.passwordMessage=''"  maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password" />
@@ -470,21 +475,24 @@
 		var ajax_customer_user_register_register = '/ajax/customer_user_register_register/';
 	</script>
 
-		<dh-dialog class="disnone" height="500" type="street" header="请选择最靠近你的地址" show="addressShow">
-			<ul class="select-street">
-				<li ng-repeat="item in shreets" ng-click="resultClick(item)">
-					<i class="icon address-yellow"></i>
-					<div class="shreets-item">
+		<dh class="reveal-modal" id="myModal" style="background-color:#FFFFFF;width:500px;" class="disnone" height="500" type="street" header="请选择最靠近你的地址" show="addressShow">
+			<div style="height:30px;border-bottom:1px solid #E5E5E5;margin:0px;margin-top:-15px;">请选择最靠近你的位置</div>
+			<!-- <ul class="select-street">
+				<li style="width:480px"; style="margin:0px;">
+					<div class="shreets-item" style="width:100%;margin:0px;">
+						<h4 style="width:100%;height:50px;font-size:15px;line-height:50px;border-bottom:1px solid #CCCCCC;border-top:1px solid #e0e0e0;">111</h4>
 						<h4 ng-bind="item.name"></h4>
-						<h5 ng-bind="item.address"></h5>
+                    	<h5 ng-bind="item.address"></h5>
 					</div>
 				</li>
-			</ul>
-			<div class="street-commet">
+			</ul> -->
+			 <ul class="select-street" id="ulcontent">
+       		 </ul>
+			<div style="font: inherit; vertical-align: baseline;">
 				<p>以上列出地址都不正确么？</p>
 				<p>请您检查地址拼写/格式是否正确和 <a href="javascript:void(0)" class="link" ng-click="resetStreet()">重新输入您的地址</a>。</p>
 			</div>
-		</dh-dialog>
+		</dh>
 		<dh-dialog class="disnone" height="500" type="merchants" header="商户入驻申请" show="merchantsShow">
 			<form class="inline" ng-controller="merchantCtrl">
 				<div class="form-group row mb10">
@@ -560,7 +568,7 @@
 		<script type="text/javascript" src="{{ asset('Shop/js/angular.min.js') }}"></script>
 		<script src="{{ asset('Shop/js/common.js') }}"></script>
 		
-		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5cd6dcb00bc675bf26c9b4ab2af0759a"></script>
+		<!--<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5cd6dcb00bc675bf26c9b4ab2af0759a"></script>!-->
 		<script src="{{ asset('Shop/js/service.js') }}"></script>
 		
 		<script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
@@ -569,227 +577,31 @@
 		
 		<script>var manually_locations='';</script>
 		<script src="{{ asset('Shop/js/frontPage.js') }}"></script>
-
-		
 		<script>angular.bootstrap(document, ["app"]);</script>
-
+                <script src="{{ asset('Shop/js/jsjs.js') }}"></script>
 		<script>
-			var countdown=60; 
-			function settime(obj) {
-				if (countdown == 0) { 
-					obj.removeAttribute("disabled");    
-					obj.value="获取验证码"; 
-					countdown = 60;
-					return;
-				} else {
-					obj.setAttribute("disabled", true); 
-					obj.value="重新发送(" + countdown + ")"; 
-					countdown--; 
-				} 
-				setTimeout(function(){
-					settime(obj)
-				},1000)
-			}
-                         //发送验证码
-			function yzm(){
-				var sj = $("#aaa").val();
-				$.ajax({
-					url:'/code',
-					type:'post',
-					async:true,
-					data:{id:sj},
-                                        headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success:function(data){
-						if(data === 'y'){
-                                                    //alert('发送成功!');
-						}
-					},
-					error:function(){
-						alert('失败');
-					}
-				})
-			}
-                        //鼠标失去判断去数据库查询是是否存
-                        $('#aaa').blur(function(){
-                            //获取输入的值
-                            var sj = $("#aaa").val();
-                            if(sj !== ""){
-                            $.ajax({
-                                url:'/demand',
-                                type:'post',
-                                async:true,
-                                data:{phone:sj},
-                                headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success:function(a){
-                                        if(a === 'y'){
-                                           $("#bbb").css("display","");
-                                           $("#button").attr("disabled", true);
-                                        }else{
-                                           $("#ok").css("display","");
-                                           $("#button").attr("disabled", true);
-                                        }
-                                },
-                                error:function(){
-                                        alert('ajax失败');
-                                }
-                             })
-                            }
-                        });
-                        //
-                        $('#aaa').focus(function(){
-                            $("#bbb").css("display","none");
-                        });
-                        $('#aaa').focus(function(){
-                            $("#ok").css("display","none");
-                        });
-                       
-                        //鼠标光标定位到验证码文本框
-                        $('#abc').focus(function(){
-                            $('#pd').css("display","none");
-                        });
-                        //判断验证码
-                        $('#abc').blur(function(){
-                            $('#pd').css("display","none");
-                            var code = $("#abc").val();
-                            if(code !== ""){
-                                $.ajax({
-                                url:'/demandcode',
-                                type:'post',
-                                async:true,
-                                data:{code:code},
-                                headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success:function(a){
-                                        if(a === 'y'){
-                                            
-                                        }else{
-                                            $('#pd').css({"color":"#FF6343","font-size":"13px","line-height":"15px","display":""});
-                                            $("#button").attr("disabled", true);
-                                        }
-                                },
-                                error:function(){
-                                        alert('ajax失败');
-                                }
-                             })
-                            }
-                        });
-                        //鼠标光标定位到密码文本框
-                        $('#pwd1').focus(function(){
-                            $('#mima').css("display","none");
-                        });
-                        $('#pwd2').blur(function(){
-                            var pwd1 = $("#pwd1").val();
-                            var pwd2 = $("#pwd2").val();
-                            if(pwd1 === pwd2){
-                                $('#mima').css("display","none");
-                                $("#button").removeAttr("disabled");
-                                if($("#bbb").css("display") !== 'none'){
-                                    $("#button").attr("disabled", true);
-                                }
-                            }else{
-                                $('#mima').html("请确保密码相同");
-                                $('#mima').css({"display":"","color":"#FF6343","font-size":"13px","line-height":"15px"});
-                                $("#button").attr("disabled", true);
-                            }
-                        });
-                        //发送注册用户名数据
-                        function register(){
-                            //user  手机号码
-                            //password 密码
-                            var user = $("#aaa").val();
-                            var pwd = $("#pwd2").val();
-                                $.ajax({
-                                    url:'/enroll',
-                                    type:'post',
-                                    async:true,
-                                    data:{user:user,pwd :pwd},
-                                    headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success:function(b){
-                                            if( b === 'y'){
-                                                alert('注册成功');
-                                                location.href = "/";
-                                            }else{
-                                                alert('注册失败');
-                                            }
-                                    },
-                                    error:function(){
-                                            alert('ajax失败');
-                                    }
-                             });
-                        }
-                            function login(){
-                                var name = $("#lPhone").val();
-                                var password = $("#lPass").val();
-                                $.ajax({
-                                   url:'/dologin',
-                                   type:'post',
-                                   async:true,
-                                   data:{name:name,password:password},
-                                   headers: {
-                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                   },
-                                   success:function(a){
-                                       if( a === 'y'){
-                                           location.href = "/";
-                                       }else{
-                                           alert('登录失败');
-                                       }
-                                   },
-                                   error:function(){
-                                       alert('ajax失败');
-                                   }
-                            });
-                          }
-                          function exit(){
-                              $.ajax({
-                                   url:'/logout',
-                                   type:'post',
-                                   async:true,
-                                   headers: {
-                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                   },
-                                   success:function(a){
-                                       if( a === 'y'){
-                                           location.href = "/";
-                                       }else{
-                                           alert('退出失败');
-                                       }
-                                   },
-                                   error:function(){
-                                       alert('ajax失败');
-                                   }
-                            });
-                          };
+
                            //实时获取用户输入搜索地址
             $('#Search').keyup('input', function () {
 
     			var address = $("input[name=Search]").val();
     			$("#uladdress").find("h5").remove();
+    			$("#ulcontent").find("li").remove();
     			//判断输入框是否有值
 				var pid =$('#inputid').val();
     			if(address){
-    				$("#uladdress").css('display','block');
-    				
-					$.ajax({
-						//请求地址
-						url:"/addseek",
-						//请求方式
-						type:'post',
-						//是否异步
-						async:true,
-						//发送的数据
-						data:{name:address,id:pid},
-						//响应的数据类型
-			
-						
-						headers: {
+                            $("#uladdress").css('display','block');
+                            $.ajax({
+                                    //请求地址
+                                    url:"/addseek",
+                                    //请求方式
+                                    type:'post',
+                                    //是否异步
+                                    async:true,
+                                    //发送的数据
+                                    data:{name:address,id:pid},
+                                    //响应的数据类型
+                            headers: {
 	                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	                    },
 	                    dataType:"json",
@@ -799,6 +611,14 @@
 						//alert(data[0][0].name);
 							for(var i = 0; i < data.length; i++){
 								$('#uladdress').append("<h5  name='h5address' style='height:30px;border-bottom: 1px solid #e0e0e0;cursor: pointer;font-size: .75em;color: #999999; margin-top:15px;'>"+data[i].name+"</h5>");
+								$('#ulcontent').append(
+									'<li>'+
+                						'<i class="icon address-yellow"></i>'+
+                						'<div class="shreets-item">'+
+                    						"<a href='/shop_list?id="+data[i].id+"'>"+data[i].name+"</a>"+
+                					'</div></li>'
+       
+								)
 							}
 						}
 					});
@@ -813,6 +633,258 @@
 			$("#Search").focus(function(){
 				$("#uladdress").css('display','block');
 			})
+			//弹出框效果
+			(function($) {
+
+			/*---------------------------
+			 Defaults for Reveal
+			----------------------------*/
+	 
+			/*---------------------------
+			 Listener for data-reveal-id attributes
+			----------------------------*/
+
+			$('a[data-reveal-id]').live('click', function(e) {
+				e.preventDefault();
+				var modalLocation = $(this).attr('data-reveal-id');
+				$('#'+modalLocation).reveal($(this).data());
+			});
+
+			/*---------------------------
+			 Extend and Execute
+			----------------------------*/
+
+   			$.fn.reveal = function(options) {
+        
+        
+	        var defaults = {  
+		    	animation: 'fadeAndPop', //fade, fadeAndPop, none
+			    animationspeed: 300, //how fast animtions are
+			    closeonbackgroundclick: true, //if you click background will modal close?
+			    dismissmodalclass: 'close-reveal-modal' //the class of a button or element that will close an open modal
+	    	}; 
+    	
+	        //Extend dem' options
+	        var options = $.extend({}, defaults, options); 
+		
+	        return this.each(function() {
+        
+			/*---------------------------
+			 Global Variables
+			----------------------------*/
+        	var modal = $(this),
+        		topMeasure  = parseInt(modal.css('top')),
+				topOffset = modal.height() + topMeasure,
+          		locked = false,
+				modalBG = $('.reveal-modal-bg');
+
+			/*---------------------------
+			 Create Modal BG
+			----------------------------*/
+			if(modalBG.length == 0) {
+				modalBG = $('<div class="reveal-modal-bg" />').insertAfter(modal);
+			}		    
+     
+			/*---------------------------
+			 Open & Close Animations
+			----------------------------*/
+			//Entrance Animations
+			modal.bind('reveal:open', function () {
+			  modalBG.unbind('click.modalEvent');
+				$('.' + options.dismissmodalclass).unbind('click.modalEvent');
+				if(!locked) {
+					lockModal();
+					if(options.animation == "fade") {
+						modal.css({'opacity' : 0, 'visibility' : 'visible', 'top': $(document).scrollTop()+topMeasure});
+						modalBG.fadeIn(options.animationspeed/2);
+						modal.delay(options.animationspeed/2).animate({
+							"opacity" : 1
+						}, options.animationspeed,unlockModal());					
+					} 
+				}
+				modal.unbind('reveal:open');
+			}); 	
+
+			//Closing Animation
+			modal.bind('reveal:close', function () {
+			  if(!locked) {
+					lockModal();
+					if(options.animation == "fade") {
+						modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
+						modal.animate({
+							"opacity" : 0
+						}, options.animationspeed, function() {
+							modal.css({'opacity' : 1, 'visibility' : 'hidden', 'top' : topMeasure});
+							unlockModal();
+						});					
+					}  	
+				}
+				modal.unbind('reveal:close');
+			});     
+   	
+			/*---------------------------
+			 Open and add Closing Listeners
+			----------------------------*/
+        	//Open Modal Immediately
+    		modal.trigger('reveal:open')
+			
+			//Close Modal Listeners
+			var closeButton = $('.' + options.dismissmodalclass).bind('click.modalEvent', function () {
+			  modal.trigger('reveal:close')
+			});
+			
+			if(options.closeonbackgroundclick) {
+				modalBG.css({"cursor":"pointer"})
+				modalBG.bind('click.modalEvent', function () {
+				  modal.trigger('reveal:close')
+				});
+			}
+			$('body').keyup(function(e) {
+        		if(e.which===27){ modal.trigger('reveal:close'); } // 27 is the keycode for the Escape key
+			});
+			
+			
+			/*---------------------------
+			 Animations Locks
+			----------------------------*/
+						function unlockModal() { 
+							locked = false;
+						}
+						function lockModal() {
+							locked = true;
+						}	
+						
+			        });//each call
+			    }//orbit plugin call
+			})(jQuery);
 		</script>
+		<script type="text/javascript">
+
+(function($) {
+
+/*---------------------------
+ Defaults for Reveal
+----------------------------*/
+	 
+/*---------------------------
+ Listener for data-reveal-id attributes
+----------------------------*/
+
+	$('button[data-reveal-id]').live('click', function(e) {
+		e.preventDefault();
+		var modalLocation = $(this).attr('data-reveal-id');
+		$('#'+modalLocation).reveal($(this).data());
+	});
+
+/*---------------------------
+ Extend and Execute
+----------------------------*/
+
+    $.fn.reveal = function(options) {
+        
+        
+        var defaults = {  
+	    	animation: 'fadeAndPop', //fade, fadeAndPop, none
+		    animationspeed: 300, //how fast animtions are
+		    closeonbackgroundclick: true, //if you click background will modal close?
+		    dismissmodalclass: 'close-reveal-modal' //the class of a button or element that will close an open modal
+    	}; 
+    	
+        //Extend dem' options
+        var options = $.extend({}, defaults, options); 
+	
+        return this.each(function() {
+        
+/*---------------------------
+ Global Variables
+----------------------------*/
+        	var modal = $(this),
+        		topMeasure  = parseInt(modal.css('top')),
+				topOffset = modal.height() + topMeasure,
+          		locked = false,
+				modalBG = $('.reveal-modal-bg');
+
+/*---------------------------
+ Create Modal BG
+----------------------------*/
+			if(modalBG.length == 0) {
+				modalBG = $('<div class="reveal-modal-bg" />').insertAfter(modal);
+			}		    
+     
+/*---------------------------
+ Open & Close Animations
+----------------------------*/
+			//Entrance Animations
+			modal.bind('reveal:open', function () {
+			  modalBG.unbind('click.modalEvent');
+				$('.' + options.dismissmodalclass).unbind('click.modalEvent');
+				if(!locked) {
+					lockModal();
+					if(options.animation == "fade") {
+						modal.css({'opacity' : 0, 'visibility' : 'visible', 'top': $(document).scrollTop()+topMeasure});
+						modalBG.fadeIn(options.animationspeed/2);
+						modal.delay(options.animationspeed/2).animate({
+							"opacity" : 1
+						}, options.animationspeed,unlockModal());					
+					} 
+				}
+				modal.unbind('reveal:open');
+			}); 	
+
+			//Closing Animation
+			modal.bind('reveal:close', function () {
+			  if(!locked) {
+					lockModal();
+					if(options.animation == "fade") {
+						modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
+						modal.animate({
+							"opacity" : 0
+						}, options.animationspeed, function() {
+							modal.css({'opacity' : 1, 'visibility' : 'hidden', 'top' : topMeasure});
+							unlockModal();
+						});					
+					}  	
+				}
+				modal.unbind('reveal:close');
+			});     
+   	
+			/*---------------------------
+			 Open and add Closing Listeners
+			----------------------------*/
+        	//Open Modal Immediately
+    		modal.trigger('reveal:open')
+			
+			//Close Modal Listeners
+			var closeButton = $('.' + options.dismissmodalclass).bind('click.modalEvent', function () {
+			  modal.trigger('reveal:close')
+			});
+			
+			if(options.closeonbackgroundclick) {
+				modalBG.css({"cursor":"pointer"})
+				modalBG.bind('click.modalEvent', function () {
+				  modal.trigger('reveal:close')
+				});
+			}
+			$('body').keyup(function(e) {
+        		if(e.which===27){ modal.trigger('reveal:close'); } // 27 is the keycode for the Escape key
+			});
+			
+			
+			/*---------------------------
+			 Animations Locks
+			----------------------------*/
+						function unlockModal() { 
+							locked = false;
+						}
+						function lockModal() {
+							locked = true;
+						}	
+						
+			        });//each call
+			    }//orbit plugin call
+			})(jQuery);
+        
+
+	</script>
 	</body>
 </html>

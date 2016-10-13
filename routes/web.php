@@ -147,18 +147,9 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 		return view("Shop.order_success");
 	});
 
-//pwd_forget找回密码(身份验证)页面视图路由
-	Route::get("/pwd_forget",function(){
-		return view("Shop.pwd_forget");
-	});
-
-//pwd_reset找回密码(重设登录密码)页面视图路由
-	Route::get("/pwd_reset",function(){
-		return view("Shop.pwd_reset");
-	});
-
-//pwd_success找回密码(完成页面)页面视图路由
-	Route::get("/pwd_success",function(){
-		return view("Shop.pwd_success");
-	});
+//找回密码开始
+Route::get("/FindPassword","MyShop\PasswordController@FindPassword");
+Route::get("/ResetPassword","MyShop\PasswordController@ResetPassword");
+Route::get("/SuccessFind","MyShop\PasswordController@SuccessFind");
+//找回密码完
 //后台***********************项目
