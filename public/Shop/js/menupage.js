@@ -446,6 +446,7 @@ var bodyCtrl = (function (window) {
                 }
             }, true);
             //add cart item num
+            //添加商品数量
             scope.addGoodsNum = function (index) {
                 if (!scope.cartDatas[index]) {
                     return;
@@ -470,6 +471,7 @@ var bodyCtrl = (function (window) {
                 window.location.reload();
             }
         },
+        //搜索地址searchAddress
         searchAddress: function () {
             if (scope.grid_locationId == "") {
                 timeout(function () {
@@ -535,7 +537,7 @@ var bodyCtrl = (function (window) {
                         })
                         .success(function (d) {
                             if (d.status == 'ok' && d.order_id) {
-                                window.location.href = checkout_url.replace('/0/', '/' + d.order_id + '/?gid=' + scope.grid_locationId);
+                                window.location.href = checkout_url.replace('/order');
                             } else {
                                 if(d.status == 'failed' ){
                                     if(d.failed_code == 0){
