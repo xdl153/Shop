@@ -9,7 +9,6 @@
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
         <link rel="stylesheet" type="text/css" href="{{ asset('Shop/css/reset.css') }}" />
         <link rel="stylesheet" href="{{ asset('Shop/css/common.css') }}"/>
-
         <link rel="stylesheet" href="{{ asset('Shop/css/forget_passwd.css') }}"/>
 
         <!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="{{ asset('Shop/css/frontPage-ie8-fix.css') }}" /><![endif]-->
@@ -34,7 +33,7 @@
                         <h1 class="logo" title="外卖超人">
                             <a href="index.html"></a>
                         </h1>
-                        <span class="page-name"> | 找回密码</span>
+                        <span class="page-name"> 返回  | 找回密码</span>
                     </section>
 
 
@@ -58,36 +57,16 @@
                             </li>
                         </ol>
                     </div>
-
-                    <form action="#" method="post">
+                    <form>
+                        <!-- 找回密码一 -->
                         <div class="fill-data-box" id="phoneStep">
                             <div class="fill-data">
                                 <div class="title">手机号码：</div>
                                 <div class="form-group w275">
-                                    <input type="text" maxlength="11" id="phone" name="phone" class="form-text" placeholder="输入您常用的手机号码"/>
+                                    <input id="phone"type="text" maxlength="11" id="phone" name="phone" class="form-text" placeholder="输入您常用的手机号码"/>
                                 </div>
-                                <div class="form-error-message"></div>
-                                <div class="captcha-wrap">
-                                    <div class="captcha-box" id="captchaBox" style="margin-left: -300px">
-                                        <div class="captcha-item">
-                                            <div class="form-group captcha clearfix">
-                                                <input type="text" id="captcha2" name="captcha2"  class="form-text" placeholder="短信验证码"/>
-                                                <input type="button" id="getCaptcha" class="captcha-btn" value="获取短信验证码"/>
-                                            </div>
-                                            <div class="form-error-message"></div>
-                                        </div>
-                                        <div class="captcha-item">
-                                            <div class="form-group captcha clearfix">
-                                                <input type="text" id="imgCaptcha" disabled="disabled" maxlength="4" class="form-text" placeholder="输入验证码"/>
-                                                <span style="float:left"><img id="phoneCaptchaImg" _src="/captcha/" src="{{ asset('Shop/images/yzm.gif') }}" alt="验证码" width="100"/></span>
-                                            </div>
-                                            <div class="form-error-message"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="form-btn" id="phoneNextStep">下一步</button>
-                                </div>
+                                <input id="code" style="width:140px;"type="text" />　<button onclick="settime(this);yzm();" style="width:110px;height:34px;background-color:#80BF2F;"><span style="display: inline-block;padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button><br><br><span></span>
+                                <button id="button" class="form-btn" id="phoneNextStep">下一步</button>
                                 <ul class="other-way">
                                     <li>其他方式</li>
                                     <li>联系客服，可以拨打<span>4001 517 577</span></li>
@@ -138,8 +117,12 @@
                 ajax_password_reset_via_mobile_start = '/ajax/password_reset_via_mobile_start/',
                 common_sms_code = '/ajax/common_sms_code/'
         </script>
-        <script src="{{ asset('js/forget_passwd.js') }}"></script>
-
+        <script src="{{ asset('Shop/js/forget_passwd.js') }}"></script>
+        <script>
+            $("#button").click(function(){
+                alert('ok');
+            });
+        </script>
         <!-- Baidu Analytics -->
 
 
