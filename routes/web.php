@@ -120,6 +120,7 @@ Route::post("/enroll","MyShop\RegisterController@enroll");
 
 //feedback用户反馈
 Route::post("/feedback","MyShop\FeedbackControoler@store");
+
         
 //help帮助中心视图路由
 	Route::get("/help",function(){
