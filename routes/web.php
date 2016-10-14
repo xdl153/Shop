@@ -97,10 +97,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	});
 
 //shop_detail商品细节(餐厅菜单)视图路由
-// Route::get("/shop_detail","MyShop\Shop_DetailController@shop_detail");
-	Route::get("/shop_detail",function(){
-		return view("Shop.shop_detail");
-	});
+ Route::get("/shop_detail","MyShop\Shop_DetailController@shop_detail");
+//	Route::get("/shop_detail",function(){
+//		return view("Shop.shop_detail");
+//	});
 
 //shop_intro餐厅介绍视图路由
 // Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
