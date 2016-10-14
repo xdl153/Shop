@@ -6,7 +6,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 		<meta name="description" content="外卖超人为您提供上海徐家汇附近外卖餐厅,直接网上订餐,叫外卖立享赠饮、打折、优惠券等优惠-“嗖”一下的美食！" />
 		<meta name="viewport" content="user-scalable=no">
-		
 		<meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
 		<meta name="baidu-site-verification" content="IYCrtVH0i1" />
 		<meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
@@ -105,33 +104,40 @@
 					<div class="filter-food">
 						<div class="clearfix restaurant-food">
 							<label class="fl">菜品分类：</label>
-							<ul class="clearfix">
-								
+							<script src="Shop/js/jquery-1.8.3.min.js"></script>>
+							<ul class="clearfix">			
 								<li ng-class="{cur:cuisineIndex=='all'}" ng-click="changeCuisine('all')">所有菜系</li>
-								
-								<li ng-class="{cur:cuisineIndex=='cantonese'}" ng-click="changeCuisine('cantonese')">粤菜</li>
-								
-								<li ng-class="{cur:cuisineIndex=='chinese-fastfood'}" ng-click="changeCuisine('chinese-fastfood')">中餐简餐</li>
-								
-								<li ng-class="{cur:cuisineIndex=='drink-snack'}" ng-click="changeCuisine('drink-snack')">饮料小吃</li>
-								
-								<li ng-class="{cur:cuisineIndex=='japan-korea'}" ng-click="changeCuisine('japan-korea')">日韩料理</li>
-								
-								<li ng-class="{cur:cuisineIndex=='noodles-pastry'}" ng-click="changeCuisine('noodles-pastry')">面食|糕点</li>
-								
-								<li ng-class="{cur:cuisineIndex=='pizza'}" ng-click="changeCuisine('pizza')">匹萨</li>
-								
-								<li ng-class="{cur:cuisineIndex=='seafood'}" ng-click="changeCuisine('seafood')">生鲜</li>
-								
-								<li ng-class="{cur:cuisineIndex=='sichuan'}" ng-click="changeCuisine('sichuan')">川菜</li>
-								
-								<li ng-class="{cur:cuisineIndex=='southeast-asian'}" ng-click="changeCuisine('southeast-asian')">东南亚菜</li>
-								
-								<li ng-class="{cur:cuisineIndex=='supermarket'}" ng-click="changeCuisine('supermarket')">超市</li>
-								
-								<li ng-class="{cur:cuisineIndex=='western'}" ng-click="changeCuisine('western')">西餐</li>
-								
+								@foreach($category as $info)
+									<li name="all" ng-class="{cur:cuisineIndex=='japan-korea'}">{{ $info->name }}</li>
+								@endforeach
 							</ul>
+							<input type="hidden" id="hidden" value="{{ $_GET['id'] }}">
+							<script type="text/javascript">
+								var id = $("#hidden").val();
+								$("li[name=all]").click(function(){
+									var cat = $(this).text();
+									$.ajax({
+										//请求地址
+										url:"/shop_list",
+										//请求方式
+										type:'get',
+										//是否异步
+										async:true,
+										//发送的数据
+										data:{cname:cat,id:id},
+										//响应的数据类型
+					                     dataType:"json",
+										success:function(data){
+											//for(var i=0; i < data.length; i++){
+											//成功回调函数
+												//alert(data[i].did);
+												alert(data);
+											//};
+										}
+									});
+								});
+								
+							</script>
 						</div>
 						<span class="more" toogle-nav-menu="24">更多<i></i></span>
 					</div>
@@ -231,28 +237,29 @@
 
 
 						<ul class="clearfix transform-style" id="ye-restaurant">
-							
-								<li data-index="1"
+							@if($business)
+							@foreach($business as $info)
+								<li data-index="1" 
 									class="restaurant-item fl c_japan-korea c_all p_all p_356 p_352 p_42  p_online fee 0"
-									data-price='150' data-count="1205" data-title="[半价菜][送可乐]樱花日本料理">
+									data-price='150' data-count="1205" data-title="{{ $info->name }}">
 									<div class="img-box fl">
-										<a href="{{ URL('/shop_detail') }}">
-											<img data-src="http://dhcrestaurantlogo.dhero.cn/1592?v=1415601926" src="http://dhcrestaurantlogo.dhero.cn/0" width="82px" height="82px">
+										<a href="/shop_detail?bid={{ $info->id }}">
+											<img data-src="Shop/{{ $info->photo }}" src="http://dhcrestaurantlogo.dhero.cn/0" width="82px" height="82px">
 										</a>
 									</div>
 									<article class="restaurant-introduce fl">
-										<h3 class="ellipsis"><a href="{{ URL('/shop_detail') }}">[半价菜][送可乐]樱花日本料理</a></h3>
+										<h3 class="ellipsis"><a href="{{ URL('/shop_detail') }}">{{ $info->name }}</a></h3>
 										<dl class="clearfix">
 											
-												<dt class="fl ellipsis">已售1205单</dt>
+												<dt class="fl ellipsis">已售{{ $info->count }}单</dt>
 											
 											<dd class="small-star fl">
-												<div class="small-star score" style="width:65px"></div>
+												<div class="small-star score" style="width:{{ $info->grade }}px"></div>
 											</dd>
 										</dl>
-										<p>150元起送 0元配送费</p>
+										<p>电话：{{ $info->phone }}</p>
 										<div class="restaurant-state">
-										<p class="fl">日韩料理</p>
+										<p class="fl">{{ $info->cname }}</p>
 										
 										
 											<span><i class="status-icon"></i></span>
@@ -270,21 +277,21 @@
 									</article>
 									<div class="tooltip restaurant-info">
 										<script type="text/template">
-											<h3 class="ellipsis">[半价菜][送可乐]樱花日本料理</h3>
+											<h3 class="ellipsis">{{ $info->name }}</h3>
 											
-												<h4 class="ellipsis">营业时间 [09:00-22:30]</h4>
+												<h4 class="ellipsis">营业时间 [{{ $info->shopopen }}-{{ $info->shopon }}]</h4>
 											
 											<ul>
 												
 												 
-													<li><i class="status-icon"></i><span>餐厅支持在线支付</span></li>
+													<li><i class="status-icon"></i><span>餐厅不支持在线支付</span></li>
 												
 												
 													
-														<li><img src="http://dhcactivity.dhero.cn/Fg-4kUvXVpR1DRR0O3VFr73KHEQr?imageView2/1/w/15/h/15/" alt="" /><span>每单赠送价值15元进口果汁1瓶！</span></li>
+													<li><img src="http://dhcactivity.dhero.cn/Fg-4kUvXVpR1DRR0O3VFr73KHEQr?imageView2/1/w/15/h/15/" alt="" /><span>每单赠送价值15元进口果汁1瓶！</span></li>
 													
-														<li><img src="http://dhcactivity.dhero.cn/Flswo958RM8GgqlKACT4tY5kr5K7?imageView2/1/w/15/h/15/" alt="" /><span>活动菜品立减6元，多点多减！</span></li>
-													
+													<li><img src="http://dhcactivity.dhero.cn/Flswo958RM8GgqlKACT4tY5kr5K7?imageView2/1/w/15/h/15/" alt="" /><span>活动菜品立减6元，多点多减！</span></li>
+											
 														<li><img src="http://dhcactivity.dhero.cn/FjnSIEuUzJvV6j-ifPq7zevJSt30?imageView2/1/w/15/h/15/" alt="" /><span>该餐厅已通过认证</span></li>
 													
 												
@@ -297,8 +304,12 @@
 										<div class="collect-success">收藏成功</div>
 									
 								</li>
+							@endforeach
+							@else
+								抱歉，该地区没有店铺正在营业
+							@endif
 							
-								<li data-index="2"
+								<!--<li data-index="2"
 									class="restaurant-item fl c_drink-snack c_all p_all p_352 p_42   fee 0"
 									data-price='30' data-count="827" data-title="吉祥馄饨 (高安路店)">
 									<div class="img-box fl">
@@ -540,7 +551,7 @@
 										<div class="collect not-collect" title="收藏餐厅" data-rid="991"></div>
 										<div class="collect-success">收藏成功</div>
 									
-								</li>
+								</li>!-->
 							
 						</ul>
 						<div class="restaurant-list-empty all-restaurant-empty">
@@ -12569,7 +12580,7 @@
 				currentLocation = '徐家汇',
 				disableCoupon = false;
 		</script>
-		<script src="{{ asset('Shop/js/restaurant.js') }}"></script>
+		 <script src="{{ asset('Shop/js/restaurant.js') }}"></script>
 
 		
 		<script>angular.bootstrap(document, ["app"]);</script>

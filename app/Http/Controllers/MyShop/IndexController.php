@@ -21,15 +21,6 @@ class IndexController extends Controller
 		//查询已选择城市下的第一个区的id值
 		$region = \DB::select("select id from district where upid='{$_GET['id']}'");
 		$id = $region['0']->id;
-		// foreach($region as $re){
-		// 	$list[]=\DB::select("select * from district where upid={$re->id} and name like '%路%'");
-		// }	
-		// foreach($list as $li){
-		// 	foreach($li as $l){
-		// 		$info[]=$l;
-		// 	}
-		// }
-		// dd($info);
 		//查询区下面的最后一级地区第一到第五条
 		$town = \DB::select("select * from district where upid='{$id}' limit 0,5");
 
