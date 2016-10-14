@@ -46,12 +46,14 @@ class Shop_listController extends Controller
 						$business[$t][$a]=$i;
 						$business[$t]['tabsAction']='2';
 					}
-					
+
 				}
 				$t++;
 			}
+			//查询该地址内所有的店铺数量与地址名
+			$district = \DB::select("select name,(select count(*) from address where did={$_GET['id']}) as count from district where id={$_GET['id']}");
 			//查询所有类别
 			$category = \DB::select("select * from category");
-            return view("Shop.shop_list",["business"=>$business,"category"=>$category]);
+            return view("Shop.shop_list",["business"=>$business,"category"=>$category,"district"=>$district]);
 	}
 }

@@ -12,8 +12,10 @@ class IndexController extends Controller
     //首页视图
 	public function index()
 	{	
+
+		//若没有GET值默认为北京
 		if(!isset($_GET['id']) && empty($_GET['id'])){
-			$_GET['id']='9';
+			$_GET['id']='1';
 		}
 		//查询主要城市信息
 		$district = \DB::select("select * from district where id=".$_GET['id']);

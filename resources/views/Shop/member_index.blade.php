@@ -10,6 +10,8 @@
         <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
         <meta name="baidu-site-verification" content="IYCrtVH0i1" />
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="Shop/js/jquery-1.8.3.min.js"></script>
         <link rel="icon" type="image/png" href="images/favicon.ico"/>
 
         <script type="text/javascript">
@@ -40,20 +42,52 @@
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
 
-                            <ul class="member logging" ng-init="loginInfo=true">
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="userName">
-                                        <a href="{{ URL('/member_index  ') }}" rel="nofollow" draw-user>18005151538<em></em></a>
-                                        <div>
-                                                <p><a href="{{ URL('/member_index') }}"  rel="nofollow">账号管理</a></p>
-                                                <p><a href="{{ URL('/member_addr') }}"  rel="nofollow">地址管理</a></p>
-                                                <p class="no-bo"><a id="logout" href="#" referer-url rel="nofollow">退出</a></p>
-                                        </div>
-                                </li>
-                                <li class=""><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">我的订单</a></li>
-                                <li class=""><a href="{{ URL('/member_collect') }}"  rel="nofollow">我的收藏</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
+                            <ul id="member" class="member" login-box>
+                                <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                            <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                            <div>
+                                                <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                            </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                                    @endif
+                        
+                        
+                                <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                <script type="text/javascript">
+    
+                                    function exit(){
+                                        var hiddenid = $('#hidden').val();
+                                        $.ajax({
+                                           url:'/logout',
+                                           type:'post', 
+                                           async:true,
+                                           headers: {
+                                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                           },
+                                           success:function(a){
+                                            if( a === 'y'){
+                                                location.reload();
+                                            }else{
+                                                alert('退出失败');
+                                            }
+                                           },
+                                           error:function(){
+                                               alert('ajax失败');
+                                           }
+                                        });
+                                    };
+                                </script>
                             </ul>
 
                     </div>
@@ -77,20 +111,17 @@
             <div class="user-center-main-box common-width clearfix">
                 <aside class="fl">
                     <ul>
-                        <li class="active">
-                            <a href="{{ URL('/member_index') }}" rel="nofollow">账号管理</a>
+                        <li  class="active">
+                            <a href="/member_index?id={{ $_GET['id'] }}" rel="nofollow">账号管理</a>
+                        </li>
+                        <li>
+                            <a href="/member_order?id={{ $_GET['id'] }}" rel="nofollow">我的订单</a>
                         </li>
                         <li >
-                            <a href="{{ URL('/member_order') }}" rel="nofollow">我的订单</a>
+                            <a href="/member_collect?id={{ $_GET['id'] }}" rel="nofollow">我的收藏</a>
                         </li>
-                        <li >
-                            <a href="{{ URL('/member_collect') }}" rel="nofollow">我的收藏</a>
-                        </li>
-                        <li >
-                            <a href="{{ URL('/member_addr') }}"  rel="nofollow">地址管理</a>
-                        </li>
-                        <li >
-                            <a href="{{ URL('/gifts') }}" rel="nofollow">氪星礼品站</a>
+                        <li>
+                            <a href="/member_addr?id={{ $_GET['id'] }}"  rel="nofollow">地址管理</a>
                         </li>
                     </ul>
                 </aside>

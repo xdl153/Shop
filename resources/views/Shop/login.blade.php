@@ -48,7 +48,12 @@
         
             <div class="login-register">
                 <div class="login_tab" id="loginTab">
-                    <span class="login-btn active">登录</span><span class="register-btn ''">注册</span>
+                   
+                    @if($_GET['status'] == '1')
+                        <span class="login-btn active">登录</span><span class="register-btn ''">注册</span>
+                    @else
+                        <span class="login-btn ">登录</span><span class="register-btn active">注册</span>
+                    @endif
                 </div>
 
                 <div class="log-box hide show " id="loginPageBox">
@@ -197,11 +202,12 @@
         </div>
     </div>
 </footer>
-
+<input type="hidden" id="hidden" value={{ $_GET['id'] }}>
 
 <script type="text/javascript" src="{{ asset('Shop/static/js/jquery-1.7.2.min.js') }}"></script>
-
+   
     <script>
+
     //    登陆
     var domain = 'http://waimaichaoren.com/';
     //    注册
@@ -235,6 +241,7 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
 <!-- 登录 -->
 <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
 <script>
+
     function login(){
          var name = $("#lPhone").val();
          var password = $("#lPass").val();
@@ -250,7 +257,12 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
             },
             success:function(a){
                 if( a === 'y'){
-                    location.href = "/shop_list";
+                    //获取地址ID值
+                    var hiddenid = $('#hidden').val();
+
+                    //跳转到店铺列表
+                    location.href = "/shop_list?id="+hiddenid+"";
+
                 }else{
                     alert('登录失败');
                 }
