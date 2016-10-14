@@ -399,9 +399,9 @@
 			</div>
 			<div class="clearfix mb10">
 				<dh-checkbox model="user.rememberme" title="记住我" class="fl"></dh-checkbox>
-				<a href="/account/password/reset_via_mobile/" target="_blank" class="fs12 fr link">忘记密码</a>
+				<a href="/FindPassword" target="_blank" class="fs12 fr link">忘记密码</a>
 			</div>
-			<button class="big-btn btn-green btn mb10"  onclick="login();" ng-click="loginVaildate()" ng-disabled="loginBtnDisabled" ng-bind="loginBtn"></button>
+			<button id="yhdl" class="big-btn btn-green btn mb10"  onclick="login();" ng-click="loginVaildate()"  ng-bind="loginBtn"></button>
 			<div class="clearfix">
 				<span class="fr fs12">
 					没有账号?
@@ -444,11 +444,11 @@
 							</span>
 						</div>
 						<label class="fr">
-							<button onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="display: inline-block;padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
+							<button id="yzmyzm"onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
 						</label>
 					</div>
 				</div>
-			</div>
+		</div>
 			<div class="form-group mb10">
 				<label for="">登录密码</label>
 				<div><input type="password" id="pwd1" ng-class="{error:user.passwordMessage}" ng-focus="user.passwordMessage=''"  maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password" />
@@ -580,10 +580,8 @@
 		
 		<script>var manually_locations='';</script>
 		<script src="{{ asset('Shop/js/frontPage.js') }}"></script>
-
-		
 		<script>angular.bootstrap(document, ["app"]);</script>
-
+                <script src="{{ asset('Shop/js/jsjs.js') }}"></script>
 		<script>
 			var countdown=60; 
 			function settime(obj) {
@@ -744,6 +742,7 @@
                                    }
                             });
                           }
+
                            //实时获取用户输入搜索地址
             $('#Search').keyup('input', function () {
 

@@ -13,6 +13,7 @@ class logoutController extends Controller
     public function logout()
     {
     	session()->forget("username");
+        session()->forget("userid");
         return 'y';
     }
 }

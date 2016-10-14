@@ -12391,11 +12391,13 @@
 		
 		<dh-dialog class="disnone" height="500" feeedbackclass="userFeedback" type="user-feedback" header="意见反馈" show="userFeedback">
 			<div ng-controller="feedbackCtrl">
-				<form novalidate="true" name="feedbackForm" class="inline">
+				<form novalidate="true" name="feedbackForm" class="inline" method="post" action="{{ URL('/feedback') }}" >
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                    <input type="hidden" name="uid" value="{{ session('userid') }}" />
 					<div class="form-group row mb10">
 						<label class="col-3">联系方式：</label>
 						<div class="col-8">
-							<input type="text" maxlength="20" name="userContact" required ng-focus="userContactFocus()" ng-class="{error:feedback.phoneMessage}" placeholder="请输入您的手机号码" ng-model="feedback.userContact"/>
+							<input type="text" maxlength="20" name="phone" required ng-focus="userContactFocus()" ng-class="{error:feedback.phoneMessage}" placeholder="请输入您的手机号码" ng-model="feedback.userContact"/>
 						</div>
 					</div>
 					<div class="row mb10">
@@ -12406,7 +12408,7 @@
 					<div class="form-group row">
 						<label class="col-3 vt">反馈信息：</label>
 						<div class="col-8">
-							<textarea name="feedbackMessage"  placeholder="可以说说您对外卖超人的意见" ng-focus="feedbacFocus()" required ng-class="{error:feedback.feedbackMessageTip}" ng-model="feedback.feedbackMessage" maxlength="300" cols="25" rows="7"></textarea>
+							<textarea name="content"  placeholder="可以说说您对外卖超人的意见" ng-focus="feedbacFocus()" required ng-class="{error:feedback.feedbackMessageTip}" ng-model="feedback.feedbackMessage" maxlength="300" cols="25" rows="7"></textarea>
 						</div>
 					</div>
 					<div class="row mb10">
@@ -12585,7 +12587,9 @@
 		
 		<script>angular.bootstrap(document, ["app"]);</script>
 		<!-- Baidu Analytics -->
-
-
+               
+                @if(session("msg"))
+			<script type="text/javascript" > alert('{{session("msg")}}'); </script>
+		@endif
 	</body>
 </html>

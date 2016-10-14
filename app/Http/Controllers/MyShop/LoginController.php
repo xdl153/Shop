@@ -28,7 +28,6 @@ class LoginController extends Controller
             }
         }else{
             return 'n';
-            
         }
 
     }
