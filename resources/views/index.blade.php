@@ -52,7 +52,7 @@
                                                 <span>|</span>
                                                 <a href="{{ URL('/member_order') }}">查看订单</a>
                                                 <span>|</span>
-                                                <a online="exit();">退出</a>
+                                                <a onclick="exit();">退出</a>
                                             @else
                                                 <a href="javascript:void(0)" ng-click="logoinDialogShow()">登录</a>
 						<span>/</span>
@@ -776,8 +776,8 @@
 						//成功回调函数
 							for(var i = 0; i < data.length; i++){
 								$('#uladdress').append(
-										"<h1  name='haddress"+i+"' style='height:30px;border-bottom: 1px solid #e0e0e0;cursor: pointer;font-size: .75em;color: #999999; margin-top:15px;'><a href='http://www.baidu.com'>"+data[i].name+"</a></h1>"
-									);
+										"<h5  name='haddress"+i+"' style='height:30px;border-bottom: 1px solid #e0e0e0;cursor: pointer;font-size: .75em;color: #999999; margin-top:15px;'>"+data[i].name+"</h5>"
+								);
 				
 								$('#ulcontent').append(
 									'<li >'+
