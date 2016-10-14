@@ -224,6 +224,7 @@
 									
 				@foreach($menu as $m)
                                         <li title="{{ $m->name }}" class="menu-item hasImg" accessorykey="{{ $m->bid }}-{{ $m->id }}" data-sale="8" data-price="{{ $m->price }}">
+                                           
                                             <div class="menu-item-img">  
                                                 <img data-src="" src="{{ asset('Shop/') }}{{ $m->images }}"  width="202" height="202" /> 
                                             </div>
