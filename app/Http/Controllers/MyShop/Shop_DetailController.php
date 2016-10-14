@@ -10,8 +10,18 @@ use App\Http\Controllers\Controller;
 class Shop_DetailController extends Controller
 {
     //shop_detail商品细节
-	public function shop_detail()
-	{
-		return view("Shop.shop_detail");
+	public function shop_detail(Request $request)
+	{   
+                //获取店铺ID
+		$m=$request->only('bid');
+                //遍历拿取店铺ID
+                foreach($m as $value){
+                      $bid=$value;
+                }
+		//查询菜单 菜名，图片，菜的价格，bid，店铺有多少个菜
+		$menu = \DB::select('select bid,id,name,price,images,(select MAX(id) from menu) as count from menu where bid='.$bid);
+//		 dd($menu);
+                //返回视图
+                return view("Shop.shop_detail",['menu'=>$menu]);		
 	}
 }
