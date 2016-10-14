@@ -519,7 +519,7 @@ var bodyCtrl = (function (window) {
                 ajaxData.getGridLocationId(get_grid_location_data).then(function (grid_location_id) {
                     window.location.href = loactionUrl + '?gid=' + grid_location_id + '&referer=menupage';
                 });
-            }
+            };
         },
         createOrder: function () {
             scope.createOrder = function () {
@@ -537,7 +537,7 @@ var bodyCtrl = (function (window) {
                         })
                         .success(function (d) {
                             if (d.status == 'ok' && d.order_id) {
-                                window.location.href = checkout_url.replace('/order');
+                                window.location.href = checkout_url.replace('www.wmcr.com/photo');
                             } else {
                                 if(d.status == 'failed' ){
                                     if(d.failed_code == 0){
@@ -547,7 +547,7 @@ var bodyCtrl = (function (window) {
                                     }
                                 }
                                 scope.createOrderError = true;
-                                scope.createOrderErrorMsg = d.failed_msg;
+                                scope.createOrderErrorMsg = '失败';
                                 scope.isPlaceOrder=false;
                             }
                         })

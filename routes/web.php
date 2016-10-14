@@ -139,10 +139,12 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 	});
         
 //order下订单(送餐信息)页面视图路由
+Route::post("/order","MyShop\OrderController@order");
 	Route::get("/order",function(){
 		return view("Shop.order");
 	});
-        
+
+
 //order_success下订单成功页面视图路由
 	Route::get("/order_success",function(){
 		return view("Shop.order_success");

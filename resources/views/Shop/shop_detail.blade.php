@@ -69,18 +69,20 @@
         <section class="menupage-main common-width" ng-init="city_name='上海'">
 
     <header class="nav clearfix">
+        @foreach($bs as $b)
         <div class="fl clearfix nav-des">
-            <img src="http://dhcrestaurantlogo.dhero.cn/1592?v=1415630726" alt="[半价菜][送可乐]樱花日本料理" class="fl" />
+            <img src="{{ asset('Shop') }}{{ $b->photo }}" alt="{{ $b->name }}" class="fl" />
             <div class="fl nav-des-text">
-                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">[半价菜][送可乐]樱花日本料理</h2>
+                <h2 class="ellipsis" title="{{ $b->name }}">{{ $b->name }}</h2>
                 <div class="clearfix">
                     <div class="fl nav-review">
-                        <div style="width:65.00px;"></div>
+                        <div style="width:{{ $b->grade }}.00px;"></div>
                     </div>
-                    <p class="nav-review-x">5星</p>
+                    <p class="nav-review-x"></p>
                 </div>
             </div>
         </div>
+        @endforeach
         <div class="fr clearfix nav-right">
 
             <div class="fl nav-right-blast line-right">
@@ -117,11 +119,11 @@
                                 <li data-toggle="section-all" class="active">
                                     <a href="javascript:void(0);">显示全部</a>
                                 </li>
-                                
+                                @foreach($coun as $c)
                                     <li data-toggle="section-10">
-                                        <a href="javascript:void(0);">店主推荐(10)</a>
+                                        <a href="javascript:void(0);">店主推荐({{ $c->c }})</a>
                                     </li>
-                                    
+                                @endforeach    
                                     
                                     <li data-toggle="section-25311">
                                         <a href="javascript:void(0);">饮料(12)</a>
@@ -232,7 +234,7 @@
                                                 <span class="price">{{ $m->price }}</span>
                                                 <span ng-if="menuItemCount['{{ $m->bid }}-{{ $m->id }}" ng-class="{disinbl:menuItemCount['{{ $m->bid }}-{{ $m->id }}']}"
                                                       class="badge disnone" ng-bind="menuItemCount['{{ $m->bid }}-{{ $m->id }}']"></span>
-                                                <span class="fr">已售8份</span>
+                                                <span class="fr">已售{{ $m->num }}份</span>
 
                                             </div>
 
@@ -323,7 +325,8 @@
                                 </h5>
                             </header>
                             <section>
-                                <div class="inner-cart empty" ng-class="{empty:isEmpty}">
+                                <form class="inner-cart empty" ng-class="{empty:isEmpty}" method="POST" action="{{ URL('/order') }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <div class="cart-thead clearfix">
                                         <div class="goods-name fs16">商品名</div>
                                         <div class="goods-count fs16">份数</div>
@@ -333,7 +336,7 @@
                                     <div class="cart-item-list select-none">
                                         <div class="disnone" ng-class="{disnone:isEmpty}">
                                             <div class="cart-item cart-data clearfix" ng-repeat="obj in cartDatas">
-                                                <div class="goods-name ellipsis" ng-bind="obj.name"></div>
+                                                <div class="goods-name ellipsis" ng-bind="obj.name" id=""></div>
                                                 <div class="goods-count clearfix ellipsis">
                                                     <span class="goods-sub icon sub-icon fl" sub-goods="[[$index]]"></span>
                                                     <span class="goods-nums fl" ng-bind="obj.quantity"></span>
@@ -375,7 +378,7 @@
                                     <div class="checkout">
                                         <button class="checkout btn" ng-disabled="isPlaceOrder" ng-click="createOrder()" ng-bind="createOrderBtnName">立即下单</button>
                                     </div>
-                                </div>
+                                </form>
                             </section>
                         </div>
 
@@ -797,9 +800,9 @@
                 //可以_过程_秩序 
                 var can_process_order = true;
                 //创建订单url
-                var create_order_url = "/mobile/ajax/create_order/";
+                var create_order_url = "/order";
                 //结帐的url
-                var checkout_url = "/checkout/0/";
+                var checkout_url = "/order";
                 //餐厅列表url
                 var restaurant_list_url = "/restaurants/0/";
                 //最喜欢的网址

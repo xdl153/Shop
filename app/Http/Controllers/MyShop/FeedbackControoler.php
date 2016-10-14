@@ -12,12 +12,13 @@ class FeedbackControoler extends Controller
     //保存用户反馈
 	public function store(Request $request)
 	{
+//            dd($request);
             //判断用户uid是否存在,否返回请先登录
             if(!empty($uid = $request->input('uid'))){
-                //取得时间
+//                //取得时间
 		$time=$request->server('REQUEST_TIME');
-		$date3=date('Y-m-d',$time);
-//                dd($request);
+		$date3=date('Y/m/d',$time);
+////                dd($request);
 		$uid = $request->input('uid');
 		$phone = $request->input('phone');
 		$content = $request->input('content');

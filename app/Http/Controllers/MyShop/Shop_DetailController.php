@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 
 class Shop_DetailController extends Controller
 {
-    //shop_detail商品细节
+    
+//    shop_detail商品细节
 	public function shop_detail(Request $request)
 	{   
                 //获取店铺ID
@@ -19,9 +20,12 @@ class Shop_DetailController extends Controller
                       $bid=$value;
                 }
 		//查询菜单 菜名，图片，菜的价格，bid，店铺有多少个菜
-		$menu = \DB::select('select bid,id,name,price,images,(select MAX(id) from menu) as count from menu where bid='.$bid);
-//		 dd($menu);
+		$menu = \DB::select('select bid,id,name,price,num,images from menu where bid='.$bid);
+                $bs= \DB::select('select grade,name,photo from business where id='.$bid);
+                $coun=\DB::select('select count(bid) as c from menu where bid='.$bid);
+//                dd($menu);
                 //返回视图
-                return view("Shop.shop_detail",['menu'=>$menu]);		
+                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun]);		
 	}
+   
 }
