@@ -61,8 +61,8 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	});
 
 //member_order查看订单视图路由
-// Route::get("/member_order","MyShop\Member_OrderController@member_order");
-	Route::get("/member_order",function(){
+ Route::get("/member_order{id?}","MyShop\Member_OrderController@member_order");
+	Route::get("/member_order{id?}",function(){
 		return view("Shop.member_order");
 	});
 	

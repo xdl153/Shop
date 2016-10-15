@@ -12,10 +12,8 @@ class OrderController extends Controller
     //
     public function order(Request $request)
     {
-//  
-    dd($request);
-//        return back();  
-//        return view('Shop.order');
+        
+        return "1111";
     }
 
 }
