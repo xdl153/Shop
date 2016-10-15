@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html>
+<html  >
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
         <meta name="description" content="叫上海[半价菜][送可乐]樱花日本料理外卖上外卖超人,全球领先订餐平台，提供宋园路地铁站
     网上订餐,  [半价菜][送可乐]樱花日本料理外卖菜单, [半价菜][送可乐]樱花日本料理每日特价。马上登陆外卖超人，轻松三步即刻享受周边美食！" />
         <meta name="viewport" content="user-scalable=no">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
         <meta name="baidu-site-verification" content="IYCrtVH0i1" />
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
@@ -32,7 +32,7 @@
         <![endif]-->
         <title>店铺商品</title>
     </head>
-    <body class="day " ng-controller="bodyCtrl"  day-or-night>
+    <body class="day " ng-controller="bodyCtrl"  day-or-night id="mian">
         <section class="common-back" id="wrapBackground">
 
                 <header id="header">
@@ -335,53 +335,54 @@
                                         <div class="goods-subtotal fs16">小计</div>
                                     </div>
                                     <div class="cart-item-list select-none">
-                                        <div class="disnone" ng-class="{disnone:isEmpty}">
+                                        <div class="disnone" ng-class="{disnone:isEmpty}" id='sss'>
                                             <div class="cart-item cart-data clearfix" ng-repeat="obj in cartDatas">
-                                                <div class="goods-name ellipsis" ng-bind="obj.name" id=""></div>
+                                                <div class="goods-name ellipsis cai" ng-bind="obj.name" ></div>
                                                 <div class="goods-count clearfix ellipsis">
                                                     <span class="goods-sub icon sub-icon fl" sub-goods="[[$index]]"></span>
-                                                    <span class="goods-nums fl" ng-bind="obj.quantity"></span>
+                                                    <span class="goods-nums fl fen" ng-bind="obj.quantity" ></span>
                                                     <span class="goods-add icon add-icon fl" ng-click="addGoodsNum($index)"></span>
                                                 </div>
-                                                <div class="goods-price">￥<span ng-bind="obj.price|number:2"></span></div>
-                                                <div class="goods-subtotal">￥<span ng-bind="(obj.quantity * obj.price)|number:2"></span></div>
+                                                <div class="goods-price">￥<span ng-bind="obj.price|number:2" class="jia"></span></div>
+                                                <div class="goods-subtotal">￥<span ng-bind="(obj.quantity * obj.price)|number:2" class="xj"></span></div>
 
-                                                <div class="accessory-item" ng-class="{firstitem:$first}" ng-repeat="item in obj.options">
+                                                <!--<div class="accessory-item" ng-class="{firstitem:$first}" ng-repeat="item in obj.options">
                                                     <div class="cart-item clearfix">
-                                                        <div class="goods-name ellipsis" ng-bind="item.name"></div>
+                                                        <div class="goods-name ellipsis" ng-bind="item.name" id="cais"></div>
                                                         <div class="goods-count fs20">
                                                            <span class="goods-sub fl"></span>
-                                                           <span class="goods-nums fl" ng-bind="item.quantity"></span>
+                                                           <span class="goods-nums fl" ng-bind="item.quantity" id="fens"></span>
                                                         </div>
-                                                        <div class="goods-price">￥<span ng-bind="item.price|number:2"></span></div>
-                                                        <div class="goods-subtotal">￥<span ng-bind="(item.price * item.quantity)|number:2"></span></div>
+                                                        <div class="goods-price">￥<span ng-bind="item.price|number:2" id="jias"></span></div>
+                                                        <div class="goods-subtotal">￥<span ng-bind="(item.price * item.quantity)|number:2" id="xjs"></span></div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                             <!--附加物-->
-                                            <div class="cart-item cart-item-addendum cart-data clearfix" ng-repeat="addition in additions">
+                                            <!--<div class="cart-item cart-item-addendum cart-data clearfix" ng-repeat="addition in additions">
                                                 <div class="goods-name ellipsis" ng-bind="addition.name"></div>
                                                 <div class="goods-count clearfix ellipsis">
                                                     <span class="goods-nums fl" ng-bind="addition.quantity"></span>
                                                 </div>
                                                 <div class="goods-price">￥<span ng-bind="addition.price|number:2"></span></div>
                                                 <div class="goods-subtotal">￥<span ng-bind="(addition.price * addition.quantity)|number:2"></span></div>
-                                            </div>
+                                            </div>-->
                                             <!--附加物-->
                                         </div>
                                         <div class="cart-item-empty">暂无商品，请在左边的菜单上点单</div>
                                     </div>
                                     <div id="cart-item-list"></div>
                                     <div class="total clearfix disnone" ng-class="{disnone:isEmpty}">
-                                        <div class="fl">配送费：￥<span ng-bind="deliveryCost|number:2"></span></div>
-                                        <div class="fr">合计：￥<span ng-bind="total|number:2"></span></div>
+                                        <div class="fl">配送费：￥<span ng-bind="deliveryCost|number:2" class='pei'></span></div>
+                                        <div class="fr">合计：￥<span ng-bind="total|number:2" class="hj"></span></div>
                                     </div>
                                     <div class="checkout">
-                                        <button class="checkout btn" ng-disabled="isPlaceOrder" ng-click="createOrder()" ng-bind="createOrderBtnName">立即下单</button>
+                                        <button class="checkout btn" id="buts">立即下单</button>
                                     </div>
                                 </form>
                             </section>
                         </div>
+                              
 
                         <article class="restaurant-notice">
                             <header>
@@ -733,7 +734,7 @@
 
         <script type="text/javascript" src="{{ asset('Shop/js/angular.min.js') }}"></script>
         <script src="{{ asset('Shop/js/common.js') }}"></script>
-
+        <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
 
 
 
@@ -813,14 +814,43 @@
 	   </script>
         <script src="{{ asset('Shop/js/menupage.js') }}"></script>
         <script src="{{ asset('Shop/js/favorite.js') }}"></script>
-
+          <script type="text/javascript">
+            $("#buts").click(function(){
+                var cai = $('.cai').html();
+                var fen = $('.fen').html();
+                var jia = $('.jia').html();
+                var xj = $('.xj').html();
+                var hj = $('.hj').html();
+                var pei = $('.pei').html();
+                $("#ss + div");
+                $.ajax({
+                        url:'/creade_order',
+                        type:'post',
+                        async:true,
+                        data:{cai:cai,fen:fen,jia:jia,xj:xj,hj:hj,pei:pei},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                          if(data == 'y'){
+                            $("#mian").load("/order", function(){
+                                   alert('aaaa');
+                             });
+                          }
+                        },
+                        error:function(){
+                                alert('失败');
+                        }
+                    })
+            });
+        </script>
 
         <script>angular.bootstrap(document, ["app"]);</script>
-
+         
         <!-- Baidu Analytics -->
 
 
-
+        
 
     </body>
 </html>

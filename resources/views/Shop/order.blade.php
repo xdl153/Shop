@@ -130,11 +130,14 @@
                     </div>
                                     <div class="form-group row mb10">
                                             <label class="col-2">送餐时间：</label>
-                                            <dh-select class="col-8" data="selectObj" selectedindex="datetimeIndex"></dh-select>
+                                            <!--<dh-select class="col-8" data="selectObj" selectedindex="datetimeIndex"></dh-select>-->
+                                            <select style="width:100px;" >
+                                                <option>即使送出</option>
+                                                <option>1</option>
+                                            </select>
                                     </div>
                     <div class="form-group row mb10 relative">
                         <label class="col-2">支付方式：</label>
-
                         <dh-radio class="col-2" model="payType" value="0" title="餐到付款"></dh-radio>
                         <em ng-init="payType=0"></em>
 
@@ -149,12 +152,15 @@
                                     </div>
                             </form>
                     </section>
+                    
                     <header>订单内容</header>
+                    @if(session('data'))
                     <section>
-                            <div class="toggle-order-info" accordion>
+<!--                            <div class="toggle-order-info" accordion>
                                     <a href="javascript:;">展开订单详情 <i class="icon arrows-s-down"></i></a>
-                            </div>
-                            <div class="order-info">
+                            </div>-->
+                            
+                            <div class="order-info" style="display: block; height: 109px;">
                                     <div class="order-thead clearfix">
                                             <div class="goods-name">商品</div>
                                             <div class="goods-count">份数</div>
@@ -164,41 +170,47 @@
                                     </div>
                                     <div class="order-body">
 
-                            <div class="order-item clearfix">
-                                <div class="goods-name">蛋黄虾仁馄饨十可口可乐一瓶</div>
-                                <div class="goods-count">2</div>
-                                <div class="goods-price">￥22.00</div>
-                                <div class="goods-total">￥44.00</div>
-                            </div>
+                                        <div class="order-item clearfix">
+                                            <div class="goods-name">{{ session('data')['cai'] }}</div>
+                                            <div class="goods-count">{{ session('data')['fen'] }}</div>
+                                            <div class="goods-price">￥{{ session('data')['jia'] }}</div>
+                                            <div class="goods-total">￥{{ session('data')['xj'] }}</div>
+                                        </div>
 
 
 
-                            <div class="order-item order-item-addendum clearfix">
-                                <div class="goods-name">点我呀，减6元 ！</div>
-                                <div class="goods-count">2</div>
-                                <div class="goods-price">￥-6.00</div>
-                                <div class="goods-total">￥-12.00</div>
-                            </div>
+                                        <!--<div class="order-item order-item-addendum clearfix">
+                                            <div class="goods-name">点我呀，减6元 ！</div>
+                                            <div class="goods-count">2</div>
+                                            <div class="goods-price">￥-6.00</div>
+                                            <div class="goods-total">￥-12.00</div>
+                                        </div>-->
 
                                     </div>
                             </div>
+                            
                     </section>
+                    @endif
+                    
                     <section class="total-sum">
 
 
-                            <p class="tr fs14">订单金额： <span>￥32.00</span></p>
-                <p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>
-                <p class="tr fs14">配送费用： <span>￥0.00</span></p>
-                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal=32.00" ng-bind="orderTotal|number:2"></span></b></p>
+                            <p class="tr fs14">订单金额： <span>￥0.00</span></p>
+                            <!--<p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>-->
+                            <p class="tr fs14">配送费用： <span>￥0.00</span></p>
+                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal=0.00" ng-bind="orderTotal|number:2"></span></b></p>
                             <p class="tr last">
-                                    <a href="{{ URL('Shop/shop_detail') }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
-                                    <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                                    <a href="{{ URL('shop_detail') }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
+                                    <button class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
                             </p>
                     </section>
+                    
             </section>
+             
 
             </div>
         </section>
+        
 
             <footer id="footer">
             <div class="footer-first gray">
@@ -512,7 +524,7 @@
             var _isAuthenticated = 'ajax';
             var setLastAddrUrl =  "/ajax/delivery_address/0/last_used/";
             var lastUsedAddressId = '230901';
-            userAddress.push({customer_name:'阿逗',delivery_address:'rrrrr',customer_phone:'13815212121',id:'230896'});userAddress.push({customer_name:'阿逗',delivery_address:'江苏南京',customer_phone:'13851435593',id:'230897'});userAddress.push({customer_name:'阿逗',delivery_address:'q',customer_phone:'13851435593',id:'230898'});userAddress.push({customer_name:'阿逗',delivery_address:'wqwq',customer_phone:'13851423225',id:'230899'});userAddress.push({customer_name:'阿逗',delivery_address:'aaaa',customer_phone:'18005150081',id:'230900'});userAddress.push({customer_name:'阿逗',delivery_address:'我千千万',customer_phone:'13851435593',id:'230901'});
+//            userAddress.push({customer_name:'阿逗',delivery_address:'rrrrr',customer_phone:'13815212121',id:'230896'});userAddress.push({customer_name:'阿逗',delivery_address:'江苏南京',customer_phone:'13851435593',id:'230897'});userAddress.push({customer_name:'阿逗',delivery_address:'q',customer_phone:'13851435593',id:'230898'});userAddress.push({customer_name:'阿逗',delivery_address:'wqwq',customer_phone:'13851423225',id:'230899'});userAddress.push({customer_name:'阿逗',delivery_address:'aaaa',customer_phone:'18005150081',id:'230900'});userAddress.push({customer_name:'阿逗',delivery_address:'我千千万',customer_phone:'13851435593',id:'230901'});
             selectObj.push({id:'no',text:'即时送出',date:'2015-05-03'});
             selectObj.push({id:'10:30',text:'10:30',date:'2015-05-03'});selectObj.push({id:'11:00',text:'11:00',date:'2015-05-03'});selectObj.push({id:'11:30',text:'11:30',date:'2015-05-03'});selectObj.push({id:'12:00',text:'12:00',date:'2015-05-03'});selectObj.push({id:'12:30',text:'12:30',date:'2015-05-03'});selectObj.push({id:'13:00',text:'13:00',date:'2015-05-03'});selectObj.push({id:'13:30',text:'13:30',date:'2015-05-03'});selectObj.push({id:'14:00',text:'14:00',date:'2015-05-03'});selectObj.push({id:'14:30',text:'14:30',date:'2015-05-03'});selectObj.push({id:'15:00',text:'15:00',date:'2015-05-03'});selectObj.push({id:'15:30',text:'15:30',date:'2015-05-03'});selectObj.push({id:'16:00',text:'16:00',date:'2015-05-03'});selectObj.push({id:'16:30',text:'16:30',date:'2015-05-03'});selectObj.push({id:'17:00',text:'17:00',date:'2015-05-03'});selectObj.push({id:'17:30',text:'17:30',date:'2015-05-03'});selectObj.push({id:'18:00',text:'18:00',date:'2015-05-03'});selectObj.push({id:'18:30',text:'18:30',date:'2015-05-03'});selectObj.push({id:'19:00',text:'19:00',date:'2015-05-03'});selectObj.push({id:'19:30',text:'19:30',date:'2015-05-03'});selectObj.push({id:'20:00',text:'20:00',date:'2015-05-03'});selectObj.push({id:'20:30',text:'20:30',date:'2015-05-03'});selectObj.push({id:'21:00',text:'21:00',date:'2015-05-03'});
         </script>
