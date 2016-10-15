@@ -7,6 +7,7 @@
         <meta name="keywords" content="" />
         <meta name="description" content="" />
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('Shop/css/reset.css') }}" />
         <link rel="stylesheet" href="{{ asset('Shop/css/common.css') }}"/>
         <link rel="stylesheet" href="{{ asset('Shop/css/forget_passwd.css') }}"/>
@@ -40,7 +41,7 @@
             </div>
         </header>
 
-        <section class="main">
+        <section id="main" class="main">
             <div class="common-width">
 
                 <div class="main-inner">
@@ -57,15 +58,16 @@
                             </li>
                         </ol>
                     </div>
-                    <form>
+                   
                         <!-- 找回密码一 -->
                         <div class="fill-data-box" id="phoneStep">
                             <div class="fill-data">
                                 <div class="title">手机号码：</div>
                                 <div class="form-group w275">
-                                    <input id="phone"type="text" maxlength="11" id="phone" name="phone" class="form-text" placeholder="输入您常用的手机号码"/>
+                                    <input id="Phone"type="text" maxlength="11" id="phone" name="phone" class="form-text" placeholder="输入您常用的手机号码"/>
+                                    <p id="sj"></p>
                                 </div>
-                                <input id="code" style="width:140px;"type="text" />　<button onclick="settime(this);yzm();" style="width:110px;height:34px;background-color:#80BF2F;"><span style="display: inline-block;padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button><br><br><span></span>
+                                <input id="code" maxlength="4" placeholder="输入您的验证码" style="width:140px;"type="text" />　<button onclick="settime(this);yzm();" id="coden" style="width:110px;height:34px;background-color:#80BF2F;"><span style="display: inline-block;padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button><br><br><span></span>
                                 <button id="button" class="form-btn" id="phoneNextStep">下一步</button>
                                 <ul class="other-way">
                                     <li>其他方式</li>
@@ -73,7 +75,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </form>
 
                 </div>
             </div>
@@ -118,9 +119,232 @@
                 common_sms_code = '/ajax/common_sms_code/'
         </script>
         <script src="{{ asset('Shop/js/forget_passwd.js') }}"></script>
+        <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
         <script>
+            //不给发短信不给注册
+
+            $("#coden").attr("disabled", true);
+            $("#button").attr("disabled", true);
+            $("#code").attr("disabled", true);
+            //判断手机号码是否正确
+             $("#Phone").blur(function(){
+                 var phone = $("#Phone").val();
+                 if(!!(/^1[34578]\d{9}$/.test(phone))){
+                    $("#sj").html("");
+                    $.ajax({
+                        url:'/FindPhone',
+                        type:'post',
+                        async:true,
+                        data:{id:phone},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(a){
+                            if( a !== 'y'){
+                                $("#code").attr("disabled", true);
+                                $("#coden").attr("disabled", true);
+                                $("#button").attr("disabled", true);
+                                $("#button").html("账号错误");
+                            }else{
+                                $("#button").html("请输入验证码");
+                                $("#code").removeAttr("disabled", true);
+                                $("#coden").removeAttr("disabled");
+                            }
+                        },
+                        error:function(){
+                            alert('ajax失败');
+                        }
+                    });
+                 }else{
+                    $("#sj").html("请输入正确的手机号码！");
+                    $("#coden").attr("disabled", true);
+                    $("#button").attr("disabled", true);
+                 }
+             });
+            //判断手机号码结束
+            //判断验证码
+            $("#code").blur(function(){
+                var code = $("#code").val();
+                
+//                if(code == ""){
+//                     $("#button").html("请输入验证码");
+//                     $("#button").attr("disabled", true);
+//                }
+//                if(!!(/^\d{4}$/).pd(code)){
+//                    $("#button").html("验证码必须4位");
+//                    $("#button").attr("disabled", true);
+//                }
+                $("#button").removeAttr("disabled", true);
+            });
+            
+            //获取短信验证码
+            var countdown=60; 
+                function settime(obj) {
+                    if (countdown == 0) { 
+                            obj.removeAttribute("disabled");    
+                            obj.value="获取验证码"; 
+                            countdown = 60;
+                            return;
+                    } else {
+                            obj.setAttribute("disabled", true); 
+                            obj.value="重新发送(" + countdown + ")"; 
+                            countdown--; 
+                    } 
+                    setTimeout(function(){
+                            settime(obj)
+                    },1000)
+                }
+                 //发送验证码
+                function yzm(){
+                    var phone = $("#Phone").val();
+                    if(phone == ""){
+                        $("#button").html("请输入验证码");
+                    }else{
+                    $.ajax({
+                        url:'/FindCode',
+                        type:'post',
+                        async:true,
+                        data:{id:phone},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                            if(data === 'y'){
+                                $("#coden").attr("disabled", true);
+                                $("#coden").html("验证码已发送");
+                                $("#button").removeAttr("disabled");
+                            }
+                        },
+                        error:function(){
+                                alert('失败');
+                        }
+                    })
+                    }
+                };
+            //获取短信验证码结束
+           
+            
+            //判断验证码是否正确
             $("#button").click(function(){
-                alert('ok');
+                var code = $("#code").val();
+                var phone = $("#Phone").val();
+                    $.ajax({
+                        url:'/DemandFindCode',
+                        type:'post',
+                        async:true,
+                        data:{code:code,phone:phone},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                            if(data === 'y'){
+                                $("#button").html("请稍等");
+                                $("#main").load("/ResetPassword", function(){
+                                    $("#xgmima").attr("disabled", true);
+                                    var regEx = new RegExp(/^[a-zA-Z0-9]{6,10}$/);
+                                    $("#spanhaoma").html("您正在为账号"+phone+"设置密码");
+                                    $("#pass1").blur(function(){
+                                        var aa = $("#pass1").val();
+                                        var bb = $("#pass2").val();
+                                            //alert(aa);
+                                        if(!aa.match(regEx)){
+                                            $("#xgmima").attr("disabled", true);
+                                            $("#xgmima").html("密码为6 - 10位字符");
+                                        }else{
+                                            //$("#xgmima").removeAttr("disabled");
+                                            $("#xgmima").html("确认");
+                                        }
+                                        if(aa == ''){
+                                            $("#xgmima").attr("disabled", true);
+                                        }
+                                        if(bb !== ""){
+                                            if(aa !== bb){
+                                                $("#xgmima").attr("disabled", true);
+                                                $("#xgmima").html("二次密码输入不一致");
+                                            }
+                                        }
+                                        if(aa == bb && bb == aa){
+                                                $("#xgmima").removeAttr("disabled");
+                                        }else{
+                                                $("#xgmima").html("二次密码输入不一致");
+                                                $("#xgmima").attr("disabled", true);
+                                        }
+                                    });
+                                    $("#pass2").blur(function(){
+                                        var aa = $("#pass1").val();
+                                        var bb = $("#pass2").val();
+                                            //alert(aa);
+                                        if(!bb.match(regEx)){
+                                            $("#xgmima").attr("disabled", true);
+                                            $("#xgmima").html("密码为6 - 10位字符");
+                                        }
+                                        if(bb !== aa){
+                                            $("#xgmima").attr("disabled", true);
+                                            $("#xgmima").html("二次密码输入不一致");
+                                        }else{
+                                            if(bb.match(regEx)){
+                                                //$("#xgmima").removeAttr("disabled");
+                                                $("#xgmima").html("确认");
+                                            }else{
+                                                 $("#xgmima").html("密码为6 - 10位字符");
+                                            }
+                                            if(aa == bb && bb == aa){
+                                                $("#xgmima").removeAttr("disabled");
+                                            }else{
+                                                $("#xgmima").html("二次密码输入不一致");
+                                                $("#xgmima").attr("disabled", true);
+                                            }
+
+                                        }
+                                    });
+                                    $("#xgmima").click(function(){
+                                        var aa = $("#pass1").val();
+                                        var bb = $("#pass2").val();
+                                        if(aa !== '' && bb !== ''){
+                                            if(aa == bb){
+                                                 $.ajax({
+                                                   url:'/DoResetPassword',
+                                                   type:'post',
+                                                   async:true,
+                                                   data:{id:phone,password:bb},
+                                                   headers: {
+                                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                   },
+                                                   success:function(a){
+                                                       if( a === 'y'){
+                                                           
+                                                           $("#xgmima").html("请稍等");
+                                                           location.href = "/SuccessFind";
+                                                       }else{
+                                                           alert('修改失败');
+                                                       }
+                                                   },
+                                                   error:function(){
+                                                       alert('ajax失败');
+                                                   }
+                                            });
+                                            }else{
+                                                $("#xgmima").html("二次密码输入不一致");
+                                            }
+                                        }else{
+                                            $("#xgmima").html("请输入密码");
+                                        }
+                                    });
+                                });
+                            }else{
+                                $("#button").attr("disabled", true);
+                                $("#button").html("验证码错误");
+                            }
+                        },
+                        error:function(){
+                                alert('失败');
+                        }
+                    })
+            });
+            //判断验证码是否正确结束
+            $("#code").focus(function(){
+                //$("#button").removeAttr("disabled");
+                $("#button").html("下一步");
             });
         </script>
         <!-- Baidu Analytics -->
