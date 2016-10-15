@@ -78,7 +78,7 @@ class PasswordController extends Controller
     public function DoResetPassword(Request $request)
     {
         $id = $request->input('id');
-        $password = $request->input('password');
+        $password = sha1($request->input('password'));
         session()->forget('findcode');
         $results = \DB::table('user')->where('name',$id)->update(['password' => $password]);
         $ob = \DB::table('user')->where("name",$id)->first();

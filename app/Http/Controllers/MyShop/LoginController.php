@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function dologin(Request $request)
     {
         $name = $request->input('name');
-        $password = $request->input('password');
+        $password = sha1($request->input('password'));
         $ob = \DB::table('user')->where("name",$name)->first();
         if($ob){
             if($ob->password == $password){
