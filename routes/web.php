@@ -152,7 +152,16 @@ Route::post("/order","MyShop\OrderController@order");
 
 //找回密码开始
 Route::get("/FindPassword","MyShop\PasswordController@FindPassword");
+//判断手机号码是否存在
+Route::post("/FindPhone","MyShop\PasswordController@FindPhone");
+//找回密码验证码
+Route::post("/FindCode","MyShop\PasswordController@FindCode");
+//判断验证码是否正确
+Route::post("/DemandFindCode","MyShop\PasswordController@DemandFindCode");
+//加载修改密码
 Route::get("/ResetPassword","MyShop\PasswordController@ResetPassword");
+//修改密码
+Route::post("/DoResetPassword","MyShop\PasswordController@DoResetPassword");
 Route::get("/SuccessFind","MyShop\PasswordController@SuccessFind");
 //找回密码完
 //后台***********************项目

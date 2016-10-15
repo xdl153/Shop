@@ -25,7 +25,7 @@
             }(document, screen));
         </script>
     </head>
-    <body>
+    <body onload="test();">
 
         <header id="header" class="">
             <div class="common-width">
@@ -63,8 +63,8 @@
                         <div class="fill-data clearfix">
                             <div class="log-success"></div>
                             <div class="log-content">
-                                <p>新密码设置成功！请牢记您的密码</p>
-                                <p>您可以<a href="{{ URL('Shop/login') }}">立即登录</a></p>
+                                <p style="font-size: 30px">新密码设置成功！请牢记您的密码</p>
+                                <p>正在登录还有<span id="sj" style="color:red;font-size: 40px"></span><span style="color: red;font-size: 30px">秒</span>跳转到首页请稍等！</p>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,23 @@
                 common_sms_code = '/ajax/common_sms_code/'
         </script>
         <script src="{{ asset('Shop/js/forget_passwd.js') }}"></script>
+        <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
+        <script>
+            var countdown = 6;
+            function test(){
+                if(countdown !== 0){
+                    $("#sj").html(countdown);
+                    countdown--;
+                }
+                setTimeout(function(){
+                    test();
+                },1000)
+                if(countdown == 0){
+                    location.href = "/";
+                }
+            }
 
+        </script>
         <!-- Baidu Analytics -->
 
     <!-- End Baidu Tracking Code -->

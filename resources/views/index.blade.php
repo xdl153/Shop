@@ -581,7 +581,7 @@
 		<script>var manually_locations='';</script>
 		<script src="{{ asset('Shop/js/frontPage.js') }}"></script>
 		<script>angular.bootstrap(document, ["app"]);</script>
-                <script src="{{ asset('Shop/js/jsjs.js') }}"></script>
+                <script src="{{ asset('Shop/js/qtjs.js') }}"></script>
 		<script>
 			var countdown=60; 
 			function settime(obj) {

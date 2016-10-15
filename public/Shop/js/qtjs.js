@@ -2,19 +2,19 @@
 			function settime(obj) {
 				if (countdown == 0) { 
 					obj.removeAttribute("disabled");    
-					obj.value="»ñÈ¡ÑéÖ¤Âë"; 
+					obj.value="è·å–éªŒè¯ç "; 
 					countdown = 60;
 					return;
 				} else {
 					obj.setAttribute("disabled", true); 
-					obj.value="ÖØĞÂ·¢ËÍ(" + countdown + ")"; 
+					obj.value="é‡æ–°å‘é€(" + countdown + ")"; 
 					countdown--; 
 				} 
 				setTimeout(function(){
 					settime(obj)
 				},1000)
 			}
-                         //·¢ËÍÑéÖ¤Âë
+                         //å‘é€éªŒè¯ç 
 			function yzm(){
 				var sj = $("#aaa").val();
 				$.ajax({
@@ -27,22 +27,21 @@
                                         },
                                         success:function(data){
 						if(data === 'y'){
-                                                    //alert('·¢ËÍ³É¹¦!');
+                                                    //alert('å‘é€æˆåŠŸ!');
 						}
 					},
 					error:function(){
-						alert('Ê§°Ü');
+						alert('å¤±è´¥');
 					}
 				})
 			}
-                        //Êó±êÊ§È¥ÅĞ¶ÏÈ¥Êı¾İ¿â²éÑ¯ÊÇÊÇ·ñ´æ
+                        //é¼ æ ‡å¤±å»åˆ¤æ–­å»æ•°æ®åº“æŸ¥è¯¢æ˜¯æ˜¯å¦å­˜
                         $('#aaa').blur(function(){
-                            //»ñÈ¡ÊäÈëµÄÖµ
                             var sj = $("#aaa").val();
                             if(sj == ""){
                                 $("#button").attr("disabled", true);
                             }
-                            if(sj !== ""){
+                            if(sj !== "" && !!(/^1[34578]\d{9}$/.test(sj))){
                             $.ajax({
                                 url:'/demand',
                                 type:'post',
@@ -62,14 +61,14 @@
                                         }
                                 },
                                 error:function(){
-                                        alert('ajaxÊ§°Ü');
+                                        alert('ajaxå¤±è´¥');
                                 }
                              })
                             }
                         });
-                        //²»¸ø·¢¶ÌĞÅ
+                        //ä¸ç»™å‘çŸ­ä¿¡
                         $("#yzmyzm").attr({"disabled":"disabled"});
-                        //²»¸ø×¢²á
+                        //ä¸ç»™æ³¨å†Œ
                         $("#button").attr({"disabled":"disabled"});
                         //
                         $('#aaa').focus(function(){
@@ -79,11 +78,11 @@
                             $("#ok").css("display","none");
                         });
                        
-                        //Êó±ê¹â±ê¶¨Î»µ½ÑéÖ¤ÂëÎÄ±¾¿ò
+                        //é¼ æ ‡å…‰æ ‡å®šä½åˆ°éªŒè¯ç æ–‡æœ¬æ¡†
                         $('#abc').focus(function(){
                             $('#pd').css("display","none");
                         });
-                        //ÅĞ¶ÏÑéÖ¤Âë
+                        //åˆ¤æ–­éªŒè¯ç 
                         $('#abc').blur(function(){
                             $('#pd').css("display","none");
                             var code = $("#abc").val();
@@ -105,12 +104,12 @@
                                         }
                                 },
                                 error:function(){
-                                        alert('ajaxÊ§°Ü');
+                                        alert('ajaxå¤±è´¥');
                                 }
                              })
                             }
                         });
-                        //Êó±ê¹â±ê¶¨Î»µ½ÃÜÂëÎÄ±¾¿ò
+                        //é¼ æ ‡å…‰æ ‡å®šä½åˆ°å¯†ç æ–‡æœ¬æ¡†
                         $('#pwd1').focus(function(){
                             $('#mima').css("display","none");
                         });
@@ -124,15 +123,15 @@
                                     $("#button").attr("disabled", true);
                                 }
                             }else{
-                                $('#mima').html("ÇëÈ·±£ÃÜÂëÏàÍ¬");
+                                $('#mima').html("è¯·ç¡®ä¿å¯†ç ç›¸åŒ");
                                 $('#mima').css({"display":"","color":"#FF6343","font-size":"13px","line-height":"15px"});
                                 $("#button").attr("disabled", true);
                             }
                         });
-                        //·¢ËÍ×¢²áÓÃ»§ÃûÊı¾İ
+                        //å‘é€æ³¨å†Œç”¨æˆ·åæ•°æ®
                         function register(){
-                            //user  ÊÖ»úºÅÂë
-                            //password ÃÜÂë
+                            //user  æ‰‹æœºå·ç 
+                            //password å¯†ç 
                             var user = $("#aaa").val();
                             var pwd = $("#pwd2").val();
                                 $.ajax({
@@ -145,21 +144,21 @@
                                     },
                                     success:function(b){
                                             if( b === 'y'){
-                                                alert('×¢²á³É¹¦');
+                                                alert('æ³¨å†ŒæˆåŠŸ');
                                                 location.href = "/";
                                             }else{
-                                                alert('×¢²áÊ§°Ü');
+                                                alert('æ³¨å†Œå¤±è´¥');
                                             }
                                     },
                                     error:function(){
-                                            alert('ajaxÊ§°Ü');
+                                            alert('ajaxå¤±è´¥');
                                     }
                              });
                         }
                             function login(){
                             var name = $("#lPhone").val();
                             var password = $("#lPass").val();
-                                $("#yhdl").html("µÇÂ¼ÖĞÇëÉÔµÈ");
+                                $("#yhdl").html("ç™»å½•ä¸­è¯·ç¨ç­‰");
                                 $("#yhdl").attr("disabled", true);
                                     $.ajax({
                                        url:'/dologin',
@@ -173,26 +172,26 @@
                                            if( a === 'y'){
                                                window.location.reload();
                                            }else{
-                                               $("#yhdl").html("ÓÃ»§Ãû»òÃÜÂë´íÎó");
+                                               $("#yhdl").html("ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
                                            }
                                        },
                                        error:function(){
-                                           alert('ajaxÊ§°Ü');
+                                           alert('ajaxå¤±è´¥');
                                        }
                                     });
                           };
                           $("#yhdl").attr("disabled", true);
-                          $("#yhdl").html("ÇëÊäÈëÕËºÅÃÜÂë");
+                          $("#yhdl").html("è¯·è¾“å…¥è´¦å·å¯†ç ");
                           $("#lPhone").focus(function(){
                             var name = $("#lPhone").val();
                             var password = $("#lPass").val();
                               if(name == "" && password == ""){
                                     $("#yhdl").attr("disabled", true);
-                                    $("#yhdl").html("ÇëÊäÈëÕËºÅÃÜÂë");
+                                    $("#yhdl").html("è¯·è¾“å…¥è´¦å·å¯†ç ");
                               }
                               if(name !== "" && password !== ""){
                                     $("#yhdl").removeAttr("disabled");
-                                    $("#yhdl").html("µÇÂ¼");
+                                    $("#yhdl").html("ç™»å½•");
                               }
                           });
                           $("#lPhone").blur(function(){
@@ -200,17 +199,17 @@
                             var password = $("#lPass").val();
                               if(name == "" && password == ""){
                                     $("#yhdl").attr("disabled", true);
-                                    $("#yhdl").html("ÇëÊäÈëÕËºÅÃÜÂë");
+                                    $("#yhdl").html("è¯·è¾“å…¥è´¦å·å¯†ç ");
                               }
                               if(name !== "" && password !== ""){
                                     $("#yhdl").removeAttr("disabled");
-                                    $("#yhdl").html("µÇÂ¼");
+                                    $("#yhdl").html("ç™»å½•");
                               }
                               if(name !== ""){
-                                  $("#yhdl").html("ÇëÊäÈëÃÜÂë");
+                                  $("#yhdl").html("è¯·è¾“å…¥å¯†ç ");
                               }
                               if(name == ""){
-                                  $("#yhdl").html("ÇëÊäÈëÊÖ»úºÅÂë");
+                                  $("#yhdl").html("è¯·è¾“å…¥æ‰‹æœºå·ç ");
                               }
                           });
                           $("#lPass").focus(function(){
@@ -218,11 +217,11 @@
                             var password = $("#lPass").val();
                               if(password == "" && name == ""){
                                 $("#yhdl").attr("disabled", true);
-                                $("#yhdl").html("ÇëÊäÈëÕËºÅÃÜÂë");
+                                $("#yhdl").html("è¯·è¾“å…¥è´¦å·å¯†ç ");
                               }
                               if(password !== ""){
                                 $("#yhdl").removeAttr("disabled");
-                                $("#yhdl").html("µÇÂ¼");
+                                $("#yhdl").html("ç™»å½•");
                               }
                           });
                           $("#lPass").blur(function(){
@@ -230,11 +229,11 @@
                             var password = $("#lPass").val();
                               if(password == "" && name == ""){
                                 $("#yhdl").attr("disabled", true);
-                                $("#yhdl").html("ÇëÊäÈëÕËºÅÃÜÂë");
+                                $("#yhdl").html("è¯·è¾“å…¥è´¦å·å¯†ç ");
                               }
                               if(password !== ""){
                                 $("#yhdl").removeAttr("disabled");
-                                $("#yhdl").html("µÇÂ¼");
+                                $("#yhdl").html("ç™»å½•");
                               }
                           });
                           function exit(){
@@ -249,11 +248,11 @@
                                        if( a === 'y'){
                                            location.href = "/";
                                        }else{
-                                           alert('ÍË³öÊ§°Ü');
+                                           alert('é€€å‡ºå¤±è´¥');
                                        }
                                    },
                                    error:function(){
-                                       alert('ajaxÊ§°Ü');
+                                       alert('ajaxå¤±è´¥');
                                    }
                             });
                           };

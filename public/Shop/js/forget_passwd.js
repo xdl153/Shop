@@ -288,7 +288,7 @@
     function customPost(url, data, success, error) {
         $.ajax({
             type: 'POST',
-            url: url,
+            url: 'DoResetPassword',
             data: data,
             success: function(data) { if ($.isFunction(success)) success(data) },
             error: function(data) { if ($.isFunction(error)) error(data)},
