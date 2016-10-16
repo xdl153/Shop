@@ -61,8 +61,8 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	});
 
 //member_order查看订单视图路由
-// Route::get("/member_order","MyShop\Member_OrderController@member_order");
-	Route::get("/member_order",function(){
+ Route::get("/member_order{id?}","MyShop\Member_OrderController@member_order");
+	Route::get("/member_order{id?}",function(){
 		return view("Shop.member_order");
 	});
 	
@@ -141,10 +141,11 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 	});
         
 //order下订单(送餐信息)页面视图路由
-Route::post("/order","MyShop\OrderController@order");
-	Route::get("/order",function(){
-		return view("Shop.order");
-	});
+Route::post("/creade_order","MyShop\OrderController@creade_order");
+Route::get("/order","MyShop\OrderController@order");
+//	Route::get("/order",function(){
+//		return view("Shop.order");
+//	});
 
 
 //order_success下订单成功页面视图路由
@@ -154,7 +155,16 @@ Route::post("/order","MyShop\OrderController@order");
 
 //找回密码开始
 Route::get("/FindPassword","MyShop\PasswordController@FindPassword");
+//判断手机号码是否存在
+Route::post("/FindPhone","MyShop\PasswordController@FindPhone");
+//找回密码验证码
+Route::post("/FindCode","MyShop\PasswordController@FindCode");
+//判断验证码是否正确
+Route::post("/DemandFindCode","MyShop\PasswordController@DemandFindCode");
+//加载修改密码
 Route::get("/ResetPassword","MyShop\PasswordController@ResetPassword");
+//修改密码
+Route::post("/DoResetPassword","MyShop\PasswordController@DoResetPassword");
 Route::get("/SuccessFind","MyShop\PasswordController@SuccessFind");
 //找回密码完
 //后台***********************项目

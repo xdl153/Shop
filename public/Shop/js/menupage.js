@@ -1,3 +1,5 @@
+/* global checkout_url, create_order_url, restaurantId, restaurant_list_url, inRange, app, can_process_order, loginObj, accessoryObj, orderObj, grid_locationId, parseFloat, delivery */
+
 var element = document.getElementById("element"),target = document.getElementById("cart-item-list");
 app.config(['$interpolateProvider',function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');

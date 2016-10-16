@@ -73,13 +73,12 @@ class RegisterController extends Controller
     public function enroll(Request $request)
     {
         $user =  $request->input('user');
-        $pwd = $request->input('pwd');
+        $pwd = sha1($request->input('pwd'));
         $array = array('name' => $user,"password" => $pwd);
-        //查询
         $results = \DB::table('user')->insert($array);
         if($results >0){
+            session()->forget('code');
             return 'y';
-            
         }else{
             return 'n';
         }

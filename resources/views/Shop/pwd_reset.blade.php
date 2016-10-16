@@ -25,22 +25,6 @@
             }(document, screen));
         </script>
     </head>
-    <body>
-
-        <header id="header" class="">
-            <div class="common-width">
-
-                    <section class="clearfix">
-                        <h1 class="logo" title="外卖超人">
-                            <a href="index.html"></a>
-                        </h1>
-                        <span class="page-name"> | 找回密码</span>
-                    </section>
-
-
-            </div>
-        </header>
-
         <section class="main">
             <div class="common-width">
 
@@ -59,24 +43,23 @@
                         </ol>
                     </div>
 
-                    <form action="#" method="post">
+                    
                         <div class="fill-data-box" id="passStep">
                             <div class="fill-data">
-                                <div class="title txt-center">您正在为账号180****1538设置密码</div>
+                                <div class="title txt-center"><span id="spanhaoma"></span></div>
                                 <div class="form-group w275">
-                                    <input type="password" maxlength="10" id="pass" name="pass" class="form-text" placeholder="请输入6-10位的新密码"/>
+                                    <input type="password" maxlength="10" id="pass1"placeholder="请输入6-10位的新密码" value=""/>
                                 </div>
                                 <div class="form-error-message"></div>
                                 <div class="form-group w275">
-                                    <input type="password" maxlength="10" id="pass2" name="pass2"  class="form-text" placeholder="请再次输入新密码"/>
+                                    <input type="password" maxlength="10" id="pass2" placeholder="请再次输入新密码"/>
                                 </div>
                                 <div class="form-error-message"></div>
                                 <div>
-                                    <button class="form-btn" id="confirm">确认</button>
+                                    <button id="xgmima" class="form-btn" id="confirm">确认</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
 
                 </div>
             </div>
@@ -84,28 +67,6 @@
         <div style="height:180px;">
         </div>
         </section>
-        <footer id="footer">
-            <div class="footer-first gray">
-                <div class="company-info clearfix fs14 gray">
-                    <a href="/about_us/" target="_blank"  rel="nofollow">关于我们</a>
-                    <a href="/help/" target="_blank"  rel="nofollow">帮助中心</a>
-                    <a href="/terms-and-conditions/" target="_blank"  rel="nofollow">法律声明</a>
-                    <a href="/jobs/" target="_blank"  rel="nofollow">人才招聘</a>
-                    <a href="/contact/" class="last" target="_blank"  rel="nofollow">联系我们</a>
-                    <a href="/restaurant/list/shanghai/1/" class="last" target="_blank" style="display:none">上海餐厅导航</a>
-                </div>
-            </div>
-            <div class="footer-last">
-                <a target="_blank" class="foot-logo-1 base-logo" href="/"></a>
-                <div class="tc fs14 light-gray mb10">
-                  ©2014 waimaichaoren.com All Rights Reserved - 沪ICP备11019908号
-                </div>
-            </div>
-        </footer>
-
-
-        <script type="text/javascript" src="{{ asset('Shop/js/jquery-1.7.2.min.js') }}"></script>
-
         <script>
             var mobile_validate_url = '/ajax/common_validate_sms_code/',
                 email_validate_url = '',
