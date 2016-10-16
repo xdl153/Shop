@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
         <meta name="description" content="" />
         <meta name="viewport" content="user-scalable=no">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
         <meta name="baidu-site-verification" content="IYCrtVH0i1" />
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
@@ -77,7 +77,7 @@
                                            },
                                            success:function(a){
                                             if( a === 'y'){
-                                                location.reload();
+                                                location.href = "/";
                                             }else{
                                                 alert('退出失败');
                                             }
@@ -132,7 +132,7 @@
             <ul class="fs12">
                 <li>
                     <label>手机号码：</label>
-                    <span>18005151538</span>
+                    <span id="userid">{{ session("username") }}</span>
                 </li>
                 <li>
                     <label>登录密码：</label>
@@ -144,7 +144,6 @@
                     <span>总计0单</span>
                     <span>成功0单</span>
                 </li>
-                <li><label>氪 星 币：</label><span ng-bind="0|number"></span>个&nbsp;&nbsp;<a href="/account/gift/center/" title="兑换礼品" class="c_f60">兑换礼品</a></li>
             </ul>
          </section>
 
@@ -213,41 +212,38 @@
             </div>
         </dh-dialog>
 
-        <dh-dialog class="disnone" header="修改登录密码" height="500" show="showChangePass">
+        <dh-dialog id="ok" class="disnone" id="xgcg" header="修改登录密码" height="500" show="showChangePass" >
+            <!--<i ng-show="!hideclose" class="icon close-icon" ng-click="show=false"></i>-->
             <div ng-controller="changePasswordCtrl" class="change-password-box">
                 <div class="form-group">
                     <label>当前密码</label>
                     <div>
-                        <input type="password" ng-class="{error:user.passwordMessage}" onpaste="return false" maxlength="10" placeholder="请输入当前使用的登录密码" ng-model="user.password" />
-                        <span class="vaildate-error" ng-if="user.passwordMessage">
-                            <span ng-bind="user.passwordMessage"></span>
+                        <input type="password" id="password1" ng-class="{error:user.passwordMessage}" onpaste="return false" maxlength="10" placeholder="请输入当前使用的登录密码" ng-model="user.password" />
+                        <span id="bd" class="vaildate-error" style="display:">
+                            <span></span>
                         </span>
                     </div>
                 </div>
                 <div class="form-group mb10">
                     <label>新的密码</label>
                     <div>
-                        <input type="password" ng-class="{error:user.newPasswordMessage}" onpaste="return false" maxlength="10"  placeholder="请输入 6-10个字符" ng-model="user.newPassword" />
-                        <span class="vaildate-error" ng-if="user.newPasswordMessage">
-                            <span ng-bind="user.newPasswordMessage"></span>
-                        </span>
+                        <input type="password" id="password2" ng-class="{error:user.newPasswordMessage}" onpaste="return false" maxlength="10"  placeholder="请输入 6-10个字符" ng-model="user.newPassword" />
+                        <span id="bd2" class="vaildate-error"></span>
                     </div>
                 </div>
                 <div class="form-group mb20">
                     <div>
-                        <input type="password" ng-class="{error:user.newPassword2Message}" onpaste="return false" maxlength="10"  placeholder="请再次输入新的密码" ng-model="user.newPassword2"/>
-                        <span class="vaildate-error" ng-if="user.newPassword2Message">
-                            <span ng-bind="user.newPassword2Message"></span>
-                        </span>
+                        <input type="password" id="password3" ng-class="{error:user.newPassword2Message}" onpaste="return false" maxlength="10"  placeholder="请再次输入新的密码" ng-model="user.newPassword2"/>
+                        <span id="bd3"class="vaildate-error"></span>
                     </div>
                 </div>
                 <div class="tr">
-                    <button class="btn small-btn btn-success" ng-click="changePassSubmit()" ng-disabled="isSubmit" ng-bind="submitText"></button>
+                    <button class="btn small-btn btn-success" id="button">确认</button>
                     <button class="btn small-btn btn-cancel" ng-click="changePassCancel()">取消</button>
                 </div>
             </div>
         </dh-dialog>
-        <dh-dialog class="disnone" type="alert" height="500" index="1001" header="" show="requestSuccess">
+        <dh-dialog class="disnone" >
             <div class="alert-box">
                 <p>修改密码成功</p>
                 <p class="fs12">3秒后自动关闭</p>
@@ -288,7 +284,127 @@
 
 
         <script>angular.bootstrap(document, ["app"]);</script>
-
+        <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
+        <script>
+            $("#button").attr("disabled", true);
+            $("#bd").css("color","red");
+            $("#password1").focus(function(){
+                $("#bd").html("");
+                $("#bd").css("color","red");
+            });
+            //判断当前用户输入的密码是否与数据库中是否一致
+            $("#password1").mouseleave(function(){
+                var regEx = new RegExp(/^[a-zA-Z0-9]{6,10}$/);
+                var id = "{{ session("username") }}";
+                var password = $("#password1").val();
+                //alert(id);
+                //alert(password);
+                if(!password.match(regEx)){
+                    $("#bd").html("密码为6 - 10位字符");
+                }else{
+                    $.ajax({
+                    url:'/findpassword',
+                    type:'post',
+                    async:true,
+                    data:{id:id,password:password},
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(a){
+                            if(a === 'y'){
+                                $("#bd").html("请输入新的密码");
+                                $("#bd").css("color","green");
+                                aa = 'ok';
+                            }else{
+                                $("#bd").html("密码认证错误请重新输入");
+                                $("#bd").css("color","red");
+                                $("#button").attr("disabled", true);
+                                aa = 'no'
+                                
+                            }
+                    },
+                    error:function(){
+                            alert('网站错误请联系管理员');
+                    }
+                 })
+                }
+            });
+            $("#password2").mouseleave(function(){
+                var regEx = new RegExp(/^[a-zA-Z0-9]{6,10}$/);
+                var password2 = $("#password2").val();
+                if(!password2.match(regEx)){
+                    $("#bd2").html("密码为6 - 10位字符");
+                }else{
+                    $("#bd2").html("");
+                     if(aa == 'ok'){
+                        $("#button").removeAttr("disabled");
+                    }else{
+                        $("#button").attr("disabled", true);
+                    }
+                }
+            });
+            $("#password3").mouseleave(function(){
+                var regEx = new RegExp(/^[a-zA-Z0-9]{6,10}$/);
+                var password1 = $("#password1").val();
+                var password2 = $("#password2").val();
+                var password3 = $("#password3").val();
+                if(!password3.match(regEx)){
+                    $("#bd3").html("密码为6 - 10位字符");
+                }else{
+                    $("#bd3").html("");
+                    if(password3 !== password2){
+                        $("#bd3").html("二次密码输入不一致");
+                    }else{
+                        if(password3 === password1){
+                            $("#bd3").html("新密码与原密码相同");
+                        }else{
+                            if(aa == 'ok'){
+                                $("#button").removeAttr("disabled");
+                            }else{
+                                $("#button").attr("disabled", true);
+                            }
+                        }
+                    }
+                }
+            });
+           
+            $("#button").click(function(){
+                var id = "{{ session("username") }}";
+                var password = $("#password3").val();
+                var ypassword = $("#bd").val();
+                if(aa == 'ok'){
+                    $.ajax({
+                        url:'/Modifypass',
+                        type:'post',
+                        async:true,
+                        data:{id:id,password:password},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                            if(data === 'y'){
+                                //关闭修改密码窗口
+                                $("#ok").removeClass().addClass("common-dialog trans scale50 op0"); 
+                                $("button").html("修改中请稍等");
+                                //窗口关闭网页模糊不能点 刷新页面
+                                //document.body.innerHTML=xmlhttp.responseText
+                                setTimeout(function(){
+                                    //settime(obj)
+                                    location.reload();
+                                },500)
+                            }else{
+                                $("#bd3").html("新密码与原密码相同");
+                            }
+                        },
+                        error:function(){
+                                alert('网站错误请联系管理员2');
+                        }
+                    })
+                }else{
+                    $("#bd3").html("原密码认证错误请重新输入");
+                }
+           });
+        </script>
         <!-- Baidu Analytics -->
 
 
