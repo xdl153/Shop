@@ -370,7 +370,7 @@
 				<div>
 					<input type="text" id="lPhone" ng-model="user.username" ng-class="{error:user.usernameMessage}" ng-focus="user.usernameMessage=''" maxlength="11" placeholder="请输入你的手机号码" />
 					<span class="vaildate-error" ng-if="user.usernameMessage">
-						<span ng-bind="user.usernameMessage"></span>
+						
 					</span>
 					<span class="vaildate-error" ng-if="user.isLogined">
 						该手机号码尚未注册！<a href="javascript:;" ng-click="locationRegister()" class="link">立即注册</a>
