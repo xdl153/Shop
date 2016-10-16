@@ -81,10 +81,12 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	Route::post("/member_collect","MyShop\Member_CollectController@member_delete");
 	
 //member_Addr地址管理视图路由
-// Route::get("/member_addr","MyShop\Member_AddrController@member_addr");
-	Route::get("/member_addr",function(){
-		return view("Shop.member_addr");
-	});
+	Route::get("/member_addr","MyShop\Member_AddrController@member_addr");
+
+//删除收货地址路由
+	Route::post("/member_addrdelete","MyShop\Member_AddrController@member_addrdelete");
+//遍历所有地址路由
+	Route::post("/member_addrlist","MyShop\Member_AddrController@member_addrlist");	
 
 //gifts氪星礼品站视图路由
 // Route::get("/gifts","MyShop\GiftsController@gifts");

@@ -29,6 +29,7 @@ class Member_CollectController extends Controller
 			//查询店铺的配送范围
 			$address[] = \DB::select("select d.name,a.bid from address as a,district as d where bid={$enshr->bid} and d.id=a.did");
 		}
+		
 		return view("Shop.member_collect",["business"=>$business,"address"=>$address]);
 	}
 
