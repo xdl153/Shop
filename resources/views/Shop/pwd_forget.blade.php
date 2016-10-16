@@ -200,25 +200,25 @@
                     if(phone == ""){
                         $("#button").html("请输入验证码");
                     }else{
-                    $.ajax({
-                        url:'/FindCode',
-                        type:'post',
-                        async:true,
-                        data:{id:phone},
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success:function(data){
-                            if(data === 'y'){
-                                $("#coden").attr("disabled", true);
-                                $("#coden").html("验证码已发送");
-                                $("#button").removeAttr("disabled");
+                        $.ajax({
+                            url:'/FindCode',
+                            type:'post',
+                            async:true,
+                            data:{id:phone},
+                            headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success:function(data){
+                                if(data === 'y'){
+                                    $("#coden").attr("disabled", true);
+                                    $("#coden").html("验证码已发送");
+                                    $("#button").removeAttr("disabled");
+                                }
+                            },
+                            error:function(){
+                                    alert('失败');
                             }
-                        },
-                        error:function(){
-                                alert('失败');
-                        }
-                    })
+                        })
                     }
                 };
             //获取短信验证码结束

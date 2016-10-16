@@ -48,6 +48,13 @@ Route::post("/demandcode","MyShop\RegisterController@demandcode");
 Route::post("/enroll","MyShop\RegisterController@enroll");
  
 //注册完
+//用户修改密码
+//ajax查询当前用户输入的密码是否与数据库中一致
+Route::post("findpassword","MyShop\ModifyPasswordController@findpassword");
+
+//执行修改密码
+Route::post("Modifypass","MyShop\ModifyPasswordController@Modifypass");
+//用户修改密码完
 //Shop_list商品列表视图路由
 Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	// Route::get("/shop_list",function(){
