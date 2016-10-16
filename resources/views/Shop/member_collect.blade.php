@@ -129,37 +129,64 @@
 
 
             <ul class="favorite clearfix transform-style">
+                    
 
-                    <li class="restaurant-item fl trans">
+                    @foreach($business as $info)
+                        @foreach($info as $in)
+                    <li class="restaurant-item fl trans" name="li{{ $in->id }}">
                         <div class="img-box fl">
-                            <a href="shop_detail"><img src="http://dhcrestaurantlogo.dhero.cn/1019?v=1402245333" width="82px" height="82px"></a>
+                            <a href="shop_detail?id={{ $in->id }}"><img src="Shop/{{ $in->photo }}" width="82px" height="82px"></a>
                         </div>
                         <article class="restaurant-introduce fl">
-                            <h3 class="ellipsis"><a href="/shanghai/ji-xiang-hun-tun-gao-an-lu-dian/menu/">吉祥馄饨 (高安路店)</a></h3>
+                            <h3 class="ellipsis"><a href="/shanghai/ji-xiang-hun-tun-gao-an-lu-dian/menu/">{{ $in->name }}</a></h3>
                             <dl class="clearfix">
-                                <dt class="fl">饮料小吃</dt>
+                                <dt class="fl">{{ $in->cname }}</dt>
                                 <dd class="r-small-star fl">
-                                    <div class="r-small-star score" style="width:65.00px"></div>
+                                    <div class="r-small-star score" style="width:{{ $in->grade }}px"></div>
                                 </dd>
                             </dl>
-                            <div class="restaurant-state clearfix">
+                            <dl class="clearfix">
+                                 <dt class="fl">派送范围：</dt>
+                                @foreach($address as $add)
+                                @foreach($add as $ad)
+                                
+                                    @if($ad->bid == $in->id)
+                                    <dt class="fl">{{ $ad->name }}</dt>
 
-
-
-
-                                        <span><img src="http://dhcactivity.dhero.cn/Flswo958RM8GgqlKACT4tY5kr5K7?imageView2/1/w/15/h/15/" alt="" /></span>
-
-                                        <span><img src="http://dhcactivity.dhero.cn/FjnSIEuUzJvV6j-ifPq7zevJSt30?imageView2/1/w/15/h/15/" alt="" /></span>
-
-
-                            </div>
+                                    @endif
+                                @endforeach
+                                @endforeach
+                            </dl>
                         </article>
-                        <div class="close-favorite" data-rid="1019">&times;</div>
+                        <div class="close-favorite" >
+                            <input type="hidden" value="{{ $in->id }}">
+                            <a href="javascript:_confirm1({{ $in->id }})">&times;</a>
+                        </div>
                     </li>
+                        @endforeach
+                    @endforeach
 
             </ul>
             <page show="5" total="1"></page>
-
+            <script type="text/javascript">
+                function _confirm1(id) {     
+                   $.ajax({
+                        url:'/member_collect',
+                        type:'post',
+                        async:true,
+                        data:{id:id},
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                            $("li[name=li"+id+"]").remove();
+                        },
+                        error:function(){
+                            alert('失败');
+                        }
+                    })
+                }
+            </script>
 
 
                 </article>
@@ -250,8 +277,8 @@
 
         <script src="{{ asset('Shop/js/service.js') }}"></script>
 
-        <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
-        <!--[if lt IE 9]><script src="js/fix.js"></script><![endif]-->
+        <!--<script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
+        [if lt IE 9]><script src="js/fix.js"></script><![endif]-->
 
 
         <script>

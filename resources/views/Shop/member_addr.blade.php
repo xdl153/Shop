@@ -148,16 +148,26 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tr ng-repeat="item in userAddressList">
-                        <td ng-bind="item.customer_name"></td>
-                        <td ng-bind="item.customer_phone"></td>
-                        <td ng-bind="item.delivery_address"></td>
+                    <tr>
+                        <td ng-bind="item.customer_name">111</td>
+                        <td ng-bind="item.customer_phone">111</td>
+                        <td ng-bind="item.delivery_address">1111</td>
                         <td>
-                            <a href="javascript:;" ng-click="editUserAddress($index)">修改</a>
+                            <a href="javascript:;" id="demoBtn3" ng-click="editUserAddress($index)">修改</a>
                             <a href="javascript:;" ng-click="deleteUserAddress($index)">删除</a>
                         </td>
                     </tr>
                 </table>
+                <script type="text/javascript">
+                 
+                        $('demoBtn3').onclick = function(){
+                            easyDialog.open({
+                            container : 'testBox',
+                            fixed : false
+                        });
+                
+                    }
+                </script>
             </article>
             <article ng-show="userAddressList.length < 8">
                 <header class="mb10">

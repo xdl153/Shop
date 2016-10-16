@@ -73,11 +73,13 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	});
 
 //member_collect我的收藏视图路由
-// Route::get("/member_collect","MyShop\Member_CollectController@member_collect");
-	Route::get("/member_collect",function(){
+	Route::get("/member_collect","MyShop\Member_CollectController@member_collect");
+	/*Route::get("/member_collect",function(){
 		return view("Shop.member_collect");
-	});
-
+	});*/
+//member_collect删除收藏路由
+	Route::post("/member_collect","MyShop\Member_CollectController@member_delete");
+	
 //member_Addr地址管理视图路由
 // Route::get("/member_addr","MyShop\Member_AddrController@member_addr");
 	Route::get("/member_addr",function(){
