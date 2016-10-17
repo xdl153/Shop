@@ -150,12 +150,14 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 	});
         
 //order下订单(送餐信息)页面视图路由
-Route::post("/creade_order","MyShop\OrderController@creade_order");
+Route::post("/create_order","MyShop\OrderController@creade_order");
 Route::get("/order","MyShop\OrderController@order");
-//	Route::get("/order",function(){
-//		return view("Shop.order");
-//	});
-
+//添加送货地址
+Route::post("/add","MyShop\OrderController@add");
+//修改送货地址
+Route::post('/update','MyShop\OrderController@update');
+//删除送货地址
+Route::delete('/del',"MyShop\OrderController@destroy");
 
 //order_success下订单成功页面视图路由
 	Route::get("/order_success",function(){
