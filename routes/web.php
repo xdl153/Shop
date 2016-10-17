@@ -55,6 +55,19 @@ Route::post("findpassword","MyShop\ModifyPasswordController@findpassword");
 //执行修改密码
 Route::post("Modifypass","MyShop\ModifyPasswordController@Modifypass");
 //用户修改密码完
+
+
+//商家注册
+
+//查询客户端输入的用户名是否存在
+Route::post("Business","MyShop\BusinessController@FindBusiness");
+//查询客户端输入的手机号码是否存在
+Route::post("FindBusinessPhone","MyShop\BusinessController@FindBusinessPhone");
+//查询客户端输入的邮箱是否存在
+Route::post("FindEmail","MyShop\BusinessController@FindEmail");
+//提交商家信息
+Route::post("Submitinfo","MyShop\BusinessController@Submitinfo");
+//商家注册完
 //Shop_list商品列表视图路由
 Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	// Route::get("/shop_list",function(){

@@ -36,7 +36,7 @@
 				})
 			}
                         //鼠标失去判断去数据库查询是是否存
-                        $('#aaa').blur(function(){
+                        $('#aaa').mouseleave(function(){
                             var sj = $("#aaa").val();
                             if(sj == ""){
                                 $("#button").attr("disabled", true);
@@ -83,7 +83,7 @@
                             $('#pd').css("display","none");
                         });
                         //判断验证码
-                        $('#abc').blur(function(){
+                        $('#abc').mouseleave(function(){
                             $('#pd').css("display","none");
                             var code = $("#abc").val();
                             if(code !== ""){
@@ -113,10 +113,10 @@
                         $('#pwd1').focus(function(){
                             $('#mima').css("display","none");
                         });
-                        $('#pwd2').blur(function(){
+                        $('#pwd2').mouseleave(function(){
                             var pwd1 = $("#pwd1").val();
                             var pwd2 = $("#pwd2").val();
-                            if(pwd1 === pwd2){
+                            if(pwd1 === pwd2 && pwd2 !== ''){
                                 $('#mima').css("display","none");
                                 $("#button").removeAttr("disabled");
                                 if($("#bbb").css("display") !== 'none'){
@@ -194,7 +194,7 @@
                                     $("#yhdl").html("登录");
                               }
                           });
-                          $("#lPhone").blur(function(){
+                          $("#lPhone").mouseleave(function(){
                             var name = $("#lPhone").val();
                             var password = $("#lPass").val();
                               if(name == "" && password == ""){
@@ -224,7 +224,7 @@
                                 $("#yhdl").html("登录");
                               }
                           });
-                          $("#lPass").blur(function(){
+                          $("#lPass").mouseleave(function(){
                             var name = $("#lPhone").val();
                             var password = $("#lPass").val();
                               if(password == "" && name == ""){

@@ -32,6 +32,11 @@
         <title>下订单</title>
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
+        @if(!session('data'))
+            <script type='text/javascript'>alert('请您先登录并下订单!');window.location.href="/";</script>";
+        @else
+
+        @endif
         <section class="common-back" id="wrapBackground">
 
                 <header id="header">
@@ -130,14 +135,11 @@
                     </div>
                                     <div class="form-group row mb10">
                                             <label class="col-2">送餐时间：</label>
-                                            <!--<dh-select class="col-8" data="selectObj" selectedindex="datetimeIndex"></dh-select>-->
-                                            <select style="width:100px;" >
-                                                <option>即使送出</option>
-                                                <option>1</option>
-                                            </select>
+                                            <dh-select class="col-8" data="selectObj" selectedindex="datetimeIndex"></dh-select>
                                     </div>
                     <div class="form-group row mb10 relative">
                         <label class="col-2">支付方式：</label>
+
                         <dh-radio class="col-2" model="payType" value="0" title="餐到付款"></dh-radio>
                         <em ng-init="payType=0"></em>
 
@@ -152,15 +154,12 @@
                                     </div>
                             </form>
                     </section>
-                    
                     <header>订单内容</header>
-                    @if(session('data'))
                     <section>
-<!--                            <div class="toggle-order-info" accordion>
+                            <div class="toggle-order-info" accordion>
                                     <a href="javascript:;">展开订单详情 <i class="icon arrows-s-down"></i></a>
-                            </div>-->
-                            
-                            <div class="order-info" style="display: block; height: 109px;">
+                            </div>
+                            <div class="order-info">
                                     <div class="order-thead clearfix">
                                             <div class="goods-name">商品</div>
                                             <div class="goods-count">份数</div>
@@ -169,48 +168,41 @@
                                             <div class="goods-total">小计</div>
                                     </div>
                                     <div class="order-body">
-
-                                        <div class="order-item clearfix">
-                                            <div class="goods-name">{{ session('data')['cai'] }}</div>
-                                            <div class="goods-count">{{ session('data')['fen'] }}</div>
-                                            <div class="goods-price">￥{{ session('data')['jia'] }}</div>
-                                            <div class="goods-total">￥{{ session('data')['xj'] }}</div>
-                                        </div>
-
-
-
-                                        <!--<div class="order-item order-item-addendum clearfix">
-                                            <div class="goods-name">点我呀，减6元 ！</div>
-                                            <div class="goods-count">2</div>
-                                            <div class="goods-price">￥-6.00</div>
-                                            <div class="goods-total">￥-12.00</div>
-                                        </div>-->
+                        @foreach($data as $d)              
+                            <div class="order-item clearfix">
+                                <div class="goods-name">{{ $d }}</div>
+                                <div class="goods-count">1</div>
+                                <div class="goods-price">￥22.00</div>
+                                <div class="goods-total">￥44.00</div>
+                            </div>
+                        @endforeach
+                        
+                            <!--<div class="order-item order-item-addendum clearfix">
+                                <div class="goods-name">点我呀，减6元 ！</div>
+                                <div class="goods-count">2</div>
+                                <div class="goods-price">￥-6.00</div>
+                                <div class="goods-total">￥-12.00</div>
+                            </div>-->
 
                                     </div>
                             </div>
-                            
                     </section>
-                    @endif
-                    
                     <section class="total-sum">
 
 
-                            <p class="tr fs14">订单金额： <span>￥0.00</span></p>
-                            <!--<p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>-->
-                            <p class="tr fs14">配送费用： <span>￥0.00</span></p>
-                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal=0.00" ng-bind="orderTotal|number:2"></span></b></p>
+                            <p class="tr fs14">订单金额： <span>￥32.00</span></p>
+                <p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>
+                <p class="tr fs14">配送费用： <span>￥0.00</span></p>
+                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal=32.00" ng-bind="orderTotal|number:2"></span></b></p>
                             <p class="tr last">
-                                    <a href="{{ URL('shop_detail') }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
-                                    <button class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                                    <a href="{{ URL('Shop/shop_detail') }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
+                                    <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
                             </p>
                     </section>
-                    
             </section>
-             
 
             </div>
         </section>
-        
 
             <footer id="footer">
             <div class="footer-first gray">
