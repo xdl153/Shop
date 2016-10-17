@@ -20,16 +20,19 @@ class Member_CollectController extends Controller
 
 		//查询用户收藏表
 		$enshrine = \DB::select("select * from enshrine where uid={$userid}");
-		
+		if($enshrine){
 		//遍历用户收藏的店铺信息、所属类别、派送范围
-		foreach($enshrine as $enshr){
-			$business[] = \DB::select("select b.id,b.name,b.photo,b.grade,b.cid,
-					(select name from category as c where c.id=b.cid) as cname 
-					from business as b where b.id={$enshr->bid} ");
-			//查询店铺的配送范围
-			$address[] = \DB::select("select d.name,a.bid from address as a,district as d where bid={$enshr->bid} and d.id=a.did");
+			foreach($enshrine as $enshr){
+				$business[] = \DB::select("select b.id,b.name,b.photo,b.grade,b.cid,
+						(select name from category as c where c.id=b.cid) as cname 
+						from business as b where b.id={$enshr->bid} ");
+				//查询店铺的配送范围
+				$address[] = \DB::select("select d.name,a.bid from address as a,district as d where bid={$enshr->bid} and d.id=a.did");
+			}
+		}else{
+			$business[] ='';
+			$address[] = '';
 		}
-		
 		return view("Shop.member_collect",["business"=>$business,"address"=>$address]);
 	}
 
@@ -42,5 +45,14 @@ class Member_CollectController extends Controller
 		//执行删除操作
 		\DB::table('enshrine')->where('bid',$id)->delete();
 		// echo "111";
+	}
+
+	//添加收藏
+	public function member_collectinsert()
+	{
+		//判断用户是否登录
+		if(!session('userid')){
+			echo "No";
+		}
 	}
 }

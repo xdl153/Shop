@@ -38,7 +38,40 @@ class Member_AddrController extends Controller
 		//查询地址表
 		// $district = \DB::table('district')->where('upid',$upid)->get();
 		$district = \DB::select("select * from district where upid={$upid}");
+
 		echo json_encode($district);
 		// echo '1';
+	}
+
+	//增加收货地址
+	public function member_addradd()
+	{	
+		//获取收货地址信息
+		$uid = session('userid');
+		$did =  $_POST['did'];
+		$name = $_POST['name'];
+		$phone = $_POST['phone'];
+		$address = $_POST['address'];
+
+		//向数据库库插入内容
+		$tb = \DB::table('site')->insertGetId(['uid'=>$uid,'did'=>$did,'name'=>$name,'phone'=>$phone,'address'=>$address]);
+		echo $tb;
+	}
+
+	//修改收货地址
+	public function member_addrupdate()
+	{
+		//接收值
+		$id = $_POST['id'];
+		$did = $_POST['did'];
+		$name = $_POST['name'];
+		$phone = $_POST['phone'];
+		$address = $_POST['address'];
+		if($address){
+			\DB::table('site')->where('id',$id)->update(['name'=>$name,'phone'=>$phone,'did'=>$did,'address'=>$address]);
+		}else{
+			\DB::table('site')->where('id',$id)->update(['name'=>$name,'phone'=>$phone]);
+		}
+		
 	}
 }

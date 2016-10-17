@@ -171,7 +171,7 @@
                 <h2>已保存地址</h2>
             </header>
             <article class="mb10">
-                <table>
+                <table id="tabname">
                     <colgroup>
                         <col width="100px">
                         <col width="145px">
@@ -186,48 +186,66 @@
                             <th>操作</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @foreach($site as $si)
-                    <tr name="tr{{ $si->id }}">
-                        <td name="td{{ $si->id }}1">{{ $si->name }}</td>
-                        <td name="td{{ $si->id }}2">{{ $si->phone }}</td>
-                        <td name="td{{ $si->id }}3">{{ $si->address }}</td>
-                        <td>
-                            <a href="javascript:;" onclick="fun({{ $si->id }})" ng-click="editUserAddress($index)">修改</a>
-                            <a href="javascript:;" onclick="dd({{ $si->id }})">删除</a>
-                        </td>
-                    </tr>
+                        <tr name="trname" id="tr{{ $si->id }}">
+                            <td name="td{{ $si->id }}1">{{ $si->name }}</td>
+                            <td name="td{{ $si->id }}2">{{ $si->phone }}</td>
+                            <td name="td{{ $si->id }}3">{{ $si->address }}</td>
+                            <input type="hidden" value="{{ $si->id }}" name="hidden{{ $si->id }}">
+                            <td>
+                                <a href="javascript:;" onclick="fun({{ $si->id }})" ng-click="editUserAddress($index)">修改</a>
+                                <a href="javascript:;" onclick="dd({{ $si->id }})">删除</a>
+                            </td>
+                        </tr>
                     @endforeach
+                    </tbody>
                 </table>
-                <div class="hide_box" id="testBox"> 
-                    <h4><a href="javascript:void(0)" title="关闭窗口">&times;</a>修改地址</h4>
-                    <div style="padding-left:60px;padding-top:30px;">
+                <div class="hide_box" id="testBox" style="height:400px;"> 
+                    <h4><a href="javascript:void(0)" id='times' title="关闭窗口">&times;</a>修改地址</h4>
+                    <div style="padding-left:60px;padding-top:30px;width:600px;">
                         
                             <div class="form-group mb10 row">
                                 <label class="col-2">收单人：</label>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <input type="text"  id="inp1" maxlength="10" >
                                 </div>
+                                 <span style="display:none;padding-top:10px;padding-left:330px;" id="names2">
+                                    <span class="vaildate-error">称呼不能为空</span>
+                                </span>
                             </div>
                             <div class="form-group mb10 row">
                                 <label class="col-2">手机号码：</label>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <input type="text" id="inp2" maxlength="11" required  name="input2">
                                 </div>
+                                <span style="display:none;padding-top:10px;padding-left:330px;" id="phone1">
+                                    <span class="vaildate-error">格式不正确</span>
+                                </span>
                             </div>
                             <div class="form-group mb30 row">
-                                <label class="col-2">送餐地址：</label>
-                                <div class="col-6">
-                                    <input type="text" required id="inp3">
+                                <label class="col-2">原有地址：</label>
+                                <div class="col-4">
+                                    <input type="hidden" value='' name="">
+                                    <input type="text" readonly="readonly" required id="inp3">
                                 </div>
-                                <br>
-                            
                             </div>
-
+             
+                                <div class="col-8" style="padding-bottom:20px;">
+                                    <select  name='sele1' style="width:100px;" id="bid">
+                                        <option value='-1'>--请选择--</option>
+                                    </select>
+                                </div>
+                            <div style="padding-bottom:20px;">
+                                <div id="div2" style="display:none;width:50px;padding-top:30px" >
+                                        <input type="text" required name="address1" size="50" placeholder="详细地址，如武定西路1189号606室">
+                                </div>
+                            </div>
                             <div class="form-group mb30 row">
                                 <label class="col-2"></label>
                                 <div class="col-8">
-                                <button class="btn btn-success normal-btn" id="sc">
-                                            保存送餐地址
+                                <button class="btn btn-success normal-btn" onclick='sc()'>
+                                            修改送餐地址
                                 </button>
                                 </div>
                             </div>
@@ -260,12 +278,12 @@
                                     placeholder="138xxxxxxxx">
                             </div>
                         <span style="display:none;" id="phone">
-                            <span class="vaildate-error">手机号码不能为空</span>
+                            <span class="vaildate-error">手机号码格式不正确</span>
                         </span>
                         </div>
                         <div class="form-group mb30 row">
                             <label class="col-2">送餐地址：</label>
-                            <select style="width:100px;" id="cid">
+                            <select name='sele' style="width:100px;" id="cid">
                                     <option value='-1'>--请选择--</option>
                             </select>
 
@@ -306,18 +324,16 @@
                             for (var i = 0; i < data.length; i++) {
                                 jQuery('#cid').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
                             };
-                            jQuery("#div1").css('display','none');
                         },
                         error:function(){
                             alert('ajax请求失败1'); //失败回调
                         }
                     });
 
-                    jQuery("select").live('change',function(){
+                    jQuery("select[name=sele]").live('change',function(){
                         jQuery(this).nextAll("select").remove();
-                        //jQuery("#div1").css('display','none');
                         var ob = jQuery(this);
-                        // alert(ob.val());
+
                         jQuery.ajax({
                             url:'/member_addrlist',               //请求地址
                             type:'post',                //请求方式
@@ -330,48 +346,163 @@
                             success:function(data){     //成功回调函数
                                 // console.log(data);
                                 if(data.length>0){
-                                    var select = jQuery("<select style='width:100px;'><option value='-1'>--请选择--</option></select>")
+                                    var select = jQuery("<select name='sele' style='width:100px;'><option value='-1'>--请选择--</option></select>")
                                     for (var i = 0; i < data.length; i++) {
                                         jQuery(select).append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
                                     };
-                                    jQuery("#div1").css('display','none');
                                     ob.after(select);
                                 }else{
-                                    jQuery("#div1").css('display','block');
+                                    
+                                    var sele = jQuery("select[name=sele]:last").val();
+                                    
+                                    if(sele > 1){
+                                        jQuery("#div1").css('display','block');
+                                    }else{
+                                        jQuery("#div1").css('display','none');
+                                        jQuery("#div1 > input").val('');
+                                    }
                                 }
-                                
+
                             },
                             error:function(){
                                 alert('ajax请求失败');  //失败回调
                             }
                         });
                     });
-                </script> 
+                </script>
+                 <script type="text/javascript">
+                    jQuery.ajax({
+                        url:'/member_addrlist',               //请求地址
+                        type:'post',                //请求方式
+                        async:true,                 //是否异步
+                        data:{upid:0},          //发送的数据
+                        headers: {
+                            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType:'json',            //响应的数据类型
+                        success:function(data){     //成功回调函数
+                            console.log(data);
+                            for (var i = 0; i < data.length; i++) {
+                                jQuery('#bid').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+                            };
+                        },
+                        error:function(){
+                            alert('ajax请求失败1'); //失败回调
+                        }
+                    });
+                    var dids = '';
+                    jQuery("select[name=sele1]").live('change',function(){
+                        jQuery(this).nextAll("select").remove();
+                        var ob = jQuery(this);
+
+                        jQuery.ajax({
+                            url:'/member_addrlist',               //请求地址
+                            type:'post',                //请求方式
+                            async:true,                 //是否异步
+                            headers: {
+                                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{upid:(jQuery(this).val())},    //发送的数据
+                            dataType:'json',            //响应的数据类型
+                            success:function(data){     //成功回调函数
+                                // console.log(data);
+                                if(data.length>0){
+                                    var select = jQuery("<select name='sele1' style='width:100px;'><option value='-1'>--请选择--</option></select>")
+                                    for (var i = 0; i < data.length; i++) {
+                                        jQuery(select).append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+                                    };
+                                    ob.after(select);
+                                }else{
+                                    
+                                    dids = jQuery("select[name=sele1]:last").val();
+
+                                    var sele = jQuery("select[name=sele1]:last").val();
+                                    if(sele > 1){
+                                        jQuery("#div2").css('display','block');
+                                    }else{
+                                        jQuery("#div2").css('display','none');
+                                        jQuery("#div2 > input").val('');
+
+                                    }
+                                }
+
+                            },
+                            error:function(){
+                                alert('ajax请求失败');  //失败回调
+                            }
+                        });
+                    });
+                </script>
                 <script type="text/javascript">
                     //增加
                     function int(){
                         var name = jQuery("input[name=name]").val();
                         var contact = jQuery("input[name=contact]").val();
                         var addr = jQuery("input[name=address]").val();
+                        var num = jQuery("#tabname tr").length;
+                       
+                        if(num < 9){
                         if(!name){
                             jQuery("#names1").css('display','block');
                         }else{
                             jQuery("#names1").css('display','none');
+                        }
+
+                        if(contact && /^1[3|4|5|8]\d{9}$/.test(contact)){
+                            jQuery("#phone").css('display','none');
+                            var phone = contact;
+                        } else{
+                            jQuery("#phone").css('display','block');
                         }
                         if(!addr){
                             jQuery("#addr1").css('display','block');
                         }else{
                             jQuery("#addr1").css('display','none');
                         }
-                        if(!contact){
-                            jQuery("#phone").css('display','block');
-                        }else{
-                            jQuery("#phone").css('display','none');
-                        }
-                        if(name && addr && contact){
 
+                        var addreinfo = '';
+
+                        //获取select的text值
+                        jQuery("select[name=sele]").each(function()
+                           {
+                                addreinfo += jQuery(this).children("option:selected").text();
+                           });
+                           
+                        if(name && addr && phone){
+                            addreinfo += addr;
+                            var sele = jQuery("select[name=sele]:last").val();
+
+                           jQuery.ajax({
+                                url:'/member_addradd',               //请求地址
+                                type:'post',                //请求方式
+                                async:true,                 //是否异步
+                                data:{name:name,phone:phone,address:addreinfo,did:sele},          //发送的数据
+                                headers: {
+                                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                                },
+                                            //响应的数据类型
+                                success:function(data){     //成功回调函数
+                                    // alert(data);
+                                    jQuery("#tabname tbody").prepend("<tr name='trname' id=tr"+data+"><td name=td"+data+"1>"+name+"</td><td name=td"+data+"2>"+contact+"</td><td name=td"+data+"3>"+addreinfo+"</td><td><a href='javascript:;' onclick='fun("+data+")' ng-click='editUserAddress($index)'>修改</a><a href='javascript:;' onclick='dd("+data+")'>删除</a></td></tr>");
+                                   
+                                    jQuery("input[name=name]").val('');
+                                    jQuery("input[name=contact]").val('');
+                                    jQuery("input[name=address]").val('');
+                                    jQuery("#cid").val('-1');
+                                    jQuery("#cid").nextAll("select[name=sele]").remove();
+                                    jQuery("#div1").css('display','none');
+                                    var top = jQuery('#tabname').offset().top;
+                                    jQuery(window).scrollTop(top);
+                                },
+                                error:function(){
+                                    alert('ajax请求失败1'); //失败回调
+                                }
+                            });
                         }
+                    }else{
+                        alert('最多只能有8个地址');
                     }
+                }
                     //删除
                     function dd(id){
                         zeroModal.confirm("确定要删除吗？", function() {
@@ -388,38 +519,95 @@
                                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
                                 },
                                 success:function(){
-                                    jQuery("tr[name=tr"+id+"]").remove();
+                                    jQuery("tr[id=tr"+id+"]").remove();
                                 }
                             });
                         });
                     }
 
+                    var sid = '';
                     //修改
                     function fun(id){    
                         easyDialog.open({
                             container : 'testBox',
                             fixed : false
                         });
-                        // var $jQ=JQuery.noConflict();
                         var name1 = jQuery("td[name=td"+id+"1]").text();
                         var name2 = jQuery("td[name=td"+id+"2]").text();
                         var name3 = jQuery("td[name=td"+id+"3]").text();
-                        var name = jQuery("#inp1").val(name1);
-                        var phone = jQuery("#inp2").val(name2);
-                        var addr = jQuery("#inp3").val(name3);
-                        // jQuery("#sc").click(function(){
-                        //    name1.text();
-                        // });
+                        jQuery("#inp1").val(name1);
+                        jQuery("#inp2").val(name2);
+                        jQuery("#inp3").val(name3);
+                        sid=id;
                     };
+                    function sc(){
+                        var name = jQuery("#inp1").val();
+                        var phone = jQuery("#inp2").val();
+                        if(name){
+                            jQuery("#names2").css('display','none');
+                        }else{
+                            jQuery("#names2").css('display','block');
+                        }
+
+                        if(phone && /^1[3|4|5|8]\d{9}$/.test(phone)){
+                            jQuery("#phone1").css('display','none');
+                            var phones = phone;
+                        } else{
+                            jQuery("#phone1").css('display','block');
+                        }
+
+                         var address = jQuery("input[name=address1]").val();
+                         dids;
+                         var addreinfo1 = '';
+                         if(address){
+                             jQuery("select[name=sele1]").each(function()
+                            {
+                                addreinfo1 += jQuery(this).children("option:selected").text();
+                            });
+                                addreinfo1 += address;
+                                jQuery("td[name=td"+sid+"3]").text(addreinfo1);
+                        }
+                        if(name && phones){
+                           
+                             jQuery.ajax({
+                                //请求地址
+                                url:"/member_addrupdate",
+                                //请求方式
+                                type:'post',
+                                //是否异步
+                                async:true,
+                                //发送的数据
+                               
+                                    data:{name:name,phone:phones,id:sid,address:addreinfo1,did:dids}, 
+                             
+                                headers:{
+                                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                                },
+                                success:function(){
+                                    jQuery("#phone1").css('display','none');
+                                    jQuery("#names2").css('display','none');
+
+                                    // alert(addreinfo1);
+                                    jQuery("td[name=td"+sid+"1]").text(name);
+                                    jQuery("td[name=td"+sid+"2]").text(phone);
+
+                                    jQuery('#times').trigger("click");
+                                    alert('修改成功');
+                                    // $('testBox').getElementsByTagName('button')[0].onclick = function(){
+                                    //     easyDialog.close();
+                                    // }
+                                }
+                            });
+                        }
+                    }
                     var $ = function(){
                         return document.getElementById(arguments[0]);
                     };
+
                      $('testBox').getElementsByTagName('a')[0].onclick = function(){
                         easyDialog.close();
                     }
-                    $('testBox').getElementsByTagName('button')[0].onclick = function(){
-                        easyDialog.close();
-                    }
+                    
                 </script>
 
                 </article>
@@ -532,8 +720,8 @@
                     <label class="require col-3">送餐地址：</label>
                     <div class="col-8">
                         <input type="text" required
-                               ng-class="{error:editUserAddressForm.submit && editUserAddressForm.address.$invalid}" name="address"
-                               placeholder="详细地址，如武定西路1189号606室" ng-model="editUserAddress.delivery_address">
+                               name="address"
+                               placeholder="详细地址，如武定西路1189号606室" >
                     </div>
                     <div class="col-8 col-offset-3" ng-if="editUserAddressForm.submit && editUserAddressForm.address.$invalid">
                         <span class="vaildate-error">送餐地址不能为空</span>
