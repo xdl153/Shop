@@ -55,6 +55,19 @@ Route::post("findpassword","MyShop\ModifyPasswordController@findpassword");
 //执行修改密码
 Route::post("Modifypass","MyShop\ModifyPasswordController@Modifypass");
 //用户修改密码完
+
+
+//商家注册
+
+//查询客户端输入的用户名是否存在
+Route::post("Business","MyShop\BusinessController@FindBusiness");
+//查询客户端输入的手机号码是否存在
+Route::post("FindBusinessPhone","MyShop\BusinessController@FindBusinessPhone");
+//查询客户端输入的邮箱是否存在
+Route::post("FindEmail","MyShop\BusinessController@FindEmail");
+//提交商家信息
+Route::post("Submitinfo","MyShop\BusinessController@Submitinfo");
+//商家注册完
 //Shop_list商品列表视图路由
 Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	// Route::get("/shop_list",function(){
@@ -86,14 +99,24 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 	});*/
 //member_collect删除收藏路由
 	Route::post("/member_collect","MyShop\Member_CollectController@member_delete");
-	
+
+//member_collectinsert添加收藏路由
+	Route::post("/member_collectinsert","MyShop\Member_CollectController@member_collectinsert");
+
 //member_Addr地址管理视图路由
 	Route::get("/member_addr","MyShop\Member_AddrController@member_addr");
 
 //删除收货地址路由
 	Route::post("/member_addrdelete","MyShop\Member_AddrController@member_addrdelete");
+
 //遍历所有地址路由
 	Route::post("/member_addrlist","MyShop\Member_AddrController@member_addrlist");	
+
+//增加收货地址路由
+	Route::post("/member_addradd","MyShop\Member_AddrController@member_addradd");
+
+//修改收货地址路由
+	Route::post("/member_addrupdate","MyShop\Member_AddrController@member_addrupdate");
 
 //gifts氪星礼品站视图路由
 // Route::get("/gifts","MyShop\GiftsController@gifts");

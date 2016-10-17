@@ -130,7 +130,8 @@
 
             <ul class="favorite clearfix transform-style">
                     
-
+                  
+                    @if($business['0'])
                     @foreach($business as $info)
                         @foreach($info as $in)
                     <li class="restaurant-item fl trans" name="li{{ $in->id }}">
@@ -165,7 +166,7 @@
                     </li>
                         @endforeach
                     @endforeach
-
+                    @endif
             </ul>
             <page show="5" total="1"></page>
             <script type="text/javascript">

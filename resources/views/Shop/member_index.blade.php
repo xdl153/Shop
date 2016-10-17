@@ -332,12 +332,21 @@
             $("#password2").mouseleave(function(){
                 var regEx = new RegExp(/^[a-zA-Z0-9]{6,10}$/);
                 var password2 = $("#password2").val();
+                var password3 = $("#password3").val();
                 if(!password2.match(regEx)){
                     $("#bd2").html("密码为6 - 10位字符");
                 }else{
                     $("#bd2").html("");
                      if(aa == 'ok'){
-                        $("#button").removeAttr("disabled");
+                        if(password3 == ''){
+                            $("#button").attr("disabled", true);
+                        }
+                        if(password3 !== password2 ){
+                            $("#button").attr("disabled", true);
+                        }
+                        if(aa !== 'ok'){
+                            $("#button").attr("disabled", true);
+                        }
                     }else{
                         $("#button").attr("disabled", true);
                     }
@@ -354,9 +363,11 @@
                     $("#bd3").html("");
                     if(password3 !== password2){
                         $("#bd3").html("二次密码输入不一致");
+                        $("#button").attr("disabled", true);
                     }else{
                         if(password3 === password1){
                             $("#bd3").html("新密码与原密码相同");
+                            $("#button").attr("disabled", true);
                         }else{
                             if(aa == 'ok'){
                                 $("#button").removeAttr("disabled");
@@ -367,41 +378,43 @@
                     }
                 }
             });
-           
             $("#button").click(function(){
                 var id = "{{ session("username") }}";
                 var password = $("#password3").val();
                 var ypassword = $("#bd").val();
-                if(aa == 'ok'){
-                    $.ajax({
-                        url:'/Modifypass',
-                        type:'post',
-                        async:true,
-                        data:{id:id,password:password},
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success:function(data){
-                            if(data === 'y'){
-                                //关闭修改密码窗口
-                                $("#ok").removeClass().addClass("common-dialog trans scale50 op0"); 
-                                $("button").html("修改中请稍等");
-                                //窗口关闭网页模糊不能点 刷新页面
-                                //document.body.innerHTML=xmlhttp.responseText
-                                setTimeout(function(){
-                                    //settime(obj)
-                                    location.reload();
-                                },500)
-                            }else{
-                                $("#bd3").html("新密码与原密码相同");
+                if(confirm("你确定修改密码吗?")){
+                    if(aa == 'ok'){
+                        $.ajax({
+                            url:'/Modifypass',
+                            type:'post',
+                            async:true,
+                            data:{id:id,password:password},
+                            headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success:function(data){
+                                if(data === 'y'){
+                                    //关闭修改密码窗口
+                                    $("#ok").removeClass().addClass("common-dialog trans scale50 op0"); 
+                                    $("button").html("修改中请稍等");
+                                    //窗口关闭网页模糊不能点 刷新页面
+                                    //document.body.innerHTML=xmlhttp.responseText
+                                    setTimeout(function(){
+                                        //settime(obj)
+                                        location.reload();
+                                    },500)
+                                }else{
+                                    $("#bd3").html("新密码与原密码相同");
+                                    
+                                }
+                            },
+                            error:function(){
+                                    alert('网站错误请联系管理员2');
                             }
-                        },
-                        error:function(){
-                                alert('网站错误请联系管理员2');
-                        }
-                    })
-                }else{
-                    $("#bd3").html("原密码认证错误请重新输入");
+                        })
+                    }else{
+                        $("#bd3").html("原密码认证错误请重新输入");
+                    }
                 }
            });
         </script>

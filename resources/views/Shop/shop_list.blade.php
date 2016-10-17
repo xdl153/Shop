@@ -263,7 +263,7 @@
 									class="restaurant-item fl c_a{{$info['cid']}} c_all p_all p_356 p_352 p_42  p_online fee 1"
 									data-price='{{ $info['money'] }}' data-count="{{ $info['count'] }}" data-title="{{ $info['name'] }}">
 									<div class="img-box fl">
-										<a href="/shop_detail?bid={{ $info['id'] }}&id={{ $_GET['id'] }}">
+										<a href="/shop_detail?bid={{ $info['id'] }}&id={{ $_GET['id'] }}" id="a1">
 											<img data-src="Shop/{{ $info['photo'] }}" src="http://dhcrestaurantlogo.dhero.cn/0" width="82px" height="82px">
 										</a>
 									</div>
@@ -319,15 +319,14 @@
 										</script>
 									</div>
 
-									
-										<div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div>
+										
 										<div class="collect-success">收藏成功</div>
-									
 								</li>
 								@endif
 							@endforeach
 							
 						</ul>
+						
 						<div class="restaurant-list-empty all-restaurant-empty">
 							<div>暂无符合条件的餐厅，返回 <a href="javascript:;" class="link reset-filter">所有餐厅</a></div>
 						</div>
