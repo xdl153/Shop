@@ -502,44 +502,45 @@
 				<div class="form-group row mb10">
 					<label class="col-3" >用户名：</label>
 					<div class="col-8">
-						<input type="text" ng-class="{error:merchants.nameMessage}" maxlength="11" placeholder="输入您的用户名/手机号码" ng-model="merchants.name"/>
+						<input id="username"type="text" ng-class="{error:merchants.nameMessage}" maxlength="11" placeholder="输入您的用户名/手机号码" ng-model="merchants.name"/>
 					</div>
-					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.nameMessage">
-						<span ng-bind="merchants.nameMessage"></span>
-					</span>
+					<span id="bd1" class="vaildate-error col-8 col-offset-3"></span>
 				</div>
 				<div class="form-group row mb10">
 					<label class="col-3">密　码：</label>
 					<div class="col-8">
-						<input type="password" model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change" placeholder="输入您的密码">
+						<input id="userpassword" type="password" model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change" placeholder="输入您的密码">
 					</div>
-					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.cityMessage">
-						<span ng-bind="merchants.cityMessage"></span>
-					</span>
+					<span id="bd2" class="vaildate-error col-8 col-offset-3"></span>
 				</div>
 				<div class="form-group row mb10">
 					<label class="col-3">店主姓名：</label>
 					<div class="col-8">
-						<input type="text" ng-class="{error:merchants.usernameMessage}" placeholder="请输入联系人姓名" ng-model="merchants.username"/>
+						<input id="store" type="text" ng-class="{error:merchants.usernameMessage}" placeholder="请输入联系人姓名" ng-model="merchants.username"/>
 					</div>
-					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.usernameMessage">
-						<span ng-bind="merchants.usernameMessage"></span>
-					</span>
+					<span id="bd3" class="vaildate-error col-8 col-offset-3"></span>
 				</div>
 				<div class="form-group row mb20">
 					<label class="col-3">联系电话：</label>
 					<div class="col-8">
-					   <input type="text" ng-class="{error:merchants.phoneMessage}" maxlength="11" placeholder="建议输入11位手机号码" ng-model="merchants.phone"/>
+					   <input id="storephone" type="text" ng-class="{error:merchants.phoneMessage}" maxlength="11" placeholder="建议输入11位手机号码" ng-model="merchants.phone"/>
 					</div>
-					<span class="vaildate-error col-8 col-offset-3" ng-if="merchants.phoneMessage">
-						<span ng-bind="merchants.phoneMessage"></span>
-					</span>
+					<span id="bd4" class="vaildate-error col-8 col-offset-3"></span>
+				</div>
+                            	<div class="form-group row mb10">
+					<label class="col-3">邮　箱：</label>
+					<div class="col-8">
+						<input id="useremail" type="text" model="city" area-model="area" ng-class="{error:merchants.cityMessage}" class="city-change" placeholder="输入您的邮箱">
+					</div>
+					<span id="bd5" class="vaildate-error col-8 col-offset-3"></span>
 				</div>
 				<div class="form-group row agreement mb20">
 				   <input type="checkbox" ng-model="merchants.checkbox" id="male"/><label for="male">我同意</label><a href="/agreement" target="_blank">"餐厅入驻协议"</a>
 				</div>
+                            <span id="tjcg" style="color:red;align:center;margin:auto;"></span><br>
+                            <br>
 				<div class="tc merchants-btn">
-					<button class="btn normal-btn btn-success" ng-click="merchantSubmit()" ng-disabled="!merchants.checkbox">确认</button>
+					<button id="storebutton" class="btn normal-btn btn-success" >确认</button>
 					<button class="btn normal-btn btn-cancel" ng-click="merchantCancel()">取消</button>
 				</div>
 			</form>
@@ -581,7 +582,10 @@
 		<script>var manually_locations='';</script>
 		<script src="{{ asset('Shop/js/frontPage.js') }}"></script>
 		<script>angular.bootstrap(document, ["app"]);</script>
+                //注册登陆js文件
                 <script src="{{ asset('Shop/js/qtjs.js') }}"></script>
+                //商家申请js文件
+                <script src="{{ asset('Shop/js/sjzc.js') }}"></script>
 		<script>
                            //实时获取用户输入搜索地址
             $('#Search').keyup('input', function () {
