@@ -68,7 +68,7 @@ var bodyCtrl = (function (window) {
             for (var i = 0, len = cartDatas.length; i < len; i++) {
                 item = cartDatas[i];
                 orderData.push({
-                    id: item.id,
+                    name: item.name,
                     p: item.price+"",
                     q: item.quantity
                 })
@@ -76,7 +76,7 @@ var bodyCtrl = (function (window) {
                 orderData[i].opts=[];
                 for (var j = 0, optionLen = itemOptions.length; j < optionLen; j++) {
                     orderData[i].opts.push({
-                        id: itemOptions[j].id,
+                        name: itemOptions[j].name,
                         p: itemOptions[j].price+"",
                         q: itemOptions[j].quantity
                     });
@@ -84,7 +84,7 @@ var bodyCtrl = (function (window) {
                 itemAdds=item.additions,orderData[i].adds=[];
                 for (var t = 0, addLength = itemAdds.length; t < addLength; t++) {
                     orderData[i].adds.push({
-                        id: itemAdds[t].id,
+                        name: itemAdds[t].name,
                         p: itemAdds[t].price+"",
                         q: item.quantity
                     });
@@ -538,8 +538,8 @@ var bodyCtrl = (function (window) {
                             "platform":1
                         })
                         .success(function (d) {
-                            if (d.status == 'ok' && d.order_id) {
-                                window.location.href = checkout_url.replace('www.wmcr.com/photo');
+                            if (d.status == 'ok') {
+                                window.location.href = checkout_url.replace('/photo');
                             } else {
                                 if(d.status == 'failed' ){
                                     if(d.failed_code == 0){
