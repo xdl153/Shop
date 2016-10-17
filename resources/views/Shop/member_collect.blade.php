@@ -129,8 +129,9 @@
 
 
             <ul class="favorite clearfix transform-style">
-                   
-                    @if(empty($business))
+                    
+                  
+                    @if($business['0'])
                     @foreach($business as $info)
                         @foreach($info as $in)
                     <li class="restaurant-item fl trans" name="li{{ $in->id }}">
