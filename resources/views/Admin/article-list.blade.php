@@ -52,7 +52,7 @@
 				<td></td>
 
 				<td class="td-manage">
-				<a style="text-decoration:none" class="ml-5" href="javascript:test({{ $article->id }})" onClick="change_password('修改密码','{{ URL('change-password') }}','10001','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
+				<a style="text-decoration:none" class="ml-5" onClick="change_password('修改密码','change-password','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
 				<a title="删除" href="javascript:;dodel({{ $article->id }})" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 				</td>
 			</tr>
@@ -62,25 +62,25 @@
 	</div>
 </div>
 <script>
-		function test(en){
-			// alert(en);
-				$.ajax({
-                      		url:"{{ URL('change-password') }}",
-					type:'post',
-					data:{'data':en},
-		                	async:true,
-					// dataType:'json',
-                      		headers: { 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')},
-                      		success:function(data){
-                        		if(data=='y'){
-                        			alert(en);
-                            			$("#"+en+"").remove();
-                        		}
+		// function test(en){
+		// 	// alert(en);
+		// 		$.ajax({
+  //                     		url:"{{ URL('change-password') }}",
+		// 					type:'post',
+		// 					data:{'data':en},
+		//                 		async:true,
+		// 					// dataType:'json',
+  //                     		headers: { 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')},
+  //                     		success:function(data){
+  //                       		if(data=='y'){
+  //                       			alert(en);
+  //                           			$("#"+en+"").remove();
+  //                       		}
                         	
-                      		},
-		                      error:function(){alert('Ajax请求失败')},
-		                  });
- 					}
+  //                     		},
+		//                       error:function(){alert('Ajax请求失败')},
+		//                   });
+ 	// 				}
 </script>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>
