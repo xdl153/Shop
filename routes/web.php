@@ -209,20 +209,9 @@ Route::post("/ord","MyShop\OrderController@ord");
 		return view("Shop.order_success");
 	});
 
+
+
 //后台***********************项目
-//后台界面 需要登录才能访问的内容 
-Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
-//网站后台首页
-	Route::get("index","MyAdmin\IndexController@index");
-//执行退出 
-	Route::get("logout","MyAdmin\LoginController@logout");
-//后台桌面
-	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
-	});
-// 管理员查看信息页面
-	Route::get("Admin/member-show",function(){
-		return view("Admin.member-show");
-	});
 // 登录表单 
 	Route::get("Admin/login","MyAdmin\LoginController@login");
 
@@ -232,14 +221,34 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 // 验证码
 	Route::get("Admin/captcha/{tmp?}","MyAdmin\LoginController@captcha");
 
+//后台界面 需要登录才能访问的内容 
+Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
+
+//网站后台首页
+	Route::get("index","MyAdmin\IndexController@index");
+
+//执行退出 
+	Route::get("logout","MyAdmin\LoginController@logout");
+
+//后台桌面
+	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
+	});
+
+// 查看信息页面
+	Route::get("Admin/member-show",function(){
+		return view("Admin.member-show");
+	});
+
+
 // 用户列表
 	Route::get("article-list","MyAdmin\UserlistController@article");
 
  //用户反馈列表
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
 
-// 修改页面
-	Route::get("change-password","MyAdmin\ChangeController@update");
+// 执行修改页面
+	Route::get("change-password","MyAdmin\ChangeController@change_password");
+	Route::post("change-password","MyAdmin\ChangeController@update");
 
 // 添加用户页面
  	Route::get("/article-add",function(){return view("/Admin.article-add");});

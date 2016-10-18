@@ -49,7 +49,7 @@
 				<td><input type="checkbox" value="1" name=""></td>
 				<td>{{ $article->id }}</td>
 				<td>{{ $article->name }}</td>
-				<td>{{ $article->data }}</td>
+				<td></td>
 
 				<td class="td-manage">
 				<a style="text-decoration:none" class="ml-5" href="javascript:test({{ $article->id }})" onClick="change_password('修改密码','{{ URL('change-password') }}','10001','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
@@ -62,23 +62,27 @@
 	</div>
 </div>
 <script>
-		function test(en){
-			// alert(en);
-				$.ajax({
-                      		url:"{{ URL('change-password') }}",
-					type:'get',
-					data:{'data':en},
-					// dataType:'json',
-                      		headers: { 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')},
-                      		success:function(data){
-                        		if(data=='修改成功')
-                        	{
-                            	$("#"+en+"").remove();
-                        }
-                        	alert(en);
-                      },
-                      error:function(){alert('Ajax请求失败')},
-                  });
+    function test(id){
+        if(confirm("tttt")){
+            $.ajax({
+                url:'/change-password',
+                type:'post',
+                async:true,
+                data:{data:id},
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    if(data === 'y'){
+                        location.reload();
+                    }else{
+                        alert('no');
+                    }
+                },
+                error:function(){
+                    alert('ajax失败');
+                }
+            });
         }
 </script>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 

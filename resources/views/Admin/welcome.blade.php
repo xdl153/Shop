@@ -38,16 +38,16 @@
 		<tbody>
 			<tr>
 				<th width="30%">注册时间</th>
-				<td><span id="lbServerName"></span>{{ session('adminuser')->regitime }}</td>
+				<td><span id="lbServerName"></span></td>
 			</tr>
 			<tr>
 				<td>登录名</td>
-				<td>{{ session('adminuser')->name }}</td>
+				<td></td>
 			</tr>
 
 			<tr>
 				<td>状态</td>
-				<td>{{ session('adminuser')->state }}</td>
+				<td></td>
 			</tr>
 		</tbody>
 	</table>
