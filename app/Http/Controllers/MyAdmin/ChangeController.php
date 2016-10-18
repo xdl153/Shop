@@ -9,23 +9,34 @@ use App\Http\Controllers\Controller;
 
 class ChangeController extends Controller
 {
-	//执行修改
+	//修改密码视图
+	// public function change_password()
+	// {
+	// 	return view('Admin.change-password');
+	// }
+	//执行修改密码
 	public function update(Request $request)
 	{
-		$list = \DB::select('select * from user where id = ?', [29]);
-		// dd($list);
-		// $list = \DB::table('user')->first();
-		// dd($list);
-		// $list = \DB::table('user')->where('id','=',$id)->first();	
-		return view('Admin.change-password',['list'=>$list]);	
+		// dd($_GET['id']);
+		return view('Admin.change-password');
 	}
 
-	//用户反馈列表ddddd
+	//用户反馈列表
 	public function picture_list()
 	{
-		$li = \DB::table('feedback')->get();
-		return view("Admin.picture-list",['li'=>$li]);
+            $li = \DB::table('feedback')->get();
+            return view("Admin.picture-list",['li'=>$li]);
 	}
+        public function picturelistdelete(Request $request)
+        {
+            $id = $request->input('id');
+            $user = \DB::table('feedback')->delete(['id' => $id]);
+            if($user > 0){
+              return 'y';
+            }else{
+                return 'n';
+            }
+        }
 
 	//商家列表
 	public function product_brand()
