@@ -26,16 +26,17 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>修改密码 - 会员管理 - H-ui.admin v2.3</title>
-<meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+<title>修改密码 - 会员管理</title>
 </head>
 <body>
 <article class="page-container">
-	<form action="/" method="post" class="form form-horizontal" id="form-change-password">
+	<form action="{{URL('Admin/change-password')}}" method="post" class="form form-horizontal" id="form-change-password">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="row cl">
+			@foreach($list as $li)
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账户：</label>
-			<div class="formControls col-xs-8 col-sm-9"> 张三 </div>
+			<div class="formControls col-xs-8 col-sm-9" bb="{{ $li->id }}">{{ $li->name }}</div>
+
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
@@ -51,12 +52,41 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+				<input onclick='edit(this.id)' id='{{ $li->id }}' cc='{{ $li->name }}' class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
 			</div>
 		</div>
+			@endforeach
 	</form>
 </article>
-
+<script>
+		// ajax做修改
+	function edit(en){
+		alert(en);
+		//获取表单中的值
+		var a=$("#"+en).attr('cc');
+		//表单中输入的值
+		var name=$('#'+a).val();
+		$.ajax({
+			url:"{{ URL('Admin/change-password') }}",
+			type:'post',
+			data:{'data':en,'name':name},
+			 headers: {
+           			 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')
+        		},
+			success:function(data){
+				alert(data);
+				if(data=='修改成功')
+				{
+					//改变对应节点的值
+					$('td[bb='+']').html(name);
+				}
+			},
+			error:function(){
+				alert('系统错误');
+			},
+		});
+	}
+</script>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script> 

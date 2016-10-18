@@ -21,10 +21,10 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>商家状态</title>
+<title>商家评论</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家状态 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家评论 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<!--29行到34行是显示条数和检索-->
 	<div class="text-c">
@@ -37,17 +37,27 @@
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="80">店铺名</th>
-					<th width="70">店铺ID</th>
-					<th width="200">消息</th>
-					<th width="120">是否运行中</th>
-					<th>具体描述</th>
-					<th width="100">开启/关闭</th>
+					<th width="80">ID</th>
+					<th width="70">用户ID</th>
+					<th width="200">店铺ID</th>
+					<th width="120">评论日期</th>
+					<th>评论内容</th>
+					<th width="100">评论星级</th>
 				</tr>
 			</thead>
+			@foreach($product_list as $p)
 			<tbody>
-				
+				<tr class="text-c">
+					<td width="25"><input type="checkbox" name="" value=""></td>
+					<td>{{ $p->id }}</td>
+					<td>{{ $p->uid }}</td>
+					<td>{{ $p->bid }}</td>
+					<td>{{ $p->data }}</td>
+					<td>{{ $p->content }}</td>
+					<td>{{ $p->grade }}</td>
+				</tr>
 			</tbody>
+			@endforeach
 		</table>
 	</div>
 </div>

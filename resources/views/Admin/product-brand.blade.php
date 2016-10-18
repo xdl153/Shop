@@ -39,18 +39,31 @@
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="70">ID</th>
 					<th width="80">地区</th>
-					<th width="200">店铺名</th>
-					<th width="120">上线日期</th>
-					<th>销量</th>
-					<th width="100">信用</th>
-					<th width="100">商品总数</th>
-					<th width="100">总销售额</th>
-					<th width="100">管理</th>
+					<th width="100">店铺名</th>
+					<th width="120">营业时间</th>
+					<th>休息时间</th>
+					<th width="100">店铺电话</th>
+					<th width="100">店铺星级</th>
+					<th width="100">收款帐号</th>
+					<th width="100">审核状态</th>
 				</tr>
 			</thead>
+			@foreach($product as $p)
 			<tbody>
-				
+				<tr class="text-c">
+					<td width="25"><input type="checkbox" name="" value=""></td>
+					<td>{{ $p->id }}</td>
+					<td width="130">{{ $p->address }}</td>
+					<td>{{ $p->name }}</td>
+					<td>{{ $p->shopopen }}</td>
+					<td>{{ $p->shopon }}</td>
+					<td>{{ $p->phone }}</td>
+					<td>{{ $p->grade }}</td>
+					<td>{{ $p->account }}</td>
+					<td>{{ $p->examine }}</td>
+				</tr>
 			</tbody>
+			@endforeach
 		</table>
 	</div>
 </div>

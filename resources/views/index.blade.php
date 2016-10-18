@@ -444,7 +444,7 @@
 							</span>
 						</div>
 						<label class="fr">
-							<button id="yzmyzm"onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
+							<button id="yzmyzm" onclick="settime(this);yzm();" style="width:119px;height:34px;background-color:#80BF2F;"><span style="padding: 4px 12px;color: #ffffff;text-align: center;vertical-align: middle;cursor: pointer;line-height:5px;">获取验证码</span></button>
 						</label>
 					</div>
 				</div>

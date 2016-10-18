@@ -165,15 +165,14 @@
             //判断验证码
             $("#code").blur(function(){
                 var code = $("#code").val();
-                
-//                if(code == ""){
-//                     $("#button").html("请输入验证码");
-//                     $("#button").attr("disabled", true);
-//                }
-//                if(!!(/^\d{4}$/).pd(code)){
-//                    $("#button").html("验证码必须4位");
-//                    $("#button").attr("disabled", true);
-//                }
+                if(code == ""){
+                     $("#button").html("请输入验证码");
+                     $("#button").attr("disabled", true);
+                }
+                if(!!(/^\d{4}$/).pd(code)){
+                    $("#button").html("验证码必须4位");
+                    $("#button").attr("disabled", true);
+                }
                 $("#button").removeAttr("disabled", true);
             });
             

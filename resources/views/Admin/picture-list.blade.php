@@ -44,7 +44,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				
+			@foreach($li as $p)
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<td>{{ $p->uid }}</td>
+					<td>{{ $p->phone }}</td>
+					<td>{{ $p->data }}</td>
+					<td>{{ $p->content }}</td>
+				</tr>
+			@endforeach
 			</tbody>
 		</table>
 	</div>
@@ -57,11 +65,11 @@
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
 <script type="text/javascript">
 $('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
+	// "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	// "bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
+	  // {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
 	]
 });
 </script>
