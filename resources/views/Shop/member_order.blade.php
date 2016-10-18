@@ -146,7 +146,7 @@
                      </div>
                      <div class="fl order-type padding-margin">
                          <p>订单类型：{{ ($l->type)==1?"餐到付款":"" }}</p>
-                         <p>订单状态：等待收货</p>
+                         <p>订单状态：{{ ($l->express)==2?"送货成功":"待送出" }}</p>
                      </div>
                      <div class="fl order-total padding-margin">
                          <p>订单金额</p>
@@ -178,16 +178,23 @@
                                     <div class="goods-price">单价</div>
                                     <div class="goods-subtotal">小计</div>
                                 </div>
+                                
                                 <div class="cart-body">
-                                       <div class="cart-item clearfix ng-scope">
-                                        <div class="goods-name ellipsis ng-binding" ></div>
-                                        <div class="goods-count ellipsis ng-binding">1</div>
-                                        <div class="goods-price ng-binding" >￥22.00</div>
-                                        <div class="goods-subtotal ng-binding" >￥22.00</div>     
+                                    @foreach($str as $st)
+                                        @foreach($st as $s)
+                                        @if($s->oid == $l->id)
+                                    <div class="cart-item clearfix ng-scope">
+                                        <div class="goods-name ellipsis ng-binding" >{{ $s->cname }}</div>
+                                        <div class="goods-count ellipsis ng-binding">{{ $s->num }}</div>
+                                        <div class="goods-price ng-binding" >￥{{ $s->Price }}</div>
+                                        <div class="goods-subtotal ng-binding" >￥{{ $s->Price*$s->num }}</div>     
                                         <div class="accessory-item">
                                             <!-- ngRepeat: option in menu_item.options -->
                                         </div>
                                     </div>
+                                        @endif
+                                        @endforeach
+                                    @endforeach
                                 </div>
                                 <div class="cart-footer clearfix">
                                     <div class="order-adress fl">
@@ -204,7 +211,7 @@
                                         <!-- ngIf: order['11982902'].coupon_amount -->
                                         <!-- ngIf: order['11982902'].red_packet_amount -->
                                         <!-- <p>活动优惠：<span ng-bind="order['11982902'].total_remit_amount|currency:'￥'"></span></p> -->
-                                        <p class="order-total">实付金额：<span ng-bind="order['11982902'].order_total|currency:'￥'" class="ng-binding"></span></p>
+                                        <p class="order-total">实付金额：{{ $l->money }}<span ng-bind="order['11982902'].order_total|currency:'￥'" class="ng-binding"></span></p>
                                     </div>
                                 </div>
                             </div>

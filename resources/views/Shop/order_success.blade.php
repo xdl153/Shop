@@ -39,23 +39,6 @@
                         <h1 class="fl">
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
-
-                            <ul class="member logging" ng-init="loginInfo=true">
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="userName">
-                                    <a href="{{ URL('/member_index') }}" rel="nofollow" draw-user>18005151538<em></em></a>
-                                    <div>
-                                        <p><a href="{{ URL('/member_index') }}"  rel="nofollow">账号管理</a></p>
-                                        <p><a href="{{ URL('/member_addr') }}"  rel="nofollow">地址管理</a></p>
-                                        <p class="no-bo"><a id="logout" href="/account/logout/" referer-url rel="nofollow">退出</a></p>
-                                    </div>
-                                </li>
-                                <li class=""><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">我的订单</a></li>
-                                <li class=""><a href="{{ URL('/member_collect') }}"  rel="nofollow">我的收藏</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="/app/"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
-                            </ul>
-
                     </div>
                 </header>
 
@@ -77,15 +60,13 @@
             <div class="confirm-content fl">
                 <div class="content">
                     <h3>订单已成功提交</h3>
-                    <p>请保持手机13851435593畅通，稍后超人客服或餐厅会与您联系。</p>
+                    @if(session('username'))
+                    <p><h4>请保持手机{{ session('username') }}畅通，稍后超人客服或餐厅会与您联系。</h4></p>
+                    @else
+                    <p>请保持手机畅通，稍后超人客服或餐厅会与您联系。</p>
+                    @endif
                     <p>感谢使用外卖超人。</p>
-
-
-                        <p>获得氪星币：<span class="c_xkb">320</span>个</p>
-
-
-                    <a href="{{ URL('/member_order') }}" class="order">查看订单</a>
-
+                    <h4><a href="/" class="order">回到首页</a></h4>
                 </div>
             </div>
             <div class="app_download fl">

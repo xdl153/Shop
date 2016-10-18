@@ -549,7 +549,7 @@ var bodyCtrl = (function (window) {
                                     }
                                 }
                                 scope.createOrderError = true;
-                                scope.createOrderErrorMsg = '失败';
+                                scope.createOrderErrorMsg = '下单失败,请您先登录';
                                 scope.isPlaceOrder=false;
                             }
                         })

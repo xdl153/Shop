@@ -42,31 +42,29 @@
                         </h1>
 
                             <ul id="member" class="member" login-box>
-								<li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
-								<li class="login-register">
-									@if(empty(session("username")))
-										<a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
-										<span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
-									@else
-										<li class="userName">
-											<a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
-											<div>
-												<p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
-												<p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
-												<p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
-											</div>
-										</li>
-											<li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                    <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                    <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                                <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                                <div>
+                                                    <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                    <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                    <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                                </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
                                             <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
                                             <li class=""><a  href="#" onclick="exit()">退出</a></li>
-									@endif
-						
-						
-								<input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
-								<script type="text/javascript">
+                                    @endif					
+                                            <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                        <script type="text/javascript">
 	
-									function exit(){
-										var hiddenid = $('#hidden').val();
+                                            function exit(){
+                                                var hiddenid = $('#hidden').val();
 		                              	$.ajax({
 		                                   url:'/logout',
 		                                   type:'post', 
@@ -86,8 +84,8 @@
 		                                   }
                            			 	});
                           			};
-								</script>
-							</ul>
+                                        </script>
+                            </ul>
 
                     </div>
                 </header>

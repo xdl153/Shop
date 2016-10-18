@@ -33,7 +33,7 @@
         <title>下订单</title>
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
-
+        
         <section class="common-back" id="wrapBackground">
 
                 <header id="header">
@@ -195,8 +195,12 @@
                                             <input type="text" maxlength="150" placeholder="如：多米饭，不吃辣等口味需求" ng-model="comment">
                                     </div>
                             </div>
+                        
                     </form>
-                        <div>* 请填写当前范围内的地址：{{ session('dizhi') }}</div>
+                        <div>* 请填写当前范围内的地址：{{ session('dizhi') }}</div> 
+                        <hr>
+                        <button  ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                        </hr>
                     </section>
                     <header>订单内容</header>
                     <section>
@@ -236,7 +240,7 @@
                                 
                                 <a href="/shop_detail?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
                                 
-                                <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" id="aaaa" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                                <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" id="aaaa"  class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
                             </p>
                         @endforeach
                     </section>
@@ -571,7 +575,8 @@
             var ajax_common_sms_code = "/ajax/common_sms_code/";
             var ajax_is_order_need_sms_validate = "/tijiao";
             var ajax_common_validate_sms_code = "/ajax/common_validate_sms_code/";
-            var orderId = '3788798';
+            var av = parseInt(Math.random()*999999+1);
+            var orderId = '520'+av;
             var grid_locationId = '602341';
             var restaurantId = '1019';
             var gaObj = {
@@ -585,7 +590,7 @@
             var selectObj = [];
             var userAddress = [];
             var _isAuthenticated = 'ajax';
-//            var setLastAddrUrl =  "/ord";
+            var setLastAddrUrl =  "/l";
             var lastUsedAddressId = '230901';
             @foreach($site as $s)
                 userAddress.push({
@@ -608,6 +613,6 @@
         <script>angular.bootstrap(document, ["app"]);</script>
 
         <!-- Baidu Analytics -->
-
+        
     </body>
 </html>
