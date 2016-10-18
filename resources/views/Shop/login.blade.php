@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('Shop/static/css/common.css') }}"/>
     <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('Shop/static/css/login.css') }}"/>
+    <script src="{{ asset('Shop/js/qtjs.js') }}"></script>
 
     <!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="{{ asset('Shop/static/css/frontPage-ie8-fix.css') }}" /><![endif]-->
     <!--[if lte IE 10]><script>document.createElement('footer');document.createElement('header');document.createElement('nav');document.createElement('section');document.createElement('article');</script><![endif]-->
@@ -43,7 +44,6 @@
 
 <section class="main">
     <div class="common-width">
-        
     <div class="main-inner">
         
             <div class="login-register">
@@ -56,11 +56,15 @@
                     @endif
                 </div>
 
-                <div class="log-box hide show " id="loginPageBox">
+                <div class="log-box hide show " id="loginPageBox" @if($_GET['status'] == '1')
+                        style="display: block;"
+                    @else
+                        style="display: none;"
+                    @endif >
                     <div class="login-header"></div>
                     <div class="form-group w275">
                         <label for="lPhone">手机号码</label>
-                        <span class="fs12 fr">没有注册 ？ <a href="{{ URL('/register') }}" class="yo">立即注册</a></span>
+                        <span class="fs12 fr">没有注册 ？ <a href="{{ URL('/login?id=786&status=2') }}" class="yo">立即注册</a></span>
                         <input id="lPhone" maxlength="11" type="text" class="form-text" placeholder="输入您的手机号码"/></label>
                     </div>
                     <div class="form-error-message"></div>
@@ -86,17 +90,21 @@
                             <span class="fr fs12"><a class="yo" target="_black" href="">忘记密码</a></span>
                         </div>
                         <div>
-                            <button onclick="login();" class="form-btn">登录</button>
+                            <button id="dldl" onclick="login();" class="form-btn">登录</button>
                         </div>
                         <div class="code-box clearfix">
                             <img src="{{ asset('Shop/static/img/downLodNew.png') }}" style="width: 262px;height: 93px;margin-left: 15px;" />
                         </div>
                     </div>
 
-                <div class="log-box hide ''" id="registerPageBox">
+                <div class="log-box hide ''" id="registerPageBox" @if($_GET['status'] == '1')
+                        style="display: none;"
+                    @else
+                        style="display: block;"
+                    @endif >
                     <div class="form-group w275">
                         <label for="">手机号码</label>
-                        <input type="text" id="rPhone" maxlength="11" class="form-text" placeholder="请输入你的手机号码" />
+                        <input type="text" id="aaa" maxlength="11" class="form-text" placeholder="请输入你的手机号码" />
                     </div>
                     <div class="form-error-message"></div>
 
@@ -111,8 +119,7 @@
                             </div>
                             <div class="captcha-item">
                                 <div class="form-group captcha clearfix">
-                                    <input type="text" id="imgCaptcha" disabled="disabled" maxlength="4" class="form-text" placeholder="输入验证码"/>
-                                    <span><img class="captchaImg" _src="/captcha/" src="/captcha/" alt="验证码"/></span>
+                                    <input type="text" id='abc' style="width: 120px;" maxlength="4" class="form-text" placeholder="输入验证码"/><button id="yzmyzm" onclick="settime(this);yzm();" style="width: 130px;margin: 0;height: 47px;background: #7fc11c;font-size: 16px;border: none;color: white;cursor: pointer;border-radius: 2px;font-family: "Microsoft YaHei";">获取验证码</button>
                                 </div>
                                 <div class="form-error-message"></div>
                             </div>
@@ -121,11 +128,11 @@
 
                     <div class="form-group w275">
                         <label for="">登录密码</label>
-                        <input type="password" id="rPass" maxlength="10" class="form-text" onpaste="return false" placeholder="输入登录密码 6-10个字符和数字"/>
+                        <input type="password"  id="pwd1" maxlength="10" class="form-text" onpaste="return false" placeholder="输入登录密码 6-10个字符和数字"/>
                     </div>
                     <div class="form-error-message"></div>
                     <div class="form-group w275">
-                        <input type="password" id="rPass2" maxlength="10" class="form-text" onpaste="return false" placeholder="输入登录密码 6-10个字符和数字"/>
+                        <input type="password" id="pwd2" maxlength="10" class="form-text" onpaste="return false" placeholder="输入登录密码 6-10个字符和数字"/>
                     </div>
                     <div class="form-error-message"></div>
 
@@ -137,7 +144,7 @@
                     </div>
                     <div class="form-error-message"></div>
                     <div>
-                        <button class="form-btn" id="registerPageBtn">确认注册</button>
+                        <button class="form-btn"  id="button" onclick="register();">确认注册</button>
                     </div>
                     
                 </div>
@@ -245,8 +252,6 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
     function login(){
          var name = $("#lPhone").val();
          var password = $("#lPass").val();
-         alert(name);
-         alert(password);
          $.ajax({
             url:'/dologin',
             type:'post',
@@ -257,14 +262,16 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
             },
             success:function(a){
                 if( a === 'y'){
-                    //获取地址ID值
+                $("#dldl").html("正在登录请稍等");
+                //获取地址ID值
+                    
                     var hiddenid = $('#hidden').val();
 
                     //跳转到店铺列表
                     location.href = "/shop_list?id="+hiddenid+"";
 
                 }else{
-                    alert('登录失败');
+                    $("#dldl").html("账号密码错误");
                 }
             },
             error:function(){

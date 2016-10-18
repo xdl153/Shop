@@ -37,9 +37,8 @@
 				<th width="25"><input type="checkbox" name="" value=""></th>
 				<th width="80">ID</th>
 				<th width="100">登录名</th>
-				<th width="40">手机</th>
+				<th width="90">手机</th>
 				<th width="90">邮箱</th>
-				<th width="150">角色</th>
 				<th width="">地址</th>
 				<th width="130">注册时间</th>
 				<th width="70">是否启用</th>
@@ -47,18 +46,19 @@
 			</tr>
 		</thead>
 		<tbody>
+		@foreach($admin_list as $a)
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>1</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','360','400')">张三</u></td>
-				<td>男</td>
-				<td>13000000000</td>
-				<td>admin@mail.com</td>
-				<td class="text-l">北京市 海淀区</td>
-				<td>2014-6-11 11:11:42</td>
+				<td>{{ $a->id }}</td>
+				<td>{{ $a->name }}</td>
+				<td>{{ $a->phone }}</td>
+				<td>{{ $a->email }}</td>
+				<td>{{ $a->address }}</td>
+				<td>{{ $a->regitime }}</td>	
 				<td class="td-status"><span class="label label-success radius">已启用</span></td>
 				<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑管理员" href="javascript:;" onclick="member_edit('编辑管理员','{{ URL('admin-add') }}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
+		@endforeach
 		</tbody>
 	</table>
 	</div>
@@ -76,7 +76,7 @@ $(function(){
 		"bStateSave": true,//状态保存
 		"aoColumnDefs": [
 		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+		  {"orderable":false,"aTargets":[0,8,8]}// 制定列不参与排序
 		]
 	});
 	$('.table-sort tbody').on( 'click', 'tr', function () {

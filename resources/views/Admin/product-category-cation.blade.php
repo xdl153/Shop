@@ -21,10 +21,10 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>店铺认证</title>
+<title>订单列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 店铺认证 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
   <!--29行到34行是显示条数和检索-->
   <div class="text-c">
@@ -37,18 +37,45 @@
       <thead>
         <tr class="text-c">
           <th width="25"><input type="checkbox" name="" value=""></th>
-          <th width="80">店铺名</th>
-          <th width="70">店铺地址</th>
-          <th width="200">配送范围</th>
-          <th width="70">店主姓名</th>
-          <th width="70">联系电话</th>
-          <th width="70">营业执照</th>
-          <th width="70">操作</th>
+          <th width="80">id</th>
+          <th width="70">用户id</th>
+          <th width="200">店铺id</th>
+          <th width="70">菜单id</th>
+          <th width="70">订单号</th>
+          <th width="70">订单创建时间</th>
+          <th width="70">订单单价</th>
+          <th width="70">送餐时间</th>
+          <th width="70">菜品份数</th>
+          <th width="70">订单备注信息</th>
+          <th width="70">订单配送方式</th>
+          <th width="70">订单状态(未提交)</th>
+          <th width="70">订单配送方式(未送出)</th>
+          <th width="70">订单总金额</th>
         </tr>
       </thead>
-      <tbody>
 
+      <tbody>
+          @foreach($product_category_cation as $p)
+          <tr class="text-c">
+          <td width="25"><input type="checkbox" name="" value=""></td>
+          <td>{{ $p->id }}</td>
+          <td>{{ $p->uid }}</td>
+          <td>{{ $p->bid }}</td>
+          <td>{{ $p->mid }}</td>
+          <td>{{ $p->number }}</td>
+          <td>{{ $p->data }}</td>
+          <td>{{ $p->Price}}</td>
+          <td>{{ $p->Delivery }}</td>
+          <td>{{ $p->num }}</td>
+          <td>{{ $p->content }}</td>
+          <td>{{ $p->type }}</td>
+          <td>{{ $p->state }}</td>
+          <td>{{ $p->express }}</td>
+          <td>{{ $p->money }}</td>
+          </tr>
+          @endforeach
       </tbody>
+
     </table>
   </div>
 </div>

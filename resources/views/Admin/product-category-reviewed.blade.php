@@ -21,10 +21,10 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>商品审核</title>
+<title>菜单列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商品审核 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 菜单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
   <!--29行到34行是显示条数和检索-->
   <div class="text-c">
@@ -37,18 +37,30 @@
       <thead>
         <tr class="text-c">
           <th width="25"><input type="checkbox" name="" value=""></th>
-          <th width="80">所属商家ID</th>
-          <th width="70">所属商家名</th>
-          <th width="200">商家信用积分</th>
-          <th width="70">商家电话</th>
-          <th width="70">菜品名</th>
-          <th width="70">图片</th>
-          <th width="70">说明</th>
-          <th width="70">是否同意</th>
+          <th width="80">id</th>
+          <th width="70">类别id</th>
+          <th width="200">店铺id</th>
+          <th width="70">菜名</th>
+          <th width="70">菜品图片</th>
+          <th width="70">价格</th>
+          <th width="70">菜品介绍</th>
+          <th width="70">推荐</th>
         </tr>
       </thead>
       <tbody>
-
+          <tr class="text-c">
+          @foreach($product_category_reviewed as $p)
+                 <td width="25"><input type="checkbox" name="" value=""></td>
+                 <td>{{ $p->id }}</td>
+                 <td>{{ $p->cid }}</td>
+                 <td>{{ $p->bid }}</td>
+                 <td>{{ $p->name }}</td>
+                 <td>{{ $p->images }}</td>
+                 <td>{{ $p->price }}</td>
+                 <td>{{ $p->caipin }}</td>
+                 <td>{{ $p->recommend }}</td>
+            @endforeach
+          </tr>
       </tbody>
     </table>
   </div>

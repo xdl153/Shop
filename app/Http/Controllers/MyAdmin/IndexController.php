@@ -9,13 +9,9 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-    //首页视图
-	// public function index()
-	// {
-        // 
-        // helllowssss
-        // aaaaaaaaaaasss
-	// 	return view("Adminstrator.index");
-	// }
+    //后台首页
+	public function index()
+	{
+		return view('Admin.index');
+	}
 }
-
