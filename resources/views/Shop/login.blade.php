@@ -44,7 +44,6 @@
 
 <section class="main">
     <div class="common-width">
-        
     <div class="main-inner">
         
             <div class="login-register">
