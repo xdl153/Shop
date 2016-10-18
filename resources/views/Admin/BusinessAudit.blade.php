@@ -46,8 +46,9 @@
                                         <th width="220">操作</th>
 				</tr>
 			</thead>
-			@foreach($list as $p)
+			
 			<tbody>
+                            @foreach($list as $p)
 				<tr class="text-c">
 					<td width="25"><input type="checkbox" name="" value=""></td>
 					<td>{{ $p->id }}</td>
@@ -63,8 +64,9 @@
                                             <td>状态　:　不通过　操作　:<a onclick="operation({{ $p->id }},2);">通过</a></td>
                                         @endif
 				</tr>
+                            @endforeach
 			</tbody>
-			@endforeach
+			
 		</table>
 	</div>
 </div>
