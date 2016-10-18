@@ -241,11 +241,11 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 
 
 // 用户列表
-	Route::get("article-list","MyAdmin\UserlistController@article");
+	Route::get("article_list","MyAdmin\UserlistController@article");
 
  //用户反馈列表
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
-
+        Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
 // 执行修改页面
 	// Route::get("change-password","MyAdmin\ChangeController@change_password");
 	Route::post("change-password","MyAdmin\ChangeController@update");
