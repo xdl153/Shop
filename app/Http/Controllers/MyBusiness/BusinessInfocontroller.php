@@ -17,12 +17,11 @@ class BusinessInfocontroller extends Controller
     	
     	//查询商家信息
     	$info = \DB::select("select * from business where did={$MyId}");
-        //店铺配送范围
-    	// foreach($info as $in){
-     //        $address[] = \DB::select("select * from address where bid={$in->id}");
-     //        foreach($address as)
-     //        $district [] = \
-     //    }
+        // 店铺配送范围
+    	foreach($info as $in){
+            $address[] = \DB::select("select * from address where bid={$in->id}");
+        }
+        dd($address);
     	return view("/Business.business-info",["info"=>$info]);
     }
 

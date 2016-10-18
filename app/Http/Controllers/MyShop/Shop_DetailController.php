@@ -38,7 +38,10 @@ class Shop_DetailController extends Controller
             $enshrine = '';
         }
                 //返回视图
-                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun,'enshrine'=>$enshrine]);		
+                session()->forget("cai");
+                session()->forget("count");
+                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun,'enshrine'=>$enshrine]);
+                
 	}
 
    //收藏店铺

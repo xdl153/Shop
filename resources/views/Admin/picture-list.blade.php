@@ -41,27 +41,63 @@
 					<th width="80">电话</th>
 					<th width="120">时间</th>
 					<th width="100">内容</th>
+                                        <th width="100">操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				
+			@foreach($li as $p)
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<td>{{ $p->uid }}</td>
+					<td>{{ $p->phone }}</td>
+					<td>{{ $p->data }}</td>
+					<td>{{ $p->content }}</td>
+                                        <td><span onclick="operation({{ $p->id }});">删除</span></td>
+				</tr>
+			@endforeach
 			</tbody>
 		</table>
 	</div>
 </div>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script>
+    function operation(dx){
+        if(confirm("确认继续吗")){
+            $.ajax({
+                url:'/picturelistdelete',
+                type:'get',
+                async:true,
+                data:{id:dx},
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    if(data === 'y'){
+                        location.reload();
+                    }else{
+                        alert('no');
+                    }
+                },
+                error:function(){
+                    alert('ajax请求失败');
+                }
+            });
+        }
+    }
+</script>
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>
 <script type="text/javascript" src="{{ asset('Admin/lib/My97DatePicker/WdatePicker.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui/js/H-ui.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
+
 <script type="text/javascript">
 $('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
+	// "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	// "bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
+	  // {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
 	]
 });
 </script>

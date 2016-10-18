@@ -6,11 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
         <meta name="description" content="" />
         <meta name="viewport" content="user-scalable=no">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
         <meta name="baidu-site-verification" content="IYCrtVH0i1" />
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
         <link rel="icon" type="image/png" href="images/favicon.ico"/>
+        <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
 
         <script type="text/javascript">
 
@@ -32,11 +33,7 @@
         <title>下订单</title>
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
-        @if(!session('data'))
-            <script type='text/javascript'>alert('请您先登录并下订单!');window.location.href="/";</script>";
-        @else
 
-        @endif
         <section class="common-back" id="wrapBackground">
 
                 <header id="header">
@@ -44,7 +41,7 @@
                         <h1 class="fl">
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
-
+                        @if(!session('username'))
                             <ul class="member logging" ng-init="loginInfo=true">
                                 <li><a href="/" class="index">首页</a></li>
                                 <li class="userName">
@@ -60,7 +57,53 @@
                                 <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
                                 <li class="phone-client "><a href="/app/"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
                             </ul>
-
+                        @else
+                            <ul id="member" class="member" login-box>
+                                 @if(empty(session("username")))
+                                <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                <li class="login-register">
+                                    <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                    <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                @else
+                                <li class="userName">
+                                        <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                        <div>
+                                                <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                        </div>
+                                </li>
+                                <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                            @endif
+				<input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+				<script type="text/javascript">
+	
+                                    function exit(){
+					var hiddenid = $('#hidden').val();
+		                              	$.ajax({
+		                                   url:'/logout',
+		                                   type:'post', 
+		                                   async:true,
+		                                   headers: {
+		                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                                   },
+		                                   success:function(a){
+		                                    if( a === 'y'){
+		                                    	location.reload('');
+                                       		}else{
+                                           		alert('退出失败');
+                                       		}
+		                                   },
+		                                   error:function(){
+		                                       alert('ajax失败');
+		                                   }
+                           			 	});
+                          			};
+                            </script>
+                            </ul>
+                        @endif
                     </div>
                 </header>
 
@@ -85,19 +128,22 @@
                     <li ng-repeat="item in userAddressList" ng-class="{active:item.active,userAddressHover:mobileAny}" ng-click="changeActiveAddress($index)" class="user-address-item fl">
                         <div class="clearfix">
                             <h3 class="fl" ng-bind="item.customer_name"></h3>
+                            <div type="hidden" id="id" style="display:none" ng-bind="item.id"></div>
                             <span class="fr"><a href="javascript:;" ng-click="updateUserAddress($index);$event.stopPropagation();" class="link">修改</a></span>
-                            <span class="fr"><a href="javascript:;" ng-click="deleteUserAddress($index);$event.stopPropagation();" class="link">删除</a></span>
+                             <span class="fr"><a href="javascript:;" id="delid" ng-click="deleteUserAddress($index);$event.stopPropagation();" class="link">删除</a></span>
+                            <!--<span class="fr"><a href="javascript:;" id="delid"  class="link">删除</a></span>-->
                         </div>
                         <p class="user-address" ng-bind="item.delivery_address"></p>
                         <p class="user-phone" ng-bind="item.customer_phone"></p>
                     </li>
 
 
+
                     <li ng-if="userAddressList.length > 0 && userAddressList.length < 8" class="user-address-item address-add-box fl">
                         <div ng-click="addUserAddress()"><i>+</i>使用新地址</div>
                     </li>
                 </ul>
-                            <form novalidate="true" name="orderForm" class="order-form inline">
+                    <form novalidate="true" name="orderForm" class="order-form inline">
                     <div ng-show="userAddressList.length == 0">
                         <div class="form-group row mb10">
                             <label class="require col-2">收单人：</label>
@@ -142,17 +188,15 @@
 
                         <dh-radio class="col-2" model="payType" value="0" title="餐到付款"></dh-radio>
                         <em ng-init="payType=0"></em>
-
-
-
                     </div>
-                                    <div class="form-group row mb10">
-                                            <label class="col-2">备注信息：</label>
-                                            <div class="col-8">
-                                                    <input type="text" maxlength="150" placeholder="如：多米饭，不吃辣等口味需求" ng-model="comment">
-                                            </div>
+                            <div class="form-group row mb10">
+                                    <label class="col-2">备注信息：</label>
+                                    <div class="col-8">
+                                            <input type="text" maxlength="150" placeholder="如：多米饭，不吃辣等口味需求" ng-model="comment">
                                     </div>
-                            </form>
+                            </div>
+                    </form>
+                        <div>* 请填写当前范围内的地址：{{ session('dizhi') }}</div>
                     </section>
                     <header>订单内容</header>
                     <section>
@@ -160,49 +204,69 @@
                                     <a href="javascript:;">展开订单详情 <i class="icon arrows-s-down"></i></a>
                             </div>
                             <div class="order-info">
-                                    <div class="order-thead clearfix">
-                                            <div class="goods-name">商品</div>
-                                            <div class="goods-count">份数</div>
-                                            <div class="goods-price">单价</div>
+                                
+                                <div class="order-thead clearfix">
+                                    <div class="goods-name">商品</div>
+                                    <div class="goods-count">份数</div>
+                                    <div class="goods-price">单价</div>
 
-                                            <div class="goods-total">小计</div>
-                                    </div>
-                                    <div class="order-body">
-                        @foreach($data as $d)              
-                            <div class="order-item clearfix">
-                                <div class="goods-name">{{ $d }}</div>
-                                <div class="goods-count">1</div>
-                                <div class="goods-price">￥22.00</div>
-                                <div class="goods-total">￥44.00</div>
-                            </div>
-                        @endforeach
-                        
-                            <!--<div class="order-item order-item-addendum clearfix">
-                                <div class="goods-name">点我呀，减6元 ！</div>
-                                <div class="goods-count">2</div>
-                                <div class="goods-price">￥-6.00</div>
-                                <div class="goods-total">￥-12.00</div>
-                            </div>-->
+                                    <div class="goods-total">小计</div>
+                                </div>
+                                <div class="order-body">
 
+                                    <div class="order-item clearfix">
+                                        @foreach($dds as $ds)
+                                        <div class="goods-name cai">{{ $ds['name'] }}</div>
+                                        <div class="goods-count fen">{{ $ds['q'] }}</div>
+                                        <div class="goods-price danjia">￥{{ $ds['p'] }}</div>
+                                        <div class="goods-total heji">￥{{ $ds['p']*$ds['q'] }}</div>
+                                        @endforeach
                                     </div>
+
+                                </div>
                             </div>
                     </section>
                     <section class="total-sum">
-
-
-                            <p class="tr fs14">订单金额： <span>￥32.00</span></p>
-                <p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>
-                <p class="tr fs14">配送费用： <span>￥0.00</span></p>
-                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal=32.00" ng-bind="orderTotal|number:2"></span></b></p>
+                        @foreach($mo as $m)
+                            <p class="tr fs14">订单金额： <span>￥{{ $m }}</span></p>
+                            <!--<p ng-if="isVaildateCouponSuccess" class="tr fs14">优惠券： <span ng-bind="couponMoney|number:2|currency:'￥-'"></span></p>-->
+                            <p class="tr fs14">配送费用： <span>￥0.00</span></p>
+                            <p class="tr fs17 pink">需要付款： <b>￥<span ng-init="orderTotal={{ $m }}" ng-bind="orderTotal|number:2"></span></b></p>
                             <p class="tr last">
-                                    <a href="{{ URL('Shop/shop_detail') }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
-                                    <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                                
+                                <a href="/shop_detail?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
+                                
+                                <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" id="aaaa" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
                             </p>
+                        @endforeach
                     </section>
             </section>
 
             </div>
         </section>
+        <script type="text/javascript">
+            $('#aaaa').click(function(){
+                $.ajax({
+                        url:'/ord',
+                        type:'post',
+                        async:true,
+                        data:{},
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){
+                            if(data == 'y'){
+                                //Ajax请求成功返回“Y” 页面跳转/order
+                                  window.location.href="/order_success";
+//                                alert('111');
+                            }
+                        },
+                        error:function(){
+                            alert('失败');
+                        }
+                })
+            })
+        </script>
 
             <footer id="footer">
             <div class="footer-first gray">
@@ -414,12 +478,13 @@
                     <button class="btn btn-cancel small-btn" ng-click="cancelConfirm()">取消</button>
                 </div>
         </dh-dialog>
-        <dh-dialog class="disnone" type="alert" index="1001" header="" show="couponConfirm">
+<!--        <dh-dialog class="disnone" type="alert" index="1001" header="" show="couponConfirm">
             <div class="coupon-confirm">
                 <p class="mb10 errorTip" ng-bind="couponConfirmMsg"></p>
-                <button class="btn btn-success couponConfirm-btn" ng-click="submitcouponConfirm()">不使用优惠劵直接下单</button>
+                <button class="btn btn-success couponConfirm-btn" id="aaa" ng-click="submitcouponConfirm()">不使用优惠劵直接下单</button>
             </div>
-        </dh-dialog>
+        </dh-dialog>-->
+        <!-- 使用新收件地址 -->
         <dh-dialog class="disnone" header="使用新地址/修改地址" width="420" show="editUserAddress">
             <div ng-controller="userAddressCtrl">
                 <form novalidate="true" name="userAddressForm" class="address-from">
@@ -459,6 +524,7 @@
                         <span class="vaildate-error">送餐地址不能为空</span>
                     </div>
                 </div>
+                    
                 <div class="form-group tc">
                     <button class="btn btn-success normal-btn" ng-click="submitUserAddress()">确认</button>
                     <button class="btn btn-cancel normal-btn" ng-click="cancelUserAddress()">取消</button>
@@ -466,7 +532,7 @@
             </form>
             </div>
         </dh-dialog>
-
+        <!-- 使用新收件地址 -->
          <ul class="site-fixed">
             <li class="scroll-top"><img src="{{ asset('Shop/images/scroll_top1.png') }}" alt=""/> </li>
             <li class="scorll-feekback" ng-click="userFeedback=true">
@@ -481,24 +547,29 @@
 
         <script type="text/javascript" src="{{ asset('Shop/js/angular.min.js') }}"></script>
         <script src="{{ asset('Shop/js/common.js') }}"></script>
-
+        <!--<script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>-->
 
         <script src="{{ asset('Shop/js/service.js') }}"></script>
 
         <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
         <!--[if lt IE 9]><script src="{{ asset('Shop/js/fix.js') }}"></script><![endif]-->
-
+        
 
         <script>
             var check_coupon_url = "/ajax/check_coupon_code/";
-            var place_order_url = "/mobile/ajax/place_order/";
+            //送货地址url
+            var place_order_url = "/songhuodizhi";
             var confirm_url = "/confirm/0/";
             var online_pay = "/account/order/0/online_pay/";
-            var ajax_add_delivery_address = "/ajax/delivery_address/add/";
+            //添加收货地址
+            var ajax_add_delivery_address = "/add";
             var ajax_add_all_delivery_addresses = "/ajax/delivery_address/add_all/";
-            var ajax_update_delivery_address = "/ajax/delivery_address/0/";
+            //删除收货地址
+            var ajax_del_delivery_addres = "/del?id=/0/";
+            //修改收货地址url
+            var ajax_update_delivery_address = "/update";
             var ajax_common_sms_code = "/ajax/common_sms_code/";
-            var ajax_is_order_need_sms_validate = "/ajax/is_order_need_sms_validate/";
+            var ajax_is_order_need_sms_validate = "/tijiao";
             var ajax_common_validate_sms_code = "/ajax/common_validate_sms_code/";
             var orderId = '3788798';
             var grid_locationId = '602341';
@@ -514,9 +585,17 @@
             var selectObj = [];
             var userAddress = [];
             var _isAuthenticated = 'ajax';
-            var setLastAddrUrl =  "/ajax/delivery_address/0/last_used/";
+//            var setLastAddrUrl =  "/ord";
             var lastUsedAddressId = '230901';
-//            userAddress.push({customer_name:'阿逗',delivery_address:'rrrrr',customer_phone:'13815212121',id:'230896'});userAddress.push({customer_name:'阿逗',delivery_address:'江苏南京',customer_phone:'13851435593',id:'230897'});userAddress.push({customer_name:'阿逗',delivery_address:'q',customer_phone:'13851435593',id:'230898'});userAddress.push({customer_name:'阿逗',delivery_address:'wqwq',customer_phone:'13851423225',id:'230899'});userAddress.push({customer_name:'阿逗',delivery_address:'aaaa',customer_phone:'18005150081',id:'230900'});userAddress.push({customer_name:'阿逗',delivery_address:'我千千万',customer_phone:'13851435593',id:'230901'});
+            @foreach($site as $s)
+                userAddress.push({
+                    customer_name: "{{ $s->name }}",
+                    delivery_address: "{{ $s->address }}",
+                    customer_phone: '{{ $s->phone }}',
+                    id: '{{ $s->id }}'
+                });
+            @endforeach
+
             selectObj.push({id:'no',text:'即时送出',date:'2015-05-03'});
             selectObj.push({id:'10:30',text:'10:30',date:'2015-05-03'});selectObj.push({id:'11:00',text:'11:00',date:'2015-05-03'});selectObj.push({id:'11:30',text:'11:30',date:'2015-05-03'});selectObj.push({id:'12:00',text:'12:00',date:'2015-05-03'});selectObj.push({id:'12:30',text:'12:30',date:'2015-05-03'});selectObj.push({id:'13:00',text:'13:00',date:'2015-05-03'});selectObj.push({id:'13:30',text:'13:30',date:'2015-05-03'});selectObj.push({id:'14:00',text:'14:00',date:'2015-05-03'});selectObj.push({id:'14:30',text:'14:30',date:'2015-05-03'});selectObj.push({id:'15:00',text:'15:00',date:'2015-05-03'});selectObj.push({id:'15:30',text:'15:30',date:'2015-05-03'});selectObj.push({id:'16:00',text:'16:00',date:'2015-05-03'});selectObj.push({id:'16:30',text:'16:30',date:'2015-05-03'});selectObj.push({id:'17:00',text:'17:00',date:'2015-05-03'});selectObj.push({id:'17:30',text:'17:30',date:'2015-05-03'});selectObj.push({id:'18:00',text:'18:00',date:'2015-05-03'});selectObj.push({id:'18:30',text:'18:30',date:'2015-05-03'});selectObj.push({id:'19:00',text:'19:00',date:'2015-05-03'});selectObj.push({id:'19:30',text:'19:30',date:'2015-05-03'});selectObj.push({id:'20:00',text:'20:00',date:'2015-05-03'});selectObj.push({id:'20:30',text:'20:30',date:'2015-05-03'});selectObj.push({id:'21:00',text:'21:00',date:'2015-05-03'});
         </script>
@@ -529,7 +608,6 @@
         <script>angular.bootstrap(document, ["app"]);</script>
 
         <!-- Baidu Analytics -->
-
 
     </body>
 </html>

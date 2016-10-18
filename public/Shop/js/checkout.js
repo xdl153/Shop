@@ -1,3 +1,5 @@
+/* global gaObj, app, online_pay, confirm_url, loginObj, lastUsedAddressId, selectObj, _isAuthenticated, ajax_add_all_delivery_addresses, ajax_add_delivery_address, userAddress, orderId, grid_locationId, ajax_common_validate_sms_code, ajax_is_order_need_sms_validate, ajax_common_sms_code, check_coupon_url, setLastAddrUrl */
+
 var bindModule = (function(){
     var scope = {},
         http = {},
@@ -31,6 +33,7 @@ var bindModule = (function(){
             }
             if (activeAddrId) {
                 url = setLastAddrUrl.replace('/0/','/' + activeAddrId + '/');
+//                alert('111');
                 http.post(url);
             }
         };
@@ -198,7 +201,7 @@ var bindModule = (function(){
                     scope.commitCheck=false;
                     setLastAddr();
                     var selectedObj = scope.selectObj[scope.datetimeIndex];
-                    var placeOrderData = {
+                    var placeOrderData = {                        
                         order_id : orderId,
                         grid_location_id : grid_locationId,
                         order_source : 'desktop',
@@ -241,13 +244,16 @@ var bindModule = (function(){
                                 }
                             }else{
                                 scope.commitCheck=true;
+                                //判断返回来的验证码
                                 if(d.failed_code==7006){
+//                                    alert('sss');
                                     scope.couponConfirm=true;
                                     scope.couponConfirmMsg=d.failed_msg;
                                     scope.showFullLoading = false;
                                 }else{
                                     scope.showFullLoading = false;
                                     scope.showError = true;
+//                                    alert('weiti');
                                     scope.errorMsg = d.failed_msg;
                                 }
                             }      
@@ -360,31 +366,41 @@ app.value('requestData',function(_scope , _http , _cache,_ajaxData){
             firstAdd:function(data){
                 http.post(ajax_add_delivery_address,data)
             },
+           //添加地址
             add : function(){
                 http.post(ajax_add_delivery_address,scope.userAddress)
                 .success(function(d){
                     if(d.status == 'ok'){
+//                        alert('11');
                         scope.userAddress.id = d.id;
+                         
                         scope.$emit("add-submit-success");
                     }else{
+//                        alert('111');
                         scope.errorMsg = d.failed_msg;
                         scope.$emit("request-error");
                     }
                 })
                 .error(function(){
+//                    alert('33');
                     scope.errorMsg = '未知错误，请稍后再试。';
                     scope.$emit("request-error");
                 })
             },
+            //修改地址
             update : function(){
                 var url = ajax_update_delivery_address.replace('/0/','/' + scope.userAddress.id + '/');
                 http.post(url,scope.userAddress)
                 .success(function(d){
                     if(d.status == 'ok'){
+//                        console.log(scope.userAddress.id);
                         scope.$emit("update-submit-success");
                     }else{
-                        scope.errorMsg = d.failed_msg;
+                        scope.errorMsg = '修改失败,3秒后关闭.';
                         scope.$emit("request-error");
+                        setTimeout(function(){
+                            location.reload();
+                        },3000)
                     }
                 })
                 .error(function(){
@@ -392,20 +408,25 @@ app.value('requestData',function(_scope , _http , _cache,_ajaxData){
                     scope.$emit("request-error");
                 })
             },
+            //删除地址
             del : function(){
-                var url = ajax_update_delivery_address.replace('/0/','/' + scope.currentSelectedAddress.id + '/');
-                http['delete'](url)
+                var url = ajax_del_delivery_addres.replace('/0/',scope.currentSelectedAddress.id);
+                http['delete'](url,scope.userAddress)
                 .success(function(d){
                     if(d.status == 'ok'){
+//                        alert('1');
                         clearForm();
                         scope.userAddressList.splice(scope.currentSelectedAddress.index,1);
                     }else{
+//                        alert('2');
                         scope.showError = true;
                         scope.errorMsg = d.failed_msg;
                     }
+//                    alert('3');
                     scope.confirm = false;
                 })
                 .error(function(){
+                    alert('4');
                     scope.confirm = false;
                     scope.showError = true;
                     scope.errorMsg = '未知错误，请稍后再试。';
@@ -588,6 +609,7 @@ function gaFunc(cart_objects,payType){
             cart_objects = angular.fromJson(cart_objects)||[];
 
         ga('ecommerce:addTransaction', transactionObj);
+       
         for (var i = 0; i < cart_objects.length; i++) {
             var item = cart_objects[i];
             ga('ecommerce:addItem', {

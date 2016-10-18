@@ -15,6 +15,7 @@ class Member_OrderController extends Controller
 //            dd($request);
             //获取session中uid
             $uid=$request->session()->get('userid');
+
 //            dd($uid);
             //查询 orderform、business、user、site标
             $list = \DB::table('orderform as odf')
@@ -26,7 +27,6 @@ class Member_OrderController extends Controller
                     ->select('odf.number','odf.type','odf.state','odf.express','odf.money','odf.data','odf.Delivery','bs.name','bs.photo','bs.phone','st.name as sname','st.phone as sphone','st.address')
                     ->where('odf.uid','=',"$uid")
                     ->get();
-//            dd($list);
             return view("Shop.member_order",['list'=>$list]);
         }
         

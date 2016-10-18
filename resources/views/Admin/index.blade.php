@@ -42,12 +42,12 @@
 			</nav>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
-					<li>超级管理员</li>
-					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<li>欢迎您管理员</li>
+					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">{{ session('adminuser')->name }}<i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
-							<li><a href="#">个人信息</a></li>
-							<li><a href="#">切换账户</a></li>
-							<li><a href="#">退出</a></li>
+							<li><a href="{{ URL('Admin/member-show') }}">个人信息</a></li>
+							<li><a href="{{ URL('Admin/logout') }}">切换账户</a></li>
+							<li><a href="{{ URL('Admin/logout') }}">退出</a></li>
 						</ul>
 					</li>
 					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -75,7 +75,6 @@
 				<ul>
 					<li><a _href="{{ URL('article-list') }}" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
 					<li><a _href="{{ URL('member-del') }}" data-title="停用的用户" href="javascript:;">停用的用户</a></li>
-					<li><a _href="{{ URL('admin-jifen') }}" data-title="积分管理" href="javascript:;">积分管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -90,12 +89,12 @@
 		<dl id="menu-product">
 			<dt><i class="Hui-iconfont">&#xe620;</i> 商家管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
-				<ul>
+				<ul>    
+                                        <li><a _href="{{ URL('BusinessAudit_list') }}" data-title="商家审核" href="javascript:void(0)">商家审核</a></li>
 					<li><a _href="{{ URL('product-brand') }}" data-title="商家列表" href="javascript:void(0)">商家列表</a></li>
-					<li><a _href="{{ URL('product-list') }}" data-title="商家状态" href="javascript:void(0)">商家状态</a></li>
-					<li><a _href="{{ URL('product-category') }}" data-title="商家审核" href="javascript:void(0)">商家审核</a></li>
-					<li><a _href="{{ URL('product-category-cation') }}" data-title="店铺认证" href="javascript:void(0)">店铺认证</a></li>
-					<li><a _href="{{ URL('product-category-reviewed') }}" data-title="商品审核" href="javascript:void(0)">商品审核</a></li>
+					<li><a _href="{{ URL('product-list') }}" data-title="商家状态" href="javascript:void(0)">评论列表</a></li>
+					<li><a _href="{{ URL('product-category-cation') }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
+					<li><a _href="{{ URL('product-category-reviewed') }}" data-title="菜单列表" href="javascript:void(0)">菜单列表</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -104,7 +103,6 @@
 			<dd>
 				<ul>
 					<li><a _href="{{ URL('admin-list') }}" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
-					<li><a _href="{{ URL('admin-role') }}" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -114,7 +112,6 @@
 			<dd>
 				<ul>
 					<li><a _href="{{ URL('system-base') }}" data-title="基本设置" href="javascript:void(0)">基本设置</a></li>
-					<li><a _href="{{ URL('system-log') }}" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -125,7 +122,7 @@
 	<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
-				<li class="active"><span title="我的桌面" data-href="{{ URL('welcome') }}">我的桌面</span><em></em></li>
+				<li class="active"><span title="我的桌面" data-href="{{ URL('/Admin/welcome') }}">我的桌面</span><em></em></li>
 			</ul>
 		</div>
 		<div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
@@ -133,7 +130,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="{{ URL('welcome') }}"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="{{ URL('/Admin/welcome') }}"></iframe>
 		</div>
 	</div>
 </section>
@@ -144,24 +141,6 @@
 <script type="text/javascript">
 /*资讯-添加*/
 function article_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*图片-添加*/
-function picture_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*产品-添加*/
-function product_add(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
