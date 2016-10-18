@@ -41,13 +41,53 @@
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
 
-                            <ul class="member" login-box>
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="login-register"><a href="{{ URL('/login') }}" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span><a href="{{ URL('/register') }}" referer-url  rel="nofollow" class="register">注册</a></li>
-                                <li><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">查看订单</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
-                            </ul>
+                            <ul id="member" class="member" login-box>
+								<li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+								<li class="login-register">
+									@if(empty(session("username")))
+										<a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+										<span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+									@else
+										<li class="userName">
+											<a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+											<div>
+												<p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+												<p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+												<p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+											</div>
+										</li>
+											<li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+									@endif
+						
+						
+								<input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+								<script type="text/javascript">
+	
+									function exit(){
+										var hiddenid = $('#hidden').val();
+		                              	$.ajax({
+		                                   url:'/logout',
+		                                   type:'post', 
+		                                   async:true,
+		                                   headers: {
+		                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                                   },
+		                                   success:function(a){
+		                                    if( a === 'y'){
+		                                    	location.reload();
+                                       		}else{
+                                           		alert('退出失败');
+                                       		}
+		                                   },
+		                                   error:function(){
+		                                       alert('ajax失败');
+		                                   }
+                           			 	});
+                          			};
+								</script>
+							</ul>
 
                     </div>
                 </header>
@@ -86,7 +126,7 @@
         <div class="fr clearfix nav-right">
 
             <div class="fl nav-right-blast line-right">
-                <p>150<span style="font-size:12px;color:#999;">元</span></p>
+                <p>30<span style="font-size:12px;color:#999;">元</span></p>
                 <span>起送</span>
             </div>
 
@@ -227,6 +267,7 @@
                                            
                                             <div class="menu-item-img">  
                                                 <img data-src="" src="{{ asset('Shop/') }}{{ $m->images }}"  width="202" height="202" /> 
+                                                
                                             </div>
                                             <div class="meun-item-name"><span class="ellipsis">{{ $m->name }}</span></div>
                                             <p class="ellipsis meun-item-des"></p>
@@ -326,8 +367,7 @@
                                 </h5>
                             </header>
                             <section>
-                                <form class="inner-cart empty" ng-class="{empty:isEmpty}">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                <div class="inner-cart empty" ng-class="{empty:isEmpty}">
                                     <div class="cart-thead clearfix">
                                         <div class="goods-name fs16">商品名</div>
                                         <div class="goods-count fs16">份数</div>
@@ -335,51 +375,51 @@
                                         <div class="goods-subtotal fs16">小计</div>
                                     </div>
                                     <div class="cart-item-list select-none">
-                                        <div class="disnone" ng-class="{disnone:isEmpty}" id='sss'>
+                                        <div class="disnone" ng-class="{disnone:isEmpty}">
                                             <div class="cart-item cart-data clearfix" ng-repeat="obj in cartDatas">
-                                                <div class="goods-name ellipsis cai" ng-bind="obj.name" ></div>
+                                                <div class="goods-name ellipsis" ng-bind="obj.name"></div>
                                                 <div class="goods-count clearfix ellipsis">
                                                     <span class="goods-sub icon sub-icon fl" sub-goods="[[$index]]"></span>
-                                                    <span class="goods-nums fl fen" ng-bind="obj.quantity" ></span>
+                                                    <span class="goods-nums fl" ng-bind="obj.quantity"></span>
                                                     <span class="goods-add icon add-icon fl" ng-click="addGoodsNum($index)"></span>
                                                 </div>
-                                                <div class="goods-price">￥<span ng-bind="obj.price|number:2" class="jia"></span></div>
-                                                <div class="goods-subtotal">￥<span ng-bind="(obj.quantity * obj.price)|number:2" class="xj"></span></div>
+                                                <div class="goods-price">￥<span ng-bind="obj.price|number:2"></span></div>
+                                                <div class="goods-subtotal">￥<span ng-bind="(obj.quantity * obj.price)|number:2"></span></div>
 
-                                                <!--<div class="accessory-item" ng-class="{firstitem:$first}" ng-repeat="item in obj.options">
+                                                <div class="accessory-item" ng-class="{firstitem:$first}" ng-repeat="item in obj.options">
                                                     <div class="cart-item clearfix">
-                                                        <div class="goods-name ellipsis" ng-bind="item.name" id="cais"></div>
+                                                        <div class="goods-name ellipsis" ng-bind="item.name"></div>
                                                         <div class="goods-count fs20">
                                                            <span class="goods-sub fl"></span>
-                                                           <span class="goods-nums fl" ng-bind="item.quantity" id="fens"></span>
+                                                           <span class="goods-nums fl" ng-bind="item.quantity"></span>
                                                         </div>
-                                                        <div class="goods-price">￥<span ng-bind="item.price|number:2" id="jias"></span></div>
-                                                        <div class="goods-subtotal">￥<span ng-bind="(item.price * item.quantity)|number:2" id="xjs"></span></div>
+                                                        <div class="goods-price">￥<span ng-bind="item.price|number:2"></span></div>
+                                                        <div class="goods-subtotal">￥<span ng-bind="(item.price * item.quantity)|number:2"></span></div>
                                                     </div>
-                                                </div>-->
+                                                </div>
                                             </div>
                                             <!--附加物-->
-                                            <!--<div class="cart-item cart-item-addendum cart-data clearfix" ng-repeat="addition in additions">
+                                            <div class="cart-item cart-item-addendum cart-data clearfix" ng-repeat="addition in additions">
                                                 <div class="goods-name ellipsis" ng-bind="addition.name"></div>
                                                 <div class="goods-count clearfix ellipsis">
                                                     <span class="goods-nums fl" ng-bind="addition.quantity"></span>
                                                 </div>
                                                 <div class="goods-price">￥<span ng-bind="addition.price|number:2"></span></div>
                                                 <div class="goods-subtotal">￥<span ng-bind="(addition.price * addition.quantity)|number:2"></span></div>
-                                            </div>-->
+                                            </div>
                                             <!--附加物-->
                                         </div>
                                         <div class="cart-item-empty">暂无商品，请在左边的菜单上点单</div>
                                     </div>
                                     <div id="cart-item-list"></div>
                                     <div class="total clearfix disnone" ng-class="{disnone:isEmpty}">
-                                        <div class="fl">配送费：￥<span ng-bind="deliveryCost|number:2" class='pei'></span></div>
-                                        <div class="fr">合计：￥<span ng-bind="total|number:2" class="hj"></span></div>
+                                        <div class="fl">配送费：￥<span ng-bind="deliveryCost|number:2"></span></div>
+                                        <div class="fr">合计：￥<span ng-bind="total|number:2"></span></div>
                                     </div>
                                     <div class="checkout">
-                                        <button class="checkout btn" id="buts">立即下单</button>
+                                        <button class="checkout btn" ng-disabled="isPlaceOrder" ng-click="createOrder()" ng-bind="createOrderBtnName">立即下单</button>
                                     </div>
-                                </form>
+                                </div>
                             </section>
                         </div>
                               
@@ -745,105 +785,126 @@
 
 
         <script type="text/javascript">
-                var sections = [
-            @foreach($menu as $m)
-                {
-                    "description": null,
-                    "image": null,
-                    "recommended": true,
-                    "id": {{ $m->bid }},
-                    "menu_items": [{
-                            "qiniu_url": "",
-                            "additions": [],
-                            "name": "{{ $m->name }}",
-                            "optionsets": [],
-                            "ordercount": 8,
-                            "position": 0,
-                            "price": {{ $m->price }},
-                            "id": {{ $m->id }},
-                            "description": ""
-                    }],
-                    "name": "\u5e97\u4e3b\u63a8\u8350"
-                },
-            @endforeach
-                ],
-                accessoryObj = {},
-                orderObj = [],
-                other_order = {};
-                if(sections){
-                        for(var i = 0 , len = sections.length; i < len; i++){
-                                var sectionObj = sections[i] , key = '';
-                                for(var j = 0 , itemLen = sectionObj.menu_items.length; j < itemLen; j++){
-                                        var menuItemObj = sectionObj.menu_items[j];
-                                        key = sectionObj.id + '-' + menuItemObj.id;
-                                        menuItemObj.key = key;
-                                        menuItemObj.sectionId = sectionObj.id;
-                                        accessoryObj[key] = menuItemObj;
-                                }
-                        }
-                }
+			var sections = [
+			@foreach($menu as $m)
+			{
+					"description": null,
+					"image": null,
+					"recommended": true,
+					"id": {{ $m->bid }},
+					"menu_items": [{
+						"qiniu_url": "",
+						"additions": [],
+						"name": "{{ $m->name }}",
+						"optionsets": [],
+						"ordercount": 8,
+						"position": 0,
+						"price": {{ $m->price }},
+						"id": {{ $m->id }},
+						"description": ""
+				}],
+					"name": "\u5e97\u4e3b\u63a8\u8350"
+			},
+			@endforeach
+			],
+			
+				accessoryObj = {},
+				orderObj = [],
+				other_order = {};
+				if(sections){
+					for(var i = 0 , len = sections.length; i < len; i++){
+						var sectionObj = sections[i] , key = '';
+						for(var j = 0 , itemLen = sectionObj.menu_items.length; j < itemLen; j++){
+							var menuItemObj = sectionObj.menu_items[j];
+							key = sectionObj.id + '-' + menuItemObj.id;
+							menuItemObj.key = key;
+							menuItemObj.sectionId = sectionObj.id;
+							accessoryObj[key] = menuItemObj;
+						}
+					}
+				}
 
-                if(other_order&&other_order.items){
-                        //order data
-                        for(var j=0;j<other_order.items.length;j++){
-                                if(other_order.items[j].status==true){
-                                        orderObj.push(other_order.items[j]);
-                                }
-                        }   
-                }
-                //餐厅的id
-                var restaurantId='1592';
-                //餐厅范围
-                var restaurantInRange = true;
-                //网格_位置ID 
-                var grid_locationId =  602341 ;
-                //在范围
-                var inRange = true;
-                //可以_过程_秩序 
-                var can_process_order = true;
-                //创建订单url
-                var create_order_url = "/order";
-                //结帐的url
-                var checkout_url = "/order";
-                //餐厅列表url
-                var restaurant_list_url = "/restaurants/0/";
-                //最喜欢的网址
-                var favoriteUrl = "/ajax/restaurant/0/favorite/";
-                //var交付= {最低_订单_数量:“150”,免费_交付_阈值:0,交付_费用:' 0 ' }
-                var delivery = {minimum_order_quantity:'150',free_delivery_treshold:'0',delivery_fee:'0' }
+				if(other_order&&other_order.items){
+					//order data
+					for(var j=0;j<other_order.items.length;j++){
+						if(other_order.items[j].status==true){
+							orderObj.push(other_order.items[j]);
+						}
+					}   
+				}
+				//餐厅的id
+				var restaurantId='1592';
+				//餐厅范围
+				var restaurantInRange = true;
+				//网格_位置ID 
+				var grid_locationId =  602341 ;
+				//在范围
+				var inRange = true;
+				//可以_过程_秩序 
+				var can_process_order = true;
+				//创建订单url
+				var create_order_url = "/create_order";
+				//结帐的url
+				var checkout_url = "/order?bid=1&id=786";
+				//餐厅列表url
+				var restaurant_list_url = "/restaurants/0/";
+				//最喜欢的网址
+				var favoriteUrl = "/ajax/restaurant/0/favorite/";
+				//var交付= {最低_订单_数量:“150”,免费_交付_阈值:0,交付_费用:' 0 ' }
+				var delivery = {minimum_order_quantity:'150',free_delivery_treshold:'0',delivery_fee:'0' }
 	   </script>
         <script src="{{ asset('Shop/js/menupage.js') }}"></script>
         <script src="{{ asset('Shop/js/favorite.js') }}"></script>
-          <script type="text/javascript">
-            $("#buts").click(function(){
-                var cai = $('.cai').html();
-                var fen = $('.fen').html();
-                var jia = $('.jia').html();
-                var xj = $('.xj').html();
+          <!--<script type="text/javascript">
+            //立即下单点击事件
+            $("#buts").bind("click",function(){
+                //获取 合计 、 配送费的值给个变量
                 var hj = $('.hj').html();
                 var pei = $('.pei').html();
-                $("#ss + div");
+                //计算 id=sss 下面的div 有多少个
+                var count = $("#sss>div").length;
+//                alert(count);
+                //定义一个 菜名、份数、单价、小计、的空数组来装他们的值
+                var cname = [];var fenshu = [];var danjia = [];var xiaoji = []; var d=[];
+                //for循环出菜名、份数、单价、小计
+                for(i=0;i<count;i++){
+                    var cai = $(".cai").eq(i).html();
+                    var fen = $(".fen").eq(i).html();
+                    var jia = $(".jia").eq(i).html();
+                    var xj = $(".xj").eq(i).html();
+                   
+//                    var hj = $(".hj").eq(i).html();
+//                    var pei = $(".pei").eq(i).html();
+                    //将上面循环出的菜名、份数、单价、小计装入 之前创建的空数组
+                    cname[i]=cai; fenshu[i]=fen; danjia[i]=jia; xiaoji[i]=xj;
+//                    d[i]=[cname,fenshu,danjia,xiaoji];
+                      //弹出菜名、份数、单价、小计
+//                    alert(cai);alert(fen);alert(jia);alert(xj);alert(hj);alert(pei);
+//                       console.log(d);
+                }
+                //输出到控制台
+//                console.log(cname,fenshu,danjia,xiaoji,hj,pei);
+
                 $.ajax({
                         url:'/creade_order',
                         type:'post',
                         async:true,
-                        data:{cai:cai,fen:fen,jia:jia,xj:xj,hj:hj,pei:pei},
+                        data:{cname:cname,fenshu:fenshu,danjia:danjia,xiaoji:xiaoji,hj:hj,pei:pei},
                         headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success:function(data){
-                          if(data == 'y'){
-                            $("#mian").load("/order", function(){
-                                   alert('aaaa');
-                             });
-                          }
+                            if(data == 'y'){
+                                //Ajax请求成功返回“Y” 页面跳转/order
+                                  window.location.href="/order?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}";
+                            }
                         },
                         error:function(){
-                                alert('失败');
+                            alert('失败');
                         }
                     })
             });
-        </script>
+        </script>-->
 
         <script>angular.bootstrap(document, ["app"]);</script>
          

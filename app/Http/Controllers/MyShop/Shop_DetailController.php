@@ -25,7 +25,10 @@ class Shop_DetailController extends Controller
                 $coun=\DB::select('select count(bid) as c from menu where bid='.$bid);
 //                dd($menu);
                 //返回视图
-                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun]);		
+                session()->forget("cai");
+                session()->forget("count");
+                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun]);
+                
 	}
    
 }

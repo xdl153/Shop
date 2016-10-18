@@ -181,6 +181,12 @@ Route::post("/add","MyShop\OrderController@add");
 Route::post('/update','MyShop\OrderController@update');
 //删除送货地址
 Route::delete('/del',"MyShop\OrderController@destroy");
+//提交订单
+Route::post('/tijiao',"MyShop\OrderController@tijiao");
+//送货地址
+Route::post("/songhuodizhi","MyShop\OrderController@shdz");
+Route::post("/ord","MyShop\OrderController@ord");
+
 
 //order_success下订单成功页面视图路由
 	Route::get("/order_success",function(){
