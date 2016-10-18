@@ -119,7 +119,7 @@
                             </div>
                             <div class="captcha-item">
                                 <div class="form-group captcha clearfix">
-                                    <input type="text" id='abc' style="width: 120px;" maxlength="4" class="form-text" placeholder="输入验证码"/><button id="yzmyzm" onclick="settime(this);yzm();" style="width: 130px;margin: 0;height: 47px;background: #7fc11c;font-size: 16px;border: none;color: white;cursor: pointer;border-radius: 2px;font-family: "Microsoft YaHei";">获取验证码</button>
+                                    <input type="text" id='abc' style="width: 140px;" maxlength="4" class="form-text" placeholder="输入验证码"/><button id="yzmyzm" onclick="settime(this);yzm();" style="width: 130px;margin: 0;height: 43px;background: #7fc11c;font-size: 16px;border: none;color: white;cursor: pointer;border-radius: 2px;font-family: "Microsoft YaHei";">获取验证码</button>
                                 </div>
                                 <div class="form-error-message"></div>
                             </div>
