@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!--[if lt IE 9]>
 <script type="text/javascript" src="{{ asset('Admin/lib/html5.js') }}"></script>
 <script type="text/javascript" src="{{ asset('Admin/lib/respond.min.js') }}"></script>
@@ -34,29 +35,50 @@
 				<th width="25"><input type="checkbox" name="" value=""></th>
 				<th width="80">店铺名</th>
 				<th>照片</th>
-				<th width="100">营业执照</th>
-				<th width="40">店铺地址</th>
-				<th width="90">收款账号</th>
-				<th width="150">配送范围</th>
-				<th width="">电话</th>
-				<th width="70">状态</th>
-				<th width="100">操作</th>
+				<th>店铺地址</th>
+				<th>收款账号</th>
+				<th>配送范围</th>
+				<th>电话</th>
+				<th>状态</th>
+				<th>操作</th>
 				
 			</tr>
 		</thead>
 		<tbody>
+			@foreach($info as $in)
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>1</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','360','400')">张三</u></td>
-				<td></td>
-				<td>13000000000</td>
-				<td>admin@mail.com</td>
+				<td>{{ $in->name }}</td>
+				<td><img src="Shop/{{ $in->photo }}" width="85" height="100"></td>
+				<td>{{ $in->address }}</td>
+				<td>{{ $in->account }}</td>
 				<td class="text-l">北京市 海淀区</td>
-				<td>2014-6-11 11:11:42</td>
-				<td class="td-status"><span class="label label-success radius">已启用</span></td>
-				<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="member_edit('编辑','{{ URL('business-brand') }}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="关闭" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td>{{ $in->phone }}</td>
+				<td class="td-status">
+					@if($in->examine == '3')
+						<span class="label label-defaunt radius">已停用</span>
+					@else
+						<span class="label label-success radius">已启用</span>
+					@endif
+				</td>
+				<td class="td-manage">
+					@if($in->examine == '3')
+						<a style="text-decoration:none" onClick="member_start(this,'{{ $in->id }}')" href="javascript:;" title="启用">
+							<i class="Hui-iconfont">&#xe6e1;</i>
+						</a>
+					@else
+						<a style="text-decoration:none" onClick="member_stop(this,'{{ $in->id }}')" href="javascript:;" title="停用">
+							<i class="Hui-iconfont">&#xe631;</i>
+						</a>
+					@endif
+					
+					<a title="编辑" href="javascript:;" onclick="member_edit('编辑','business-brandupdate?id={{ $in->id }}','4','','510')" class="ml-5" style="text-decoration:none">
+					<i class="Hui-iconfont">&#xe6df;</i></a> 
+					<a title="关闭" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none">
+					<i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
 			</tr>
+			@endforeach
 		</tbody>
 	</table>
 	</div>
@@ -75,7 +97,7 @@ $(function(){
 		"bStateSave": true,//状态保存
 		"aoColumnDefs": [
 		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+		  // {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
 		]
 	});
 	$('.table-sort tbody').on( 'click', 'tr', function () {
@@ -102,7 +124,22 @@ function member_stop(obj,id){
 		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
+		// layer.msg('已停用!',{icon: 5,time:id});
+		$.ajax({
+           url:'/business-on',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                layer.msg('已停用!',{icon: 5,time:id});
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
 	});
 }
 
@@ -112,7 +149,22 @@ function member_start(obj,id){
 		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
-		layer.msg('已启用!',{icon: 6,time:1000});
+		$.ajax({
+           url:'/business-off',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                layer.msg('已启用!',{icon: 6,time:id});
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
+		
 	});
 }
 /*用户-编辑*/

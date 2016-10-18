@@ -33,9 +33,6 @@
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
         <section class="common-back" id="wrapBackground">
-			@extends('shop_list')
-
-			@section('content')
                 <!--<header id="header">
                     <div class="common-width clearfix">
                         <h1 class="fl">

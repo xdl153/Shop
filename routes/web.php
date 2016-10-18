@@ -135,7 +135,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 //	Route::get("/shop_detail",function(){
 //		return view("Shop.shop_detail");
 //	});
-
+//shop_detailinsert收藏餐厅
+ Route::POST("/shop_detailinsert","MyShop\Shop_DetailController@shop_detailinsert");
+ //shop_detaildelete取消收藏餐厅
+ Route::POST("//shop_detailtdelete","MyShop\Shop_DetailController@shop_detaildelete");
 //shop_intro餐厅介绍视图路由
 // Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
 	Route::get("/shop_intro",function(){
@@ -202,3 +205,91 @@ Route::post("/DoResetPassword","MyShop\PasswordController@DoResetPassword");
 Route::get("/SuccessFind","MyShop\PasswordController@SuccessFind");
 //找回密码完
 //后台***********************项目
+
+//商家后台***********************项目
+Route::group(["prefix"=>"Business","middleware"=>"myauth"],function(){
+//网站后台首页
+	Route::get("busi","MyBusiness\BusinessController@index");
+	
+//后台桌面
+	Route::get("welcome","MyBusiness\BusinessController@welcome");
+
+
+
+//执行退出 
+	Route::get("logout","MyBusiness\BusinessController@logout");
+	// });
+//修改密码
+ 	Route::get("dealer-password","Mybusiness\ChangepasswordController@dealer_password");
+//dealer-password更改密码
+ 	// Route::get("/dealer-password",function(){
+ 	// 	return view("/Business.dealer-password");
+ 	});
+
+//dealer-phone更改电话
+ 	Route::get("/dealer-phone",function(){
+ 		return view("/Business.dealer-phone");
+ 	});
+
+//business-info店铺信息
+ 	// Route::get("/business-info",function(){
+ 	// 	return view("/Business.business-info");
+ 	// });
+ 	Route::get("/business-info","MyBusiness\BusinessInfocontroller@Business_info");
+//business-on关闭店铺
+ 	Route::post("/business-on","MyBusiness\BusinessInfocontroller@Business_on");
+
+//business-on关闭店铺
+ 	Route::post("/business-off","MyBusiness\BusinessInfocontroller@Business_off");
+//business-brand添加店铺
+ 	Route::get("/business-brand",function(){
+ 		return view("/Business.business-brand");
+ 	});
+//business-brand修改店铺信息
+ 	Route::get("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_brandupdate");
+//执行修改店铺信息
+ 	Route::post("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_update");
+//删除配送地址
+ 	Route::post("/business-districtdel","MyBusiness\BusinessBrandupdateController@Business_districtdel");
+//添加配送地址城市级联
+ 	Route::post("/business-districtadd","MyBusiness\BusinessBrandupdateController@Business_districtadd");
+//menu-brand添加菜品
+ 	Route::get("/menu-brand",function(){
+ 		return view("/Business.menu-brand");
+ 	});
+
+//menu-list菜单列表
+ 	Route::get("/menu-list",function(){
+ 		return view("/Business.menu-list");
+ 	});
+
+//menu-cance回收站
+ 	Route::get("/menu-cance",function(){
+ 		return view("/Business.menu-cance");
+ 	});
+
+//orderform-list订单列表
+ 	Route::get("/orderform-list",function(){
+ 		return view("/Business.orderform-list");
+ 	});
+
+//orderform-accomplish已完成的订单
+ 	Route::get("/orderform-accomplish",function(){
+ 		return view("/Business.orderform-accomplish");
+ 	});
+
+//orderform-unfinished已完成的订单
+ 	Route::get("/orderform-unfinished",function(){
+ 		return view("/Business.orderform-unfinished");
+ 	});
+
+//comment-info反馈列表
+ 	Route::get("/comment-info",function(){
+ 		return view("/Business.comment-info");
+ 	});
+// 登录表单 
+	Route::get("Business/login","MyBusiness\BusinessController@login");
+// 验证码
+	Route::get("Business/captcha/{tmp?}","MyBusiness\BusinessController@captcha");
+	// 执行登录 
+	Route::post("Business/login","MyBusiness\BusinessController@dologin");

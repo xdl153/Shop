@@ -41,12 +41,52 @@
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
 
-                            <ul class="member" login-box>
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="login-register"><a href="{{ URL('/login') }}" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span><a href="{{ URL('/register') }}" referer-url  rel="nofollow" class="register">注册</a></li>
-                                <li><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">查看订单</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
+                            <ul id="member" class="member" login-box>
+                                <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                            <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                            <div>
+                                                <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                            </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                                    @endif
+                        
+                        
+                                <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                <script type="text/javascript">
+    
+                                    function exit(){
+                                        var hiddenid = $('#hidden').val();
+                                        $.ajax({
+                                           url:'/logout',
+                                           type:'post', 
+                                           async:true,
+                                           headers: {
+                                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                           },
+                                           success:function(a){
+                                            if( a === 'y'){
+                                                location.reload();
+                                            }else{
+                                                alert('退出失败');
+                                            }
+                                           },
+                                           error:function(){
+                                               alert('ajax失败');
+                                           }
+                                        });
+                                    };
+                                </script>
                             </ul>
 
                     </div>
@@ -94,14 +134,70 @@
                 <p>37<span style="font-size:12px;color:#999;">分钟</span></p>
                 <span>送餐时间</span>
             </div>
-            <div class="fl nav-right-collect line-left">
-
-                    <div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div>
+            <!--判断用户是否登录-->
+            @if(session('userid'))
+                <!--判断用户是否已收藏店铺-->
+                @if($enshrine)
+                <div class="fl nav-right-collect line-left">
+                    <div class="collect collect" onclick="qsc({{ $_GET['bid'] }})" title="取消收藏"></div>
+                    <div class="collect-success">收藏成功</div>
+                    <div id="review-text">已收藏</div>
+                </div>
+                @else
+                <div class="fl nav-right-collect line-left">
+                    <div class="collect not-collect" onclick="sc({{ $_GET['bid'] }})" title="收藏店铺"></div>
                     <div class="collect-success">收藏成功</div>
                     <div id="review-text">未收藏</div>
-
+                </div>
+                @endif
+            @else
+            <div class="fl nav-right-collect line-left">
+                    <div class="collect not-collect" onclick=alert('请登录') title="收藏餐厅"></div>
+                    <div class="collect-success">收藏成功</div>
+                    <div id="review-text">未收藏</div>
             </div>
+            @endif
+          
         </div>
+        <script type="text/javascript">
+            //收藏店铺
+            function sc(bid){
+                jQuery.ajax({
+                   url:'/shop_detailinsert',
+                   type:'post', 
+                   async:true,
+                   data:{bid:bid},
+                   headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                   },
+                   success:function(data){
+                        window.location.reload();
+                   },
+                   error:function(){
+                       alert('ajax失败');
+                   }
+                });
+            }
+            //取消收藏
+            function qsc(bid){
+                jQuery.ajax({
+                   url:'/shop_detailtdelete',
+                   type:'post', 
+                   async:true,
+                   data:{bid:bid},
+                   headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                   },
+                   success:function(data){
+                    // alert(data);
+                        window.location.reload();
+                   },
+                   error:function(){
+                       alert('ajax失败');
+                   }
+                });
+            }
+        </script>
     </header>
     <ul class="clearfix menu-nav-list" scroll-position-static="160">
         <li class="no-line "><a href="{{ URL('/shop_intro') }}">餐厅介绍</a></li>
@@ -792,7 +888,7 @@
                         }   
                 }
                 //餐厅的id
-                var restaurantId='1592';
+                var restaurantId="{{ $_GET['bid'] }}";
                 //餐厅范围
                 var restaurantInRange = true;
                 //网格_位置ID 
@@ -814,7 +910,7 @@
 	   </script>
         <script src="{{ asset('Shop/js/menupage.js') }}"></script>
         <script src="{{ asset('Shop/js/favorite.js') }}"></script>
-          <script type="text/javascript">
+         <!-- <script type="text/javascript">
             $("#buts").click(function(){
                 var cai = $('.cai').html();
                 var fen = $('.fen').html();
@@ -843,7 +939,7 @@
                         }
                     })
             });
-        </script>
+        </script>-->
 
         <script>angular.bootstrap(document, ["app"]);</script>
          

@@ -30,17 +30,17 @@ class Member_AddrController extends Controller
 		\DB::table('site')->where('id',$id)->delete();
 	}
 
+	//城市级联
 	public function member_addrlist()
 	{
 		//获取ajaxchuan传过来的值
 		$upid = $_POST['upid'];
 
 		//查询地址表
-		// $district = \DB::table('district')->where('upid',$upid)->get();
 		$district = \DB::select("select * from district where upid={$upid}");
 
 		echo json_encode($district);
-		// echo '1';
+		
 	}
 
 	//增加收货地址

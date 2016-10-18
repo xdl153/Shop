@@ -136,7 +136,7 @@
                         @foreach($info as $in)
                     <li class="restaurant-item fl trans" name="li{{ $in->id }}">
                         <div class="img-box fl">
-                            <a href="shop_detail?id={{ $in->id }}"><img src="Shop/{{ $in->photo }}" width="82px" height="82px"></a>
+                            <a href="shop_detail?id={{ $_GET['id'] }}&bid={{ $in->id }}"><img src="Shop/{{ $in->photo }}" width="82px" height="82px"></a>
                         </div>
                         <article class="restaurant-introduce fl">
                             <h3 class="ellipsis"><a href="/shanghai/ji-xiang-hun-tun-gao-an-lu-dian/menu/">{{ $in->name }}</a></h3>
