@@ -62,28 +62,25 @@
 	</div>
 </div>
 <script>
-    function test(id){
-        if(confirm("tttt")){
-            $.ajax({
-                url:'/change-password',
-                type:'post',
-                async:true,
-                data:{data:id},
-                headers:{
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success:function(data){
-                    if(data === 'y'){
-                        location.reload();
-                    }else{
-                        alert('no');
-                    }
-                },
-                error:function(){
-                    alert('ajax失败');
-                }
-            });
-        }
+		function test(en){
+			// alert(en);
+				$.ajax({
+                      		url:"{{ URL('change-password') }}",
+					type:'post',
+					data:{'data':en},
+		                	async:true,
+					// dataType:'json',
+                      		headers: { 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')},
+                      		success:function(data){
+                        		if(data=='y'){
+                        			alert(en);
+                            			$("#"+en+"").remove();
+                        		}
+                        	
+                      		},
+		                      error:function(){alert('Ajax请求失败')},
+		                  });
+ 					}
 </script>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>

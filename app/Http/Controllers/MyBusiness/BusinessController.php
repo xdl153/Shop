@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class BusinessController extends Controller
 {
     //商家后台首页视图
-	public function index()
+	public function index_s()
 	{
     		return view("Business.busi");
 	}

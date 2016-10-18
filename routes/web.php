@@ -247,7 +247,7 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
 
 // 执行修改页面
-	Route::get("change-password","MyAdmin\ChangeController@change_password");
+	// Route::get("change-password","MyAdmin\ChangeController@change_password");
 	Route::post("change-password","MyAdmin\ChangeController@update");
 
 // 添加用户页面
@@ -292,4 +292,80 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 //system-log系统日志
    	Route::get("/system-log",function(){
  		return view("/Admin.system-log");
+ 	});
+
+
+
+
+
+//商家后台***********************项目
+
+
+// 登录表单 
+	Route::get("Business/login","MyBusiness\LoginController@login_s");
+// 执行登录 
+	Route::post("Business/login","MyBusiness\LoginController@dologin_s");
+// 验证码
+	Route::get("Business/captcha/{tmp?}","MyBusiness\LoginController@captcha_s");
+
+
+Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
+//网站后台首页
+	Route::get("busi","MyBusiness\BusinessController@index_s");
+
+//后台桌面
+	Route::get("welcome","MyBusiness\BusinessController@welcome");
+
+//执行退出 
+	Route::get("logout","MyBusiness\LoginController@logout_s");
+
+	});
+
+//修改密码
+ 	Route::get("dealer-password","MyBusiness\ChangepasswordController@dealer_password");
+ 	Route::post("dealer-password","MyBusiness\ChangepasswordController@update");
+//修改手机号
+ 	Route::get("dealer-phone","MyBusiness\ChangepasswordController@dealer_phone");
+ 	Route::post("dealer-phone","MyBusiness\ChangepasswordController@updatephone");
+//店铺信息
+ 	Route::get("business-info","MyBusiness\ChangepasswordController@business_info");
+//添加店铺视图
+ 	Route::get("business-brand","MyBusiness\ChangepasswordController@business_brand");
+//添加店铺
+ 	Route::post("business-brand","MyBusiness\ChangepasswordController@business_brand_add");
+//执行文件上传 
+	// Route::post("business-brand","MyBusiness\ChangepasswordController@uploadfile");
+//menu-brand添加菜品
+ 	Route::get("/menu-brand",function(){
+ 		return view("/Business.menu-brand");
+ 	});
+
+//menu-list菜单列表
+ 	Route::get("/menu-list",function(){
+ 		return view("/Business.menu-list");
+ 	});
+
+//menu-cance回收站
+ 	Route::get("/menu-cance",function(){
+ 		return view("/Business.menu-cance");
+ 	});
+
+//orderform-list订单列表
+ 	Route::get("/orderform-list",function(){
+ 		return view("/Business.orderform-list");
+ 	});
+
+//orderform-accomplish已完成的订单
+ 	Route::get("/orderform-accomplish",function(){
+ 		return view("/Business.orderform-accomplish");
+ 	});
+
+//orderform-unfinished已完成的订单
+ 	Route::get("/orderform-unfinished",function(){
+ 		return view("/Business.orderform-unfinished");
+ 	});
+
+//comment-info反馈列表
+ 	Route::get("/comment-info",function(){
+ 		return view("/Business.comment-info");
  	});
