@@ -23,9 +23,19 @@ class ChangeController extends Controller
 	//用户反馈列表
 	public function picture_list()
 	{
-		$li = \DB::table('feedback')->get();
-		return view("Admin.picture-list",['li'=>$li]);
+            $li = \DB::table('feedback')->get();
+            return view("Admin.picture-list",['li'=>$li]);
 	}
+        public function picturelistdelete(Request $request)
+        {
+            $id = $request->input('id');
+            $user = \DB::table('feedback')->delete(['id' => $id]);
+            if($user > 0){
+              return 'y';
+            }else{
+                return 'n';
+            }
+        }
 
 	//商家列表
 	public function product_brand()
