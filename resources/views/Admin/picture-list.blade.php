@@ -46,9 +46,9 @@
 			</thead>
 			<tbody>
 			@foreach($li as $p)
-				<tr class="text-c">
+				<tr id="a{{ $p->id }}" class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<td>{{ $p->uid }}</td>
+					<td >{{ $p->uid }}</td>
 					<td>{{ $p->phone }}</td>
 					<td>{{ $p->data }}</td>
 					<td>{{ $p->content }}</td>
@@ -73,7 +73,7 @@
                 },
                 success:function(data){
                     if(data === 'y'){
-                        location.reload();
+                        $("#a"+dx).remove();
                     }else{
                         alert('no');
                     }
