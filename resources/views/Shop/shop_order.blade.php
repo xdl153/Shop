@@ -35,21 +35,59 @@
     <section class="common-back" id="wrapBackground">
         
             <header id="header">
-                <div class="common-width clearfix">
-                    <h1 class="fl">
-                        <a class="logo base-logo" href="/">外卖超人</a>
-                    </h1>
-                    
-                        <ul class="member" login-box>
-                            <li><a href="/" class="index">首页</a></li>
-                            <li class="login-register"><a href="{{ URL('/login') }}" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span><a href="{{ URL('/register') }}" referer-url  rel="nofollow" class="register">注册</a></li>
-                            <li><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">查看订单</a></li>
-                            <li class=""><a href="{{ URL('/gifts') }}l"  rel="nofollow">氪星礼品站</a></li>
-                            <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
-                        </ul>
-                    
-                </div>
-            </header>
+                    <div class="common-width clearfix">
+                        <h1 class="fl">
+                            <a class="logo base-logo" href="/">外卖超人</a>
+                        </h1>
+
+                            <ul id="member" class="member" login-box>
+                                    <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                    <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                                <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                                <div>
+                                                    <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                    <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                    <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                                </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                                    @endif					
+                                            <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                        <script type="text/javascript">
+	
+                                            function exit(){
+                                                var hiddenid = $('#hidden').val();
+		                              	$.ajax({
+		                                   url:'/logout',
+		                                   type:'post', 
+		                                   async:true,
+		                                   headers: {
+		                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                                   },
+		                                   success:function(a){
+		                                    if( a === 'y'){
+		                                    	location.reload();
+                                       		}else{
+                                           		alert('退出失败');
+                                       		}
+		                                   },
+		                                   error:function(){
+		                                       alert('ajax失败');
+		                                   }
+                           			 	});
+                          			};
+                                        </script>
+                            </ul>
+
+                    </div>
+                </header>
         
         <div id="main-box">
              <!--二维码-->
@@ -66,74 +104,77 @@
         
             
     <section class="menupage-main common-width" ng-init="city_name='上海'">
-        
-<header class="nav clearfix">
-    <div class="fl clearfix nav-des">
-        <img src="http://dhcrestaurantlogo.dhero.cn/1592?v=1415630726" alt="[半价菜][送可乐]樱花日本料理" class="fl" />
-        <div class="fl nav-des-text">
-            <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">[半价菜][送可乐]樱花日本料理</h2>
-            <div class="clearfix">
-                <div class="fl nav-review">
-                    <div style="width:65.00px;"></div>
+@foreach($bus as $b)
+    <header class="nav clearfix">
+        <div class="fl clearfix nav-des">
+            <img src="{{ asset('Shop') }}{{ $b->photo }}" alt="{{ $b->name }}" class="fl" />
+            <div class="fl nav-des-text">
+                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">{{ $b->name }}</h2>
+                <div class="clearfix">
+                    <div class="fl nav-review">
+                        <div style="width:{{ $b->grade }}.00px;"></div>
+                    </div>
+                    <!--<p class="nav-review-x">5星</p>-->
                 </div>
-                <p class="nav-review-x">5星</p>
             </div>
         </div>
-    </div>
-    <div class="fr clearfix nav-right">
-        
-        <div class="fl nav-right-blast line-right">
-            <p>150<span style="font-size:12px;color:#999;">元</span></p>
-            <span>起送</span>
-        </div>
-        
-        <div class="fl nav-right-blast">
-            <p>37<span style="font-size:12px;color:#999;">分钟</span></p>
-            <span>送餐时间</span>
-        </div>
-        <div class="fl nav-right-collect line-left">
-            
-                <div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div>
-                <div class="collect-success">收藏成功</div>
-                <div id="review-text">未收藏</div>
-            
-        </div>
-    </div>
-</header>
+        <div class="fr clearfix nav-right">
 
+            <div class="fl nav-right-blast line-right">
+                <p>30<span style="font-size:12px;color:#999;">元</span></p>
+                <span>起送</span>
+            </div>
+
+            <div class="fl nav-right-blast">
+                <p>37<span style="font-size:12px;color:#999;">分钟</span></p>
+                <span>送餐时间</span>
+            </div>
+            <div class="fl nav-right-collect line-left">
+
+                    <div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div>
+                    <div class="collect-success">收藏成功</div>
+                    <div id="review-text">未收藏</div>
+
+            </div>
+        </div>
+    </header>
+    @endforeach
 <ul class="clearfix menu-nav-list" scroll-position-static="160">
-    <li class="no-line "><a href="{{ URL('/shop_intro') }}">餐厅介绍</a></li>
-    <li><a href="{{ URL('/shop_detail') }}">菜单</a></li>
-    <li ><a href="{{ URL('/shop_comment') }}">评论</a></li>
-	<li  class="active"><a href="{{ URL('/shop_order') }}" id='point-tab'>大家都在点</a></li>
+    <li class="no-line "><a href="{{ URL('/shop_intro') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">餐厅介绍</a></li>
+    <li><a href="{{ URL('/shop_detail') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">菜单</a></li>
+    <li ><a href="{{ URL('/shop_comment') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">评论</a></li>
+	<!--<li  class="active"><a href="{{ URL('/shop_order') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" id='point-tab'>大家都在点</a></li>-->
     
 </ul>
         <section class="main-box clearfix">
             <div class="main fl">
                 <div class="inner-main">
                     <ul class="flow-box clearfix" flow-box>
-                        
+                        @foreach($list as $lis)
                             <li>
                                 <div class="order-title">
-                                    <span class="fr">2015/04/28 19:07:41</span>
+                                    <span class="fr">{{ $lis->data }}</span>
                                     <i class="person-sex"></i>
-                                    <b>152****8487</b>
+                                    <b>{{ $lis->name }}</b>
                                 </div>
                                 <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3734626">
+                                    @foreach($dtl as $dt)
+                                    @foreach($dt as $d)
+                                    @if($d->oid == $lis->id)
+                                    <div class="order-body-item" order-item itemnum='1' accessorykey="{{ $d->id }}">
                                         <div class="clearfix">
-                                            <span class="ellipsis name">日式油淋鸡</span>
-                                            <span class="num">1</span>
+                                            <span class="ellipsis name">{{ $d->cname }}</span>
+                                            <span class="num">{{ $d->num }}</span>
                                             
-                                            <span class="price">￥26.00</span>
+                                            <span class="price">￥{{ $d->Price }}</span>
                                             <a href="javascript:">我也来一份</a>
                                             
                                         </div>
-                                        
                                     </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3734626">
+                                    @endif
+                                    @endforeach
+                                    @endforeach
+                                    <!--<div class="order-body-item" order-item itemnum='2' accessorykey="3734626">
                                         <div class="clearfix">
                                             <span class="ellipsis name">寿喜锅</span>
                                             <span class="num">1</span>
@@ -143,7 +184,7 @@
                                             
                                         </div>
                                         
-                                    </div>
+                                    </div>-->
                                     
                                     
                                 </div>
@@ -151,497 +192,7 @@
                                     合计：￥<span ng-bind="allPrice['3734626']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3734626'].length>0]]}" order-id orderId="3734626">和他吃一样</a>
                                 </div>
                             </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/19 11:48:32</span>
-                                    <i class="person-sex"></i>
-                                    <b>189****2987</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' >
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">[减]日式煮牛肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                              <span class="sellover">已售完</span>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' >
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">[减]铁板烧肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                              <span class="sellover">已售完</span>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3592516']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3592516'].length>0]]}" order-id orderId="3592516">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/26 18:21:47</span>
-                                    <i class="person-sex"></i>
-                                    <b>159****2410</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3703493">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式芝麻味噌沾沾面(原价32元)</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3703493">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式油淋鸡</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3703493']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3703493'].length>0]]}" order-id orderId="3703493">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/19 18:25:37</span>
-                                    <i class="person-sex"></i>
-                                    <b>134****4636</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3599656">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式煮牛肉</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥38.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3599656">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">芝麻和风色拉</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥17.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' accessorykey="3599656">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式麻婆豆腐</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥20.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='4' accessorykey="3599656">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">米饭/中</span>
-                                            <span class="num">2</span>
-                                            
-                                            <span class="price">￥3.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3599656']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3599656'].length>0]]}" order-id orderId="3599656">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/19 11:14:50</span>
-                                    <i class="person-sex"></i>
-                                    <b>138****1193</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3591402">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">三得利超爽啤酒</span>
-                                            <span class="num">4</span>
-                                            
-                                            <span class="price">￥6.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3591402">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">烤三文鱼</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥38.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' accessorykey="3591402">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">烤青花鱼</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥28.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3591402']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3591402'].length>0]]}" order-id orderId="3591402">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/19 11:59:38</span>
-                                    <i class="person-sex"></i>
-                                    <b>159****7732</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3593163">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式铁板烧肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥23.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3593163">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式炸鸡块便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥22.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' >
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">[减]日式煮牛肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                              <span class="sellover">已售完</span>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='4' accessorykey="3593163">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式咖喱牛肉便当</span>
-                                            <span class="num">2</span>
-                                            
-                                            <span class="price">￥36.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='5' accessorykey="3593163">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">海鲜沾沾面</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3593163']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3593163'].length>0]]}" order-id orderId="3593163">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/21 19:39:36</span>
-                                    <i class="person-sex"></i>
-                                    <b>130****1233</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3632333">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">芝麻和风色拉</span>
-                                            <span class="num">2</span>
-                                            
-                                            <span class="price">￥17.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3632333">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式麻婆豆腐便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥19.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' accessorykey="3632333">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式油淋鸡</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3632333']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3632333'].length>0]]}" order-id orderId="3632333">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/25 10:34:55</span>
-                                    <i class="person-sex"></i>
-                                    <b>136****7153</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3682033">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式铁板烧肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥23.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3682033">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式烤秋刀鱼便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥22.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' accessorykey="3682033">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式蟹味菇茄子铁板烧肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥21.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3682033']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3682033'].length>0]]}" order-id orderId="3682033">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/18 19:21:10</span>
-                                    <i class="person-sex"></i>
-                                    <b>182****8390</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' accessorykey="3588533">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式油淋鸡</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3588533">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">煎饺/大</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥31.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' >
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">親子饭</span>
-                                            <span class="num">1</span>
-                                            
-                                              <span class="sellover">已售完</span>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='4' accessorykey="3588533">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">黄油虾仁炒饭</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥38.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='5' accessorykey="3588533">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式韭菜炒猪肝</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥25.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3588533']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3588533'].length>0]]}" order-id orderId="3588533">和他吃一样</a>
-                                </div>
-                            </li>
-                        
-                            <li>
-                                <div class="order-title">
-                                    <span class="fr">2015/04/25 17:41:24</span>
-                                    <i class="person-sex"></i>
-                                    <b>159****1532</b>
-                                </div>
-                                <div class="order-body">
-                                    
-                                    <div class="order-body-item" order-item itemnum='1' >
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">[减]日式煮牛肉便当</span>
-                                            <span class="num">1</span>
-                                            
-                                              <span class="sellover">已售完</span>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='2' accessorykey="3690678">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">密制大布丁特价</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥15.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="order-body-item" order-item itemnum='3' accessorykey="3690678">
-                                        <div class="clearfix">
-                                            <span class="ellipsis name">日式油淋鸡</span>
-                                            <span class="num">1</span>
-                                            
-                                            <span class="price">￥26.00</span>
-                                            <a href="javascript:">我也来一份</a>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <div class="order-footer">
-                                    合计：￥<span ng-bind="allPrice['3690678']|number:2"></span><a href="javascript:" class="dis" ng-class="{eatingBtn:[[orderObj['3690678'].length>0]]}" order-id orderId="3690678">和他吃一样</a>
-                                </div>
-                            </li>
-                        
+                            @endforeach
                     </ul>
                 </div>
             </div>
@@ -974,14 +525,38 @@
     
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.2&key=ad067aee8be63cdc8baaff2672b3c545"></script>
     <script src="{{ asset('Shop/js/service.js') }}"></script>
-    
+    <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
     <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
     <!--[if lt IE 9]><script src="{{ asset('Shop/js/fix.js') }}"></script><![endif]-->
     
     
     <script>
 
-        var data=[{"order_total": 47.00, "submitted_at": "2015/04/28 19:07:41", "order_id": 3734626, "items": [{"status": true, "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21", "sectionId": 25299, "menu_price": 26.00, "id": 558862, "key": "25299-558862", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u5bff\u559c\u9505", "sectionId": 168983, "menu_price": 21.00, "id": 2026767, "key": "168983-2026767", "additions": [], "options": [], "quantity": 1}], "customer_phone": "152****8487", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 41.00, "submitted_at": "2015/04/19 11:48:32", "order_id": 3592516, "items": [{"status": false, "name": "[\u51cf]\u65e5\u5f0f\u716e\u725b\u8089\u4fbf\u5f53", "sectionId": 176893, "menu_price": 42.00, "id": 2111586, "key": "176893-2111586", "additions": [], "options": [], "quantity": 1}, {"status": false, "name": "[\u51cf]\u94c1\u677f\u70e7\u8089\u4fbf\u5f53", "sectionId": 176893, "menu_price": 29.00, "id": 2148702, "key": "176893-2148702", "additions": [], "options": [], "quantity": 1}], "customer_phone": "189****2987", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 52.00, "submitted_at": "2015/04/26 18:21:47", "order_id": 3703493, "items": [{"status": true, "name": "\u65e5\u5f0f\u829d\u9ebb\u5473\u564c\u6cbe\u6cbe\u9762(\u539f\u4ef732\u5143)", "sectionId": 122476, "menu_price": 26.00, "id": 1562368, "key": "122476-1562368", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21", "sectionId": 25299, "menu_price": 26.00, "id": 558862, "key": "25299-558862", "additions": [], "options": [], "quantity": 1}], "customer_phone": "159****2410", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 81.00, "submitted_at": "2015/04/19 18:25:37", "order_id": 3599656, "items": [{"status": true, "name": "\u65e5\u5f0f\u716e\u725b\u8089", "sectionId": 25300, "menu_price": 38.00, "id": 558905, "key": "25300-558905", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u829d\u9ebb\u548c\u98ce\u8272\u62c9", "sectionId": 25304, "menu_price": 17.00, "id": 559091, "key": "25304-559091", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u9ebb\u5a46\u8c46\u8150", "sectionId": 25300, "menu_price": 20.00, "id": 558921, "key": "25300-558921", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u7c73\u996d/\u4e2d", "sectionId": 25310, "menu_price": 3.00, "id": 559159, "key": "25310-559159", "additions": [], "options": [], "quantity": 2}], "customer_phone": "134****4636", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 90.00, "submitted_at": "2015/04/19 11:14:50", "order_id": 3591402, "items": [{"status": true, "name": "\u4e09\u5f97\u5229\u8d85\u723d\u5564\u9152", "sectionId": 56459, "menu_price": 6.00, "id": 884769, "key": "56459-884769", "additions": [], "options": [], "quantity": 4}, {"status": true, "name": "\u70e4\u4e09\u6587\u9c7c", "sectionId": 25307, "menu_price": 38.00, "id": 559114, "key": "25307-559114", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u70e4\u9752\u82b1\u9c7c", "sectionId": 25307, "menu_price": 28.00, "id": 559139, "key": "25307-559139", "additions": [], "options": [], "quantity": 1}], "customer_phone": "138****1193", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 170.00, "submitted_at": "2015/04/19 11:59:38", "order_id": 3593163, "items": [{"status": true, "name": "\u65e5\u5f0f\u94c1\u677f\u70e7\u8089\u4fbf\u5f53", "sectionId": 25301, "menu_price": 23.00, "id": 559001, "key": "25301-559001", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u70b8\u9e21\u5757\u4fbf\u5f53", "sectionId": 25301, "menu_price": 22.00, "id": 559002, "key": "25301-559002", "additions": [], "options": [], "quantity": 1}, {"status": false, "name": "[\u51cf]\u65e5\u5f0f\u716e\u725b\u8089\u4fbf\u5f53", "sectionId": 176893, "menu_price": 42.00, "id": 2111586, "key": "176893-2111586", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u5496\u55b1\u725b\u8089\u4fbf\u5f53", "sectionId": 25301, "menu_price": 36.00, "id": 558994, "key": "25301-558994", "additions": [], "options": [], "quantity": 2}, {"status": true, "name": "\u6d77\u9c9c\u6cbe\u6cbe\u9762", "sectionId": 39215, "menu_price": 26.00, "id": 2048893, "key": "39215-2048893", "additions": [], "options": [], "quantity": 1}], "customer_phone": "159****7732", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 79.00, "submitted_at": "2015/04/21 19:39:36", "order_id": 3632333, "items": [{"status": true, "name": "\u829d\u9ebb\u548c\u98ce\u8272\u62c9", "sectionId": 25304, "menu_price": 17.00, "id": 559091, "key": "25304-559091", "additions": [], "options": [], "quantity": 2}, {"status": true, "name": "\u65e5\u5f0f\u9ebb\u5a46\u8c46\u8150\u4fbf\u5f53", "sectionId": 25301, "menu_price": 19.00, "id": 559012, "key": "25301-559012", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21", "sectionId": 39215, "menu_price": 26.00, "id": 879895, "key": "39215-879895", "additions": [], "options": [], "quantity": 1}], "customer_phone": "130****1233", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 66.00, "submitted_at": "2015/04/25 10:34:55", "order_id": 3682033, "items": [{"status": true, "name": "\u65e5\u5f0f\u94c1\u677f\u70e7\u8089\u4fbf\u5f53", "sectionId": 25301, "menu_price": 23.00, "id": 559001, "key": "25301-559001", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u70e4\u79cb\u5200\u9c7c\u4fbf\u5f53", "sectionId": 25301, "menu_price": 22.00, "id": 558999, "key": "25301-558999", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u87f9\u5473\u83c7\u8304\u5b50\u94c1\u677f\u70e7\u8089\u4fbf\u5f53", "sectionId": 25301, "menu_price": 21.00, "id": 559007, "key": "25301-559007", "additions": [], "options": [], "quantity": 1}], "customer_phone": "136****7153", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 144.00, "submitted_at": "2015/04/18 19:21:10", "order_id": 3588533, "items": [{"status": true, "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21", "sectionId": 39215, "menu_price": 26.00, "id": 879895, "key": "39215-879895", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u714e\u997a/\u5927", "sectionId": 25308, "menu_price": 31.00, "id": 559146, "key": "25308-559146", "additions": [], "options": [], "quantity": 1}, {"status": false, "name": "\u89aa\u5b50\u996d", "sectionId": 25302, "menu_price": 24.00, "id": 1537023, "key": "25302-1537023", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u9ec4\u6cb9\u867e\u4ec1\u7092\u996d", "sectionId": 39215, "menu_price": 38.00, "id": 2048898, "key": "39215-2048898", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u97ed\u83dc\u7092\u732a\u809d", "sectionId": 25300, "menu_price": 25.00, "id": 558919, "key": "25300-558919", "additions": [], "options": [], "quantity": 1}], "customer_phone": "182****8390", "delivery_fee": "0.00", "total_additions": []}, {"order_total": 68.00, "submitted_at": "2015/04/25 17:41:24", "order_id": 3690678, "items": [{"status": false, "name": "[\u51cf]\u65e5\u5f0f\u716e\u725b\u8089\u4fbf\u5f53", "sectionId": 176893, "menu_price": 42.00, "id": 2111586, "key": "176893-2111586", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u5bc6\u5236\u5927\u5e03\u4e01\u7279\u4ef7", "sectionId": 25299, "menu_price": 15.00, "id": 558868, "key": "25299-558868", "additions": [], "options": [], "quantity": 1}, {"status": true, "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21", "sectionId": 25299, "menu_price": 26.00, "id": 558862, "key": "25299-558862", "additions": [], "options": [], "quantity": 1}], "customer_phone": "159****1532", "delivery_fee": "0.00", "total_additions": []}],orderObj=accessoryObj={},otherObj={};
+        var data = [
+    @foreach($list as $lis)
+    {
+    "order_total": 47.00,
+    "submitted_at": "{{ $lis->data }}",
+    "order_id": "{{ $lis->id }}",
+    "items": [{
+        "status": true,
+        "name": "\u65e5\u5f0f\u6cb9\u6dcb\u9e21",
+        "sectionId": 25299,
+        "menu_price": 26.00,
+        "id": 558862,
+        "key": "25299-558862",
+        "additions": [],
+        "options": [],
+        "quantity": 1
+    },
+    @endforeach
+    ],
+    "customer_phone": "152****8487",
+    "delivery_fee": "0.00",
+    "total_additions": []
+}],
+orderObj = accessoryObj = {},
+otherObj = {};
         if(data){
             //order list
             for(var i = 0 , len = data.length; i < len; i++){
@@ -1009,7 +584,7 @@
         var checkout_url = "/checkout/0/";
         var restaurant_list_url = "/restaurants/0/";
         var favoriteUrl = "/ajax/restaurant/0/favorite/";
-        var delivery = {minimum_order_quantity:'150',free_delivery_treshold:'0',delivery_fee:'0' }
+        var delivery = {minimum_order_quantity:'30',free_delivery_treshold:'0',delivery_fee:'0' }
     </script>
     <script src="{{ asset('Shop/js/other_eating.js') }}"></script>
     <script src="{{ asset('Shop/js/favorite.js') }}"></script>

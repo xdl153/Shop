@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'myauth' => \App\Http\Middleware\myauth::class,
         'mybusi' => \App\Http\Middleware\mybusi::class,
+        'zhongjian' => \App\Http\Middleware\zhongjian::class,
     ];
 }

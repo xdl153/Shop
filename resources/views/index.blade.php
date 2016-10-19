@@ -49,9 +49,7 @@
 					<div class="member-box fs12" login-box info="loginInfo">
                                             @if(session("username"))
                                             <a  href="{{ URL('/member_index')}}">{{session("username")}}</a>
-                                                <span>|</span>
-                                                <a href="{{ URL('/member_order') }}">查看订单</a>
-                                                <span>|</span>
+                                                <span>|</span>                                                
                                                 <a onclick="exit();">退出</a>
                                             @else
                                                 <a href="javascript:void(0)" ng-click="logoinDialogShow()">登录</a>

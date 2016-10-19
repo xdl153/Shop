@@ -40,12 +40,50 @@
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
 
-                            <ul class="member" login-box>
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="login-register"><a href="{{ URL('/login') }}" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span><a href="{{ URL('/register') }}" referer-url  rel="nofollow" class="register">注册</a></li>
-                                <li><a href="{{ URL('/member_order') }}" class="order-center"  rel="nofollow">查看订单</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
+                            <ul id="member" class="member" login-box>
+                                    <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                    <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                                <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                                <div>
+                                                    <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                    <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                    <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                                </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                                    @endif					
+                                            <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                        <script type="text/javascript">
+	
+                                            function exit(){
+                                                var hiddenid = $('#hidden').val();
+		                              	$.ajax({
+		                                   url:'/logout',
+		                                   type:'post', 
+		                                   async:true,
+		                                   headers: {
+		                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                                   },
+		                                   success:function(a){
+		                                    if( a === 'y'){
+		                                    	location.reload();
+                                       		}else{
+                                           		alert('退出失败');
+                                       		}
+		                                   },
+		                                   error:function(){
+		                                       alert('ajax失败');
+		                                   }
+                           			 	});
+                          			};
+                                        </script>
                             </ul>
 
                     </div>
@@ -66,24 +104,24 @@
 
 
             <section class="menupage-main common-width">
-
+    @foreach($bus as $b)
     <header class="nav clearfix">
         <div class="fl clearfix nav-des">
-            <img src="http://dhcrestaurantlogo.dhero.cn/1592?v=1415630726" alt="[半价菜][送可乐]樱花日本料理" class="fl" />
+            <img src="{{ asset('Shop') }}{{ $b->photo }}" alt="{{ $b->name }}" class="fl" />
             <div class="fl nav-des-text">
-                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">[半价菜][送可乐]樱花日本料理</h2>
+                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">{{ $b->name }}</h2>
                 <div class="clearfix">
                     <div class="fl nav-review">
-                        <div style="width:65.00px;"></div>
+                        <div style="width:{{ $b->grade }}.00px;"></div>
                     </div>
-                    <p class="nav-review-x">5星</p>
+                    <!--<p class="nav-review-x">5星</p>-->
                 </div>
             </div>
         </div>
         <div class="fr clearfix nav-right">
 
             <div class="fl nav-right-blast line-right">
-                <p>150<span style="font-size:12px;color:#999;">元</span></p>
+                <p>30<span style="font-size:12px;color:#999;">元</span></p>
                 <span>起送</span>
             </div>
 
@@ -100,13 +138,12 @@
             </div>
         </div>
     </header>
-
+    @endforeach
     <ul class="clearfix menu-nav-list" scroll-position-static="160">
-        <li class="no-line "><a href="{{ URL('/shop_intro') }}">餐厅介绍</a></li>
-        <li><a href="{{ URL('/shop_detail') }}">菜单</a></li>
-        <li  class="active"><a href="{{ URL('/shop_comment') }}">评论</a></li>
-            <li ><a href="{{ URL('/shop_order') }}" id='point-tab'>大家都在点</a></li>
-
+        <li class="no-line "><a href="{{ URL('/shop_intro') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">餐厅介绍</a></li>
+        <li><a href="{{ URL('/shop_detail') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">菜单</a></li>
+        <li  class="active"><a href="{{ URL('/shop_comment') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">评论</a></li>
+        <!--<li ><a href="{{ URL('/shop_order') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" id='point-tab'>大家都在点</a></li>-->
     </ul>
                     <section class="main-box">
                             <section class="review-messages">
@@ -116,19 +153,19 @@
 				{{ $jishu->count }}
                             @endforeach
                            条评论）
-                        <label class="checkbox view-check fr" title="有内容的评论" model="filterObj">
+<!--                        <label class="checkbox view-check fr" title="有内容的评论" model="filterObj">
                             <div class="checker"><span ng-class="{checked:model}">
                                 <input type="checkbox" ng-model="model" ng-true-value="true" ng-disabled="disable" class="ng-pristine ng-valid">
                             </span>
                             </div>
                             <span class="ng-binding">有内容的评论</span>
-                        </label>
+                        </label>-->
                     </header>
 
                        @foreach($list as $user)
                             <article class="review-item">
                                     <div class="fr review-search order-detail">
-                                        <a href="javascript:" class="review-read-color review-order" detailKey="Lj0t5fMW6sJW7g4Pz6r778NDM9Q56bOUZJYGOzUtBsbgzURWJvqVZeO8pv70cmUb">看他点了什么 ></a>
+                                        <!--<a href="javascript:" class="review-read-color review-order" detailKey="{{ $user->uid }}">看他点了什么 ></a>-->
                                         <div class="order-menu-info">
                                             <div class="order-menu-inner">
                                                 <div class="order-loding" ng-hide="loadStatus['Lj0t5fMW6sJW7g4Pz6r778NDM9Q56bOUZJYGOzUtBsbgzURWJvqVZeO8pv70cmUb']">
@@ -147,7 +184,7 @@
                                     <span>{{ $user->name }}</span>
                                     <span>{{ $user->data }}</span>
                                     <span class="small-star">
-                                        <span style="width:65.00px;"></span>
+                                        <span style="width:{{ $user->grade }}5px;"></span>
                                     </span>
                                 <div class="review-content">{{ $user->content }}</div>
 
@@ -155,7 +192,7 @@
                             </article>
 			@endforeach
 
-                        <!--<page total="18" show="5"></page>-->
+                        <!--<page total="2" show="1"></page>-->
 
                 </section>
                     </section>

@@ -12,7 +12,16 @@
         <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
         <link rel="icon" type="image/png" href="images/favicon.ico"/>
         <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
-
+        <!-- kefuQQ -->
+                <style type="text/css">
+                * { padding: 0; margin: 0; font-size: 12px; }
+                    body{height:2000px;} 
+                ul { list-style: none; }
+                a { text-decoration: none; }
+                </style>
+                <link rel="stylesheet" href="Shop/css/kefu.css">   
+                <script src="Shop/js/jquery.js"></script>
+                <!-- kefu QQ-->
         <script type="text/javascript">
 
             (function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
@@ -33,7 +42,7 @@
         <title>下订单</title>
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
-
+        
         <section class="common-back" id="wrapBackground">
 
                 <header id="header">
@@ -99,7 +108,7 @@
 		                                   error:function(){
 		                                       alert('ajax失败');
 		                                   }
-                           			 	});
+                           			});
                           			};
                             </script>
                             </ul>
@@ -195,8 +204,12 @@
                                             <input type="text" maxlength="150" placeholder="如：多米饭，不吃辣等口味需求" ng-model="comment">
                                     </div>
                             </div>
+                        
                     </form>
-                        <div>* 请填写当前范围内的地址：{{ session('dizhi') }}</div>
+                        <div>* 请填写当前范围内的地址：{{ session('dizhi') }}</div> 
+                        <br><hr><br >
+                        <button  ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" ng-click="commitOrder()" class="btn btn-success fs20">提交信息 <i class="icon arrows-right"></i></button>
+                        </hr>
                     </section>
                     <header>订单内容</header>
                     <section>
@@ -236,7 +249,7 @@
                                 
                                 <a href="/shop_detail?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" class="fs15 link"><i class="icon arrows-left"></i> 返回修改订单</a>
                                 
-                                <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" id="aaaa" ng-click="commitOrder()" class="btn btn-success fs20">提交订单 <i class="icon arrows-right"></i></button>
+                                <button ng-disabled="!(name && phone && address&&couponCheck&&commitCheck)" id="aaaa"  class="btn btn-success fs20">提交订单<i class="icon arrows-right"></i></button>
                             </p>
                         @endforeach
                     </section>
@@ -439,7 +452,7 @@
     <script>
         var common_sms_code = '/ajax/common_sms_code/';
         var ajax_customer_user_register_start = '/ajax/customer_user_register_start/';
-        var common_validate_sms_code = '/ajax/common_validate_sms_code/';
+        var common_validate_sms_code= '/ajax/common_validate_sms_code/';
         var ajax_customer_user_register_register = '/ajax/customer_user_register_register/';
     </script>
 
@@ -571,7 +584,8 @@
             var ajax_common_sms_code = "/ajax/common_sms_code/";
             var ajax_is_order_need_sms_validate = "/tijiao";
             var ajax_common_validate_sms_code = "/ajax/common_validate_sms_code/";
-            var orderId = '3788798';
+            var av = parseInt(Math.random()*999999+1);
+            var orderId = '520'+av;
             var grid_locationId = '602341';
             var restaurantId = '1019';
             var gaObj = {
@@ -585,7 +599,7 @@
             var selectObj = [];
             var userAddress = [];
             var _isAuthenticated = 'ajax';
-//            var setLastAddrUrl =  "/ord";
+            var setLastAddrUrl =  "/l";
             var lastUsedAddressId = '230901';
             @foreach($site as $s)
                 userAddress.push({
@@ -608,6 +622,54 @@
         <script>angular.bootstrap(document, ["app"]);</script>
 
         <!-- Baidu Analytics -->
+        <!-- QQ客服 -->
+		<div id="box-kefu">
+                    <div class="kefu-close"></div>
+                    <div class="kefu-open">
+                        <div>
+                        <ul>
+                            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=1531555719&site=qq&menu=yes" target="_blank"><i class="qq"></i>在线客服</a></li>
+                            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=1030985069&site=qq&menu=yes" target="_blank"><i class="qq"></i>在线客服</a></li>
+                            <!--<li><a href="http://www.97zzw.com/plus/guestbook.php#liuyan" target="_blank"><i class="txt"></i>咨询留言</a></li>-->
+                        </ul>
+                        </div>
+                        <a href="javascript:;" class="close">关闭</a>
+                    </div>
+                </div>
+        <!-- -->
+                
+        <script>var online= new Array();</script>
+                <script src="http://webpresence.qq.com/getonline?Type=1&645481746:1712816412:645481746:"></script>
+                <script>
+                (function($){
+                    for (var i=0; i<online.length; i++) {
+                        if (online[i]) jQuery("#box-kefu .qq").eq(i).addClass("online");
+                    }
+                    var _open = $("#box-kefu").find(".kefu-open"),
+                        _close = $("#box-kefu").find(".kefu-close");
+                    _open.find("a").hover(function(){
+                        $(this).stop(true,true).animate({paddingLeft:20},200).find("i").stop(true,true).animate({left:75},200);
+                    },function(){
+                        $(this).stop(true,true).animate({paddingLeft:35},200).find("i").stop(true,true).animate({left:10},200);
+                    });
 
+
+                    _open.find(".close").click(function(){
+                        _open.animate({width:148},200,function(){
+                            _open.animate({width:0},200,function(){
+                                _close.animate({width:34},200);
+
+                            });
+                        });
+                    });
+                    _close.click(function(){
+                        _close.animate({width:44},200,function(){
+                            _close.animate({width:0},200,function(){
+                                _open.animate({width:138},200);
+                            });
+                        });
+                    });
+                })(jQuery)
+                </script>        
     </body>
 </html>

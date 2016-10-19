@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Busi extends Model
 {
     //1 指定和user model类 关联的表名
-    protected $table = "user";
+    protected $table = "dealer";
 
     //2 执行数据库的验证 
     public function checkUser(Request $request)
@@ -18,7 +18,7 @@ class Busi extends Model
     		$pass = $request->input('password');
 
     		//2 用户名是否存在
-    		$db = \DB::table('user')->where("name",$name)->first();
+    		$db = \DB::table('dealer')->where("name",$name)->first();
     		if($db){
     			if($db->password == $pass){
     				return $db;//返回当前对象

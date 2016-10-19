@@ -15,9 +15,34 @@
 //前台***********************项目
 //Index首页视图路由
 Route::get("/","MyShop\IndexController@index");
-// Route::get("/",function(){
-    // return view("index");
-// });
+//中间件路由群组
+Route::group(["prefix"=>"/","middleware"=>"zhongjian"],function(){
+
+Route::get("/order","MyShop\OrderController@order");
+
+//order_success下订单成功页面视图路由
+Route::get("/order_success","MyShop\Order_SuccessController@success");
+
+
+});
+//order下订单(送餐信息)页面视图路由
+Route::post("/create_order","MyShop\OrderController@creade_order");
+//添加送货地址
+Route::post("/add","MyShop\OrderController@add");
+//修改送货地址
+Route::post('/update','MyShop\OrderController@update');
+//删除送货地址
+Route::delete('/del',"MyShop\OrderController@destroy");
+//提交订单
+Route::post('/tijiao',"MyShop\OrderController@tijiao");
+//送货地址
+Route::post("/songhuodizhi","MyShop\OrderController@shdz");
+Route::post("/ord","MyShop\OrderController@ord");
+
+
+	
+	
+
 //Index首页用户手动输入ajax路由
 Route::post("/addseek","MyShop\IndexController@addseek");	
 
@@ -27,7 +52,6 @@ Route::post("/addseek","MyShop\IndexController@addseek");
 Route::get("/login","MyShop\LoginController@login");
 //登录
 Route::post("/dologin","MyShop\LoginController@dologin");
-
 
 //登录完
 //退出清除session
@@ -98,9 +122,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 
 //member_order查看订单视图路由
  Route::get("/member_order{id?}","MyShop\Member_OrderController@member_order");
-	Route::get("/member_order{id?}",function(){
-		return view("Shop.member_order");
-	});
+ //用户查看订单删除
+ Route::post("/order_delete","MyShop\Member_OrderController@order_delete");
+//pinlun用户评论
+ Route::post("/comment","MyShop\Member_OrderController@comment");
 	
 //member_index账号管理视图路由
 // Route::get("/member_index","MyShop\Member_IndexController@member_index");
@@ -151,23 +176,20 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 //	Route::get("/shop_detail",function(){
 //		return view("Shop.shop_detail");
 //	});
-
+//shop_detailinsert收藏餐厅
+ Route::POST("/shop_detailinsert","MyShop\Shop_DetailController@shop_detailinsert");
+ //shop_detaildelete取消收藏餐厅
+ Route::POST("//shop_detailtdelete","MyShop\Shop_DetailController@shop_detaildelete");
 //shop_intro餐厅介绍视图路由
-// Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
-	Route::get("/shop_intro",function(){
-		return view("Shop.shop_intro");
-	});
+ Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
+
 
 //shop_comment餐厅评论视图路由
  Route::get("/shop_comment","MyShop\Shop_CommentController@shop_comment");
-//	Route::get("/shop_comment",function(){
-//		return view("Shop.shop_comment");
-//	});
+
  
 //shop_order大家都在点页面视图路由
-	Route::get("/shop_order",function(){
-		return view("Shop.shop_order");
-	});
+// Route::get("/shop_order","MyShop\Shop_orderController@shop_order");
 
 //feedback用户反馈
 Route::post("/feedback","MyShop\FeedbackControoler@store");
@@ -188,26 +210,16 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 		return view("Shop.contact");
 	});
         
-//order下订单(送餐信息)页面视图路由
-Route::post("/create_order","MyShop\OrderController@creade_order");
-Route::get("/order","MyShop\OrderController@order");
-//添加送货地址
-Route::post("/add","MyShop\OrderController@add");
-//修改送货地址
-Route::post('/update','MyShop\OrderController@update');
-//删除送货地址
-Route::delete('/del',"MyShop\OrderController@destroy");
-//提交订单
-Route::post('/tijiao',"MyShop\OrderController@tijiao");
-//送货地址
-Route::post("/songhuodizhi","MyShop\OrderController@shdz");
-Route::post("/ord","MyShop\OrderController@ord");
 
 
-//order_success下订单成功页面视图路由
-	Route::get("/order_success",function(){
-		return view("Shop.order_success");
-	});
+
+
+	
+	
+
+
+
+
 
 
 
@@ -326,12 +338,28 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 //修改手机号
  	Route::get("dealer-phone","MyBusiness\ChangepasswordController@dealer_phone");
  	Route::post("dealer-phone","MyBusiness\ChangepasswordController@updatephone");
-//店铺信息
- 	Route::get("business-info","MyBusiness\ChangepasswordController@business_info");
-//添加店铺视图
- 	Route::get("business-brand","MyBusiness\ChangepasswordController@business_brand");
-//添加店铺
- 	Route::post("business-brand","MyBusiness\ChangepasswordController@business_brand_add");
+//business-info店铺信息
+ 	Route::get("/business-info","MyBusiness\BusinessInfocontroller@Business_info");
+//business-on关闭店铺
+ 	Route::post("/business-on","MyBusiness\BusinessInfocontroller@Business_on");
+//business-off开启店铺
+ 	Route::post("/business-off","MyBusiness\BusinessInfocontroller@Business_off");
+//business-brand修改店铺信息
+ 	Route::get("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_brandupdate");
+//执行修改店铺信息
+ 	Route::post("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_update");
+
+//删除配送地址
+ 	Route::post("/business-districtdel","MyBusiness\BusinessBrandupdateController@Business_districtdel");
+//添加配送地址城市级联
+ 	Route::post("/business-districtadd","MyBusiness\BusinessBrandupdateController@Business_districtadd");
+
+//business-brand添加店铺页面
+ 	Route::get("/business-brand","MyBusiness\BusinessaddController@Business_brand");
+//business-brandadd执行添加店铺
+ 	Route::post("/business-brandadd","MyBusiness\BusinessaddController@Business_brandadd");
+///business-category店铺类别
+ 	Route::post("//business-category","MyBusiness\BusinessaddController@Business_category");
 //执行文件上传 
 	// Route::post("business-brand","MyBusiness\ChangepasswordController@uploadfile");
 //menu-brand添加菜品

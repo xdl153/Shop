@@ -17,7 +17,7 @@ class BusinessController extends Controller
     //桌面视图
 	public function welcome()
 	{
-		// $list = \DB::table('user')->get();
+		$list = \DB::table('dealer')->get();
 		// // dd($list);
     		return view("/Business.welcome",['list'=>$list]);
 	}
