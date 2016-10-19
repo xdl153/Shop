@@ -92,9 +92,7 @@
 				<ul>    
                                         <li><a _href="{{ URL('BusinessAudit_list') }}" data-title="商家审核" href="javascript:void(0)">商家审核</a></li>
 					<li><a _href="{{ URL('product-brand') }}" data-title="商家列表" href="javascript:void(0)">商家列表</a></li>
-					<li><a _href="{{ URL('product-list') }}" data-title="商家状态" href="javascript:void(0)">评论列表</a></li>
-					<li><a _href="{{ URL('product-category-cation') }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
-					<li><a _href="{{ URL('product-category-reviewed') }}" data-title="菜单列表" href="javascript:void(0)">菜单列表</a></li>
+			
 				</ul>
 			</dd>
 		</dl>

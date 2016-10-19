@@ -276,16 +276,16 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
  	Route::get("/member-del",function(){return view("/Admin.member-del");});
 
 // 商家列表
- 	Route::get("product-brand","MyAdmin\ChangeController@product_brand");
+ 	Route::get("product-brand","MyAdmin\DealerlistController@product_brand");
+
+//商家店铺信息
+ 	Route::get("product-brandBusiness","MyAdmin\DealerlistController@product_branBusiness");
         //加载商家审核视图
         Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
         //审核商家
         Route::post("operationBusiness","MyAdmin\ChangeController@operationBusiness");
         Route::post("jsonfh","MyAdmin\ChangeController@jsonfh");
         Route::get('/email','MyShop\EmailController@index');
-        //审核不同意
-        //
-        //Route::get("Toexamine",function(){return });
 //评论列表
  	Route::get("product-list","MyAdmin\ChangeController@product_list");
 

@@ -23,7 +23,8 @@ class OrderController extends Controller
 	orderform.uid, 
 	orderform.id, 
 	details.Price,
-        orderform.express
+        orderform.express,
+        details.num
 FROM orderform, site, details
 WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} ");
         return view("Business.orderform-list",['list'=>$data]);
@@ -43,7 +44,8 @@ WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = or
 	orderform.uid, 
 	orderform.id, 
 	details.Price,
-        orderform.express
+        orderform.express,
+        details.num
         FROM orderform, site, details
         WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} and orderform.express = 1");
         return view("Business.orderform-unfinished",['list'=>$data]);
@@ -62,7 +64,8 @@ WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = or
 	orderform.uid, 
 	orderform.id, 
 	details.Price,
-        orderform.express
+        orderform.express,
+        details.num
         FROM orderform, site, details
         WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} and orderform.express = 2");
         return view("Business.orderform-accomplish",['list'=>$data]);
