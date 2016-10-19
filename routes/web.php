@@ -212,6 +212,12 @@ Route::post("/ord","MyShop\OrderController@ord");
 
 
 //后台***********************项目
+
+// 查看信息页面
+	Route::get("Admin/member-show",function(){
+		return view("Admin.member-show");
+	});
+
 // 登录表单 
 	Route::get("Admin/login","MyAdmin\LoginController@login");
 
@@ -234,38 +240,37 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
 	});
 
-// 查看信息页面
-	Route::get("Admin/member-show",function(){
-		return view("Admin.member-show");
-	});
-
-
 // 用户列表
-	Route::get("article_list","MyAdmin\UserlistController@article");
+	Route::get("article-list","MyAdmin\UserlistController@article");
+
+// 执行修改用户密码
+	Route::post("change-password","MyAdmin\ChangeController@change_password");
+	Route::get("change-password","MyAdmin\ChangeController@update");
+
+// 执行删除用户
+	Route::get("del","MyAdmin\ChangeController@delete");
+
+// 添加用户页面
+ 	Route::get("article-add","MyAdmin\ChangeController@add");
+
+ // 执行添加
+ 	Route::post("article-add","MyAdmin\ChangeController@article_add");
 
  //用户反馈列表
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
-        Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
-// 执行修改页面
-	Route::post("change-password","MyAdmin\ChangeController@update");
-
-// 添加用户页面
- 	Route::get("/article-add",function(){return view("/Admin.article-add");});
-
- // 执行添加
- 	Route::post("Admin/article-add","MyAdmin\ChangeController@add");
+    	Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
 
 //member-del停用的用户
  	Route::get("/member-del",function(){return view("/Admin.member-del");});
 
 // 商家列表
  	Route::get("product-brand","MyAdmin\ChangeController@product_brand");
-        //加载商家审核视图
-        Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
-        //审核商家
-        Route::post("operationBusiness","MyAdmin\ChangeController@operationBusiness");
-        Route::post("jsonfh","MyAdmin\ChangeController@jsonfh");
-        Route::get('/email','MyShop\EmailController@index');
+//加载商家审核视图
+    Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
+//审核商家
+    	Route::post("operationBusiness","MyAdmin\ChangeController@operationBusiness");
+    	Route::post("jsonfh","MyAdmin\ChangeController@jsonfh");
+    	Route::get('/email','MyShop\EmailController@index');
 //评论列表
  	Route::get("product-list","MyAdmin\ChangeController@product_list");
 
@@ -276,21 +281,22 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
  	Route::get("product-category-reviewed","MyAdmin\ChangeController@product_category_reviewed");
 
 //管理员列表
- 	Route::get("admin-list","MyAdmin\ChangeController@admin_list");
+ 	Route::get("admin-list","MyAdmin\AdminController@admin_list");
+//添加管理员视图
+ 	Route::get("admin-add","MyAdmin\AdminController@admin_add");
+//执行添加管理员
+ 	Route::post("admin-add","MyAdmin\AdminController@add");
 
- //admin-add添加管理员
-   	Route::get("/admin-add",function(){
- 		return view("/Admin.admin-add");
- 	}); 
+//修改管理员视图
+ 	Route::get("admin-edit","MyAdmin\AdminController@admin_edit");
+//执行修改管理员
+ 	Route::post("admin-edit","MyAdmin\AdminController@edit");
+//执行删除管理员
+ 	Route::get("delete","MyAdmin\AdminController@delete");
 
 //system-base系统设置
    	Route::get("/system-base",function(){
  		return view("/Admin.system-base");
- 	});
-
-//system-log系统日志
-   	Route::get("/system-log",function(){
- 		return view("/Admin.system-log");
  	});
 
 

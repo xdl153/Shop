@@ -1,6 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<style>
+.snake{
+	color:green;
+	font-size:20px;
+	font-weight:bold;
+	position:absolute;
+}
+</style>
 <meta charset="utf-8">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -25,6 +33,7 @@
 <title>用户列表</title>
 </head>
 <body>
+<font id='myfont' size='7'></font>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 用户列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
@@ -38,8 +47,6 @@
 				<th width="25"><input type="checkbox" name="" value=""></th>
 				<th width="80">ID</th>
 				<th width="100">用户名</th>
-				<th width="130">加入时间</th>
-
 				<th width="100">操作</th>
 			</tr>
 		</thead>
@@ -47,13 +54,11 @@
 			@foreach($list as $article)
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>{{ $article->id }}</td>
+				<td id="userid">{{ $article->id }}</td>
 				<td>{{ $article->name }}</td>
-				<td></td>
-
 				<td class="td-manage">
-				<a style="text-decoration:none" class="ml-5" onClick="change_password('修改密码','change-password','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
-				<a title="删除" href="javascript:;dodel({{ $article->id }})" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				<a style="text-decoration:none" class="ml-5" href="javascript:test({{ $article->id }})" onClick="change_password('修改密码','change-password?id={{ $article->id }}','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
+				<a class="ml-5" style="text-decoration:none" href="del?id={{ $article->id }}">删除</a>
 				</td>
 			</tr>
 			@endforeach
@@ -61,27 +66,6 @@
 	</table>
 	</div>
 </div>
-<script>
-		// function test(en){
-		// 	// alert(en);
-		// 		$.ajax({
-  //                     		url:"{{ URL('change-password') }}",
-		// 					type:'post',
-		// 					data:{'data':en},
-		//                 		async:true,
-		// 					// dataType:'json',
-  //                     		headers: { 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')},
-  //                     		success:function(data){
-  //                       		if(data=='y'){
-  //                       			alert(en);
-  //                           			$("#"+en+"").remove();
-  //                       		}
-                        	
-  //                     		},
-		//                       error:function(){alert('Ajax请求失败')},
-		//                   });
- 	// 				}
-</script>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>
 <script type="text/javascript" src="{{ asset('Admin/lib/laypage/1.2/laypage.js') }}"></script> 
@@ -89,6 +73,71 @@
 <script type="text/javascript" src="{{ asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui/js/H-ui.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
+<!--/*文字特效*/-->
+// <script>
+// (function(){
+// 	// 1.准备
+// 	var msg = '用户列表';
+// 	var str = '';
+// 	// 2.循环把每个字放到标签内
+// 	for(var i = 0; i < msg.length; i++){
+// 		str += '<span id="snake'+ i +'" class="snake">';
+// 			str += msg[i];
+// 		str += '</span>';
+// 	}
+// 	document.write(str);
+
+// 	window.onmousemove = function(events){
+// 		// 
+// 		document.title = 'X:' + events.clientX + 'Y:' + events.clientY;
+
+// 		var i = 0;
+// 		var timer = setInterval(function(){
+// 			if( i >= msg.length - 1){
+// 				clearInterval(timer);
+// 			}
+
+// 			// 找对象，
+// 			var span = document.getElementById('snake'+i);
+// 			span.style.left = events.clientX + i * 30 + 20 + 'px';
+// 			span.style.top  = events.clientY + 'px';
+// 			i++;
+// 		},30);
+// 	}
+// })();
+// </script>
+
+<!--/*文字特效*/-->
+<script>
+// 找对象
+var myfont = document.getElementById('myfont');
+var msg = '用户列表';
+
+function start(num,str){
+	// 截取字符串 从0到num
+	var tmp = str.substr(0,num); // 
+	// alert(tmp);
+	// <font red>j</font>
+	tmp += '<font color="red">'+ str[num] +'</font>'; 
+	tmp += str.substr(num + 1);
+	// <font>j</font>avascript文字跑马灯
+	return tmp;
+	/*
+	alert(tmp);
+	document.write(tmp);
+	*/
+}
+//start(2,msg);
+var i = 0;
+setInterval(function(){
+	// 0 	 'javascript文字跑马灯'
+	myfont.innerHTML = start(i,msg);
+	i++;
+	if( i >= msg.length){
+		i = 0;
+	}
+},50);
+</script>
 <script type="text/javascript">
 $(function(){
 	$('.table-sort').dataTable({
@@ -109,21 +158,18 @@ $(function(){
 		}
 	});
 });
+
 /*用户-添加*/
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
 /*密码-修改*/
-function change_password(title,url,id,w,h){
+function change_password(title,url,w,h){
 	layer_show(title,url,w,h);	
 }
-/*用户-删除*/
-function member_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
-	});
-}
 </script> 
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </body>
 </html>

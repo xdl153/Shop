@@ -6,37 +6,89 @@ use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Session;
 class ChangeController extends Controller
 {
-	//修改密码视图
-	// public function change_password()
-	// {
-	// 	return view('Admin.change-password');
-	// }
-	//执行修改密码
+	//获取用户名
 	public function update(Request $request)
 	{
-		// dd($_GET['id']);
-		return view('Admin.change-password');
+		$id = $request->input('id');
+		$password = $request->input('newpassword');
+		$password2 = $request->input('newpassword2');
+		$sql = \DB::table('user')->where('id',$id)->first();
+		return view('Admin.change-password',['sql'=>$sql]);
 	}
+	//执行修改密码
+	public function change_password(Request $request)
+	{
+		$id = $request->input('id');
+		$password = $request->input('newpassword');
+		$password2 = $request->input('newpassword2');
+			if($password == '' && $password2 == '')
+			{
+				return back()->with("msg","密码不能为空");
+			}
+			if($password === $password2){
+					$pass = \DB::update('update user set password='."'$password'".'where id='.$id);
+					if($pass > 0){
+						echo '<h1 style="color:red">修改成功<h1>';
+					}
+			}else{
+				return back()->with("msg","两次输入密码请一致");
+			}
+	}
+
+	//执行删除用户
+	public function delete(Request $request)
+	{
+		$id = $request->input('id');
+		$del = \DB::delete('delete from user where id='.$id);
+		return back()->with("msg","删除成功");
+	}
+	//添加页面视图
+	public function add()
+	{
+		return view('Admin.article-add');
+	}
+    //执行添加
+		public function article_add(Request $request)
+		{
+       	 	//获取要添加的信息
+        		$name = $request->input("name");
+        		$password = $request->input("password");
+        		$password2 = $request->input("password2");
+	        	//判断是否输入帐号
+	        	if($name==null){
+				return back()->with("msg","帐号不能为空");
+	        	}elseif($password==null || $password2==null)	        	//判断是否输入密码
+	        	{
+				return back()->with("msg","密码不能为空");
+	        	}
+	        	elseif($password!=$password2)	        					//判断输入密码是否一致
+	        	{
+	        		return back()->with("msg","密码不一致");
+	        	}
+	        	elseif(\DB::table('user')->where('name',$name)->first())	  //判断帐号是否存在
+	        	{
+	        		return back()->with("msg","帐号已存在");
+	        	}
+	        	else
+	        	{	//添加帐号进数据库
+	        		$id = \DB::table("user")->insert(['name'=>$name,'password'=>$password]);
+	        		if($id>0){
+					return back()->with("msg","添加成功！");
+	        		}else{
+	            		return back()->with("msg","添加失败！");
+	       	 	}
+	        	}
+		}
 
 	//用户反馈列表
 	public function picture_list()
 	{
-            $li = \DB::table('feedback')->get();
-            return view("Admin.picture-list",['li'=>$li]);
+		$li = \DB::table('feedback')->get();
+		return view("Admin.picture-list",['li'=>$li]);
 	}
-        public function picturelistdelete(Request $request)
-        {
-            $id = $request->input('id');
-            $user = \DB::table('feedback')->delete(['id' => $id]);
-            if($user > 0){
-              return 'y';
-            }else{
-                return 'n';
-            }
-        }
 
 	//商家列表
 	public function product_brand()
@@ -109,50 +161,5 @@ class ChangeController extends Controller
 		return view("Admin.product-category-reviewed",['product_category_reviewed'=>$product_category_reviewed]);
 	}
 
-	//管理员列表
-	public function admin_list()
-	{
-		$admin_list = \DB::table('useradmin')->get();
-		return view("Admin.admin-list",['admin_list'=>$admin_list]);
-	}
-
-
-    //执行添加
-		public function add(Request $request)
-		{
-       	 	//获取要添加的信息
-        		$name = $request->input("name");
-        		$password = $request->input("password");
-        		$passwd = $request->input("passwd");
-       		//获取指定的部分数据
-	        	$data = $request->only("name","password");
-	        	// dd($data);
-	        	//判断是否输入用户名和密码
-	        	if($data["name"]==null){
-	        		echo '<b style="font-size:35px;color:red;">骚年不输用户名也想添加？右上角exit<b>';
-	        	}elseif($data["password"]==null)
-	        	{
-	        		echo '<b style="font-size:35px;color:pink;">把密码填上再添加亲！右上角exit<b>';
-	        	}
-	        	else{
-	        		$id = \DB::table("user")->insertGetId($data);
-	        		if($id>0){
-	        			echo '<b style="font-size:50px;color:blue;">添加成功！！<b>';
-	        		}else{
-	             return back()->with("err","添加失败!");
-	       	 	}
-	        	}
-		}
-
-		// public function change_password(Request $r)
-		// {
-		// 	//执行删除
-	 //        if(\DB::table("user")->where("pid",$id)->count()>0){
-	 //            echo '成功';
-	 //        }
-	 //        \DB::table("type")->where("id",$id)->delete();
-	 //        return redirect('admin/type');
-		// }
-                
 
 }

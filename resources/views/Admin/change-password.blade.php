@@ -30,13 +30,11 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{URL('Admin/change-password')}}" method="post" class="form form-horizontal" id="form-change-password">
+	<form action="change-password?id={{ $sql->id }}" method="post" class="form form-horizontal" id="form-change-password">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="row cl">
-
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账户：</label>
-			<div class="formControls col-xs-8 col-sm-9"></div>
-
+			<div class="formControls col-xs-8 col-sm-9">{{ $sql->name }}</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
@@ -52,48 +50,23 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input onclick='' class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+				<input onclick="change-password?id={{ $sql->id }}" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
 			</div>
 		</div>
-
 	</form>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </article>
-<script>
-		// ajax做修改
-	function edit(en){
-		alert(en);
-		//获取表单中的值
-		var a=$("#"+en).attr('cc');
-		//表单中输入的值
-		var name=$('#'+a).val();
-		$.ajax({
-			url:"{{ URL('Admin/change-password') }}",
-			type:'post',
-			data:{'data':en,'name':name},
-			 headers: {
-           			 'X-CSRF-TOKEN': $('p[name="csrf-token"]').attr('content')
-        		},
-			success:function(data){
-				alert(data);
-				if(data=='修改成功')
-				{
-					//改变对应节点的值
-					$('td[bb='+']').html(name);
-				}
-			},
-			error:function(){
-				alert('系统错误');
-			},
-		});
-	}
-</script>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/icheck/jquery.icheck.min.js') }}"></script> 
- 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui/js/H-ui.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
+<script type="text/javascript">
+
+</script>
 <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->

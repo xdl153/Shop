@@ -74,7 +74,7 @@
 			<dd>
 				<ul>
 					<li><a _href="{{ URL('article-list') }}" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
-					<li><a _href="{{ URL('member-del') }}" data-title="停用的用户" href="javascript:;">停用的用户</a></li>
+					<li><a _href="{{ URL('member-del') }}" data-title="用户回收站" href="javascript:;">用户回收站</a></li>
 				</ul>
 			</dd>
 		</dl>

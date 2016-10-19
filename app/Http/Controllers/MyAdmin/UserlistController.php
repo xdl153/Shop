@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class UserlistController extends Controller
 {
-    //
+    //用户列表视图
 	public function article()
 	{
 		$list = \DB::table('user')->get();

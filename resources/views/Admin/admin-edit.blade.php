@@ -26,16 +26,17 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>添加管理员</title>
+<title>修改管理员</title>
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" id="form-admin-add" action="{{ URL('admin-add') }}" method="post">
+	<form class="form form-horizontal" id="form-admin-edit" action="{{ URL('admin-edit') }}" method="post">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	<input type="hidden" name="id" value="{{ $sql->id }}">
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
+		<label class="form-label col-xs-4 col-sm-3" ><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="帐号不能为空" id="name" name="name">
+			<input type="text" class="input-text" value="{{ $sql->name }}" placeholder="帐号不能为空" id="name" name="name">
 		</div>
 	</div>
 	<div class="row cl">

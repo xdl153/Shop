@@ -35,14 +35,13 @@
 		<thead>
 			<tr class="text-c">
 				<th width="25"><input type="checkbox" name="" value=""></th>
-				<th width="80">ID</th>
-				<th width="100">登录名</th>
-				<th width="90">手机</th>
-				<th width="90">邮箱</th>
-				<th width="">地址</th>
-				<th width="130">注册时间</th>
-				<th width="70">是否启用</th>
-				<th width="100">操作</th>
+				<th>ID</th>
+				<th>登录名</th>
+				<th>手机</th>
+				<th>邮箱</th>
+				<th>地址</th>
+				<th>状态</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -54,14 +53,18 @@
 				<td>{{ $a->phone }}</td>
 				<td>{{ $a->email }}</td>
 				<td>{{ $a->address }}</td>
-				<td>{{ $a->regitime }}</td>	
 				<td class="td-status"><span class="label label-success radius">已启用</span></td>
-				<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑管理员" href="javascript:;" onclick="member_edit('编辑管理员','{{ URL('admin-add') }}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+				<a title="修改管理员" href="javascript:id{{ $a->id }}" onclick="member_edit('修改管理员','admin-edit?id={{ $a->id }}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i>
+				<a class="ml-5" style="text-decoration:none" href="delete?id={{ $a->id }}">删除</a>
 			</tr>
 		@endforeach
 		</tbody>
 	</table>
 	</div>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </div>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>
@@ -76,7 +79,7 @@ $(function(){
 		"bStateSave": true,//状态保存
 		"aoColumnDefs": [
 		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,8]}// 制定列不参与排序
+		  {"orderable":false,"aTargets":[0,7,7]}// 制定列不参与排序
 		]
 	});
 	$('.table-sort tbody').on( 'click', 'tr', function () {
@@ -91,10 +94,6 @@ $(function(){
 });
 /*用户-添加*/
 function member_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*用户-查看*/
-function member_show(title,url,id,w,h){
 	layer_show(title,url,w,h);
 }
 /*用户-停用*/
