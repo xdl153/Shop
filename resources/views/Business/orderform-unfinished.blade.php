@@ -33,10 +33,11 @@
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="80">订单编号</th>
-					<th width="120">菜品名</th>
+					<th width="80">菜品名</th>
                                         <th>留言</th>
                                         <th>下单时间</th>
 					<th>单价</th>
+                                        <th>数量</th>
                                         <th>收货人</th>
                                         <th width="90">电话</th>
 					<th>送货地址</th>
@@ -54,6 +55,7 @@
 					<td class="text-l">{{ $info->content }}</td>
                                         <td class="text-l">{{ $info->data }}</td>
 					<td class="text-l">{{ $info->Price }}元</td>
+                                        <td class="text-l">{{ $info->num }}份</td>
 					<td class="text-l">{{ $info->name }}</td>
 					<td class="text-l">{{ $info->phone}}</td>
 					<td class="text-l">{{ $info->address }}</td>
