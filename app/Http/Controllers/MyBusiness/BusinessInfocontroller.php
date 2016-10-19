@@ -16,13 +16,13 @@ class BusinessInfocontroller extends Controller
     	$MyId = session('adminuser')->id;
     	
     	//查询商家信息
-    	$info = \DB::select("select * from business where did={$MyId}");
+    	$info = \DB::select("select b.*,c.name as cname from business as b,category as c where did={$MyId} and c.id=b.cid");
         // 店铺配送范围
     	foreach($info as $in){
-            $address[] = \DB::select("select * from address where bid={$in->id}");
+            $address[] = \DB::select("select * from address as a,district as d where bid={$in->id} and d.id=a.did");
         }
-        dd($address);
-    	return view("/Business.business-info",["info"=>$info]);
+        // dd($address);
+    	return view("/Business.business-info",["info"=>$info,"address"=>$address]);
     }
 
     //关闭店铺
@@ -32,7 +32,7 @@ class BusinessInfocontroller extends Controller
     	$id = $_POST['id'];
 
     	//修改数据表关闭该店铺
-    	\DB::table("business")->where('id',$id)->update(["examine"=>"3"]);
+    	\DB::table("business")->where('id',$id)->update(["status"=>"2"]);
     }
 
     //开启店铺
@@ -42,6 +42,6 @@ class BusinessInfocontroller extends Controller
     	$id = $_POST['id'];
 
     	//修改数据表开启该店铺
-    	\DB::table("business")->where('id',$id)->update(["examine"=>'2']);
+    	\DB::table("business")->where('id',$id)->update(["status"=>"1"]);
     }
 }

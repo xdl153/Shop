@@ -28,14 +28,14 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>添加用户 - H-ui.admin v2.3</title>
+<title>修改店铺信息 - H-ui.admin v2.3</title>
 <meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <article class="page-container">
 	@foreach($info as $in)
-	<form action="" method="post" class="form form-horizontal" enctype="multipart/form-data">
+	<form action="" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<input type="hidden" name='id' value="{{ $in->id }}">
 		<div class="row cl">
@@ -190,9 +190,11 @@ $(function(){
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-			//$(form).ajaxSubmit();
+			
+			return true;
+			
 			var index = parent.layer.getFrameIndex(window.name);
-			//parent.$('.btn-refresh').click();
+			// parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
 	});
@@ -272,11 +274,6 @@ $("select[name=sele]").live('change',function(){
 	    }
 	});
 });
-function fun()
-{
-	$('#btn').trigger("click");
-	// window.location.href="Business/business-info";
-}
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

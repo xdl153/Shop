@@ -32,13 +32,14 @@
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
-				<th width="80">店铺名</th>
+				<th>店铺名</th>
+				<th>店铺类别</th>
 				<th>照片</th>
 				<th>店铺地址</th>
 				<th>收款账号</th>
 				<th>配送范围</th>
 				<th>电话</th>
+				<th>审核信息</th>
 				<th>状态</th>
 				<th>操作</th>
 				
@@ -47,35 +48,44 @@
 		<tbody>
 			@foreach($info as $in)
 			<tr class="text-c">
-				<td><input type="checkbox" value="1" name=""></td>
 				<td>{{ $in->name }}</td>
+				<td>{{ $in->cname }}</td>
 				<td><img src="Shop/{{ $in->photo }}" width="85" height="100"></td>
 				<td>{{ $in->address }}</td>
 				<td>{{ $in->account }}</td>
-				<td class="text-l">北京市 海淀区</td>
+				
+				<td class="text-l">
+					@foreach($address as $addr)
+						@foreach($addr as $ad)
+							@if($in->id == $ad->bid)
+								{{ $ad->name }}
+							@endif
+						@endforeach
+					@endforeach
+				</td>
 				<td>{{ $in->phone }}</td>
+				<td> @if($in->examine == '3') 审核不通过 @elseif($in->examine == '2') 审核通过 @elseif($in->examine == '1') 审核中 @endif</td>
 				<td class="td-status">
-					@if($in->examine == '3')
+					@if($in->status == '2')
 						<span class="label label-defaunt radius">已停用</span>
 					@else
 						<span class="label label-success radius">已启用</span>
 					@endif
 				</td>
 				<td class="td-manage">
-					@if($in->examine == '3')
-						<a style="text-decoration:none" onClick="member_start(this,'{{ $in->id }}')" href="javascript:;" title="启用">
+					@if($in->status == '2')
+						<a style="text-decoration:none" onClick="member_start(this,'{{ $in->id }}','{{ $in->id }}')" href="javascript:;" title="启用">
 							<i class="Hui-iconfont">&#xe6e1;</i>
 						</a>
 					@else
-						<a style="text-decoration:none" onClick="member_stop(this,'{{ $in->id }}')" href="javascript:;" title="停用">
+						<a style="text-decoration:none" onClick="member_stop(this,'{{ $in->id }}','{{ $in->id }}')" href="javascript:;" title="停用">
 							<i class="Hui-iconfont">&#xe631;</i>
 						</a>
 					@endif
 					
 					<a title="编辑" href="javascript:;" onclick="member_edit('编辑','business-brandupdate?id={{ $in->id }}','4','','510')" class="ml-5" style="text-decoration:none">
 					<i class="Hui-iconfont">&#xe6df;</i></a> 
-					<a title="关闭" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none">
-					<i class="Hui-iconfont">&#xe6e2;</i></a>
+					
 				</td>
 			</tr>
 			@endforeach
@@ -119,9 +129,9 @@ function member_show(title,url,id,w,h){
 	layer_show(title,url,w,h);
 }
 /*用户-停用*/
-function member_stop(obj,id){
+function member_stop(obj,id,tid){
 	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,'+id+','+tid+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 		$(obj).remove();
 		// layer.msg('已停用!',{icon: 5,time:id});
@@ -144,9 +154,9 @@ function member_stop(obj,id){
 }
 
 /*用户-启用*/
-function member_start(obj,id){
+function member_start(obj,id,tid){
 	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,'+id+','+tid+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
 		$.ajax({

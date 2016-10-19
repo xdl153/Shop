@@ -17,7 +17,8 @@ class ChangeController extends Controller
 	//执行修改密码
 	public function update(Request $request)
 	{
-		return 'y';
+		// dd($_GET['id']);
+		return view('Admin.change-password');
 	}
 
 	//用户反馈列表
