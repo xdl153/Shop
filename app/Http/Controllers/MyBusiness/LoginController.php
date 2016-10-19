@@ -22,11 +22,10 @@ class LoginController extends Controller
     {
         //获得表单提交的用户和密码
             $name = $request->input('name');
-            $password = $request->input('password');
-                        if($password  == ''  && $name == ''){
-                            return back()->with("msg","请输入用户或密码");
-                        }
-
+            $password = sha1($request->input('password'));
+            if($password  == ''  && $name == ''){
+                return back()->with("msg","请输入用户或密码");
+            }
             $ob = \DB::table('dealer')->where("name",$name)->first();
             if($ob)
                         {
@@ -47,6 +46,7 @@ class LoginController extends Controller
                                                 else
                                                 {
                                                     //9 写入session
+                                                    session()->set("userid",$ob);
                                                     session()->set("adminuser",$ob);
                                                     //10 跳转到后台首页
                                                     return redirect("Business/busi");

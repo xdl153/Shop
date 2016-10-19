@@ -42,31 +42,29 @@
                         </h1>
 
                             <ul id="member" class="member" login-box>
-								<li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
-								<li class="login-register">
-									@if(empty(session("username")))
-										<a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
-										<span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
-									@else
-										<li class="userName">
-											<a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
-											<div>
-												<p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
-												<p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
-												<p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
-											</div>
-										</li>
-											<li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                    <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                    <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                                <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                                <div>
+                                                    <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                    <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                    <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                                </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
                                             <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
                                             <li class=""><a  href="#" onclick="exit()">退出</a></li>
-									@endif
-						
-						
-								<input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
-								<script type="text/javascript">
+                                    @endif					
+                                            <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                        <script type="text/javascript">
 	
-									function exit(){
-										var hiddenid = $('#hidden').val();
+                                            function exit(){
+                                                var hiddenid = $('#hidden').val();
 		                              	$.ajax({
 		                                   url:'/logout',
 		                                   type:'post', 
@@ -86,8 +84,8 @@
 		                                   }
                            			 	});
                           			};
-								</script>
-							</ul>
+                                        </script>
+                            </ul>
 
                     </div>
                 </header>
@@ -200,10 +198,10 @@
         </script>
     </header>
     <ul class="clearfix menu-nav-list" scroll-position-static="160">
-        <li class="no-line "><a href="{{ URL('/shop_intro') }}">餐厅介绍</a></li>
-        <li class="active"><a href="{{ URL('/shop_detail') }}">菜单</a></li>
-        <li ><a href="{{ URL('/shop_comment') }}">评论</a></li>
-            <li ><a href="{{ URL('/shop_order') }}" id='point-tab'>大家都在点</a></li>
+        <li class="no-line "><a href="{{ URL('/shop_intro') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">餐厅介绍</a></li>
+        <li class="active"><a href="{{ URL('/shop_detail') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">菜单</a></li>
+        <li ><a href="{{ URL('/shop_comment') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">评论</a></li>
+            <!--<li ><a href="{{ URL('/shop_order') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}" id='point-tab'>大家都在点</a></li>-->
 
     </ul>
 
@@ -472,6 +470,7 @@
                                         <div class="fl">配送费：￥<span ng-bind="deliveryCost|number:2"></span></div>
                                         <div class="fr">合计：￥<span ng-bind="total|number:2"></span></div>
                                     </div>
+                                    
                                     <div class="checkout">
                                         <button class="checkout btn" ng-disabled="isPlaceOrder" ng-click="createOrder()" ng-bind="createOrderBtnName">立即下单</button>
                                     </div>
@@ -888,6 +887,9 @@
 						}
 					}   
 				}
+                                var u =window.location.search;
+                                var bid = u.substr(5,1);
+                                var id = u.substr(10,3);
 				//餐厅的id
 				var restaurantId='1592';
 				//餐厅范围
@@ -901,66 +903,75 @@
 				//创建订单url
 				var create_order_url = "/create_order";
 				//结帐的url
-				var checkout_url = "/order?bid=1&id=786";
+				var checkout_url = "/order?bid="+bid+"&id="+id;
 				//餐厅列表url
 				var restaurant_list_url = "/restaurants/0/";
 				//最喜欢的网址
 				var favoriteUrl = "/ajax/restaurant/0/favorite/";
 				//var交付= {最低_订单_数量:“150”,免费_交付_阈值:0,交付_费用:' 0 ' }
-				var delivery = {minimum_order_quantity:'150',free_delivery_treshold:'0',delivery_fee:'0' }
+				var delivery = {minimum_order_quantity:'30',free_delivery_treshold:'0',delivery_fee:'0' }
+                                
+//                                        var az = u.replace('?bid=');
+//                                        var ad = az.replace('id=');
+//                                alert(id);
+//                                alert(ad);
+                               
 	   </script>
         <script src="{{ asset('Shop/js/menupage.js') }}"></script>
         <script src="{{ asset('Shop/js/favorite.js') }}"></script>
-          <!--<script type="text/javascript">
+          <script type="text/javascript">
+              
+                    
+              
             //立即下单点击事件
-            $("#buts").bind("click",function(){
-                //获取 合计 、 配送费的值给个变量
-                var hj = $('.hj').html();
-                var pei = $('.pei').html();
-                //计算 id=sss 下面的div 有多少个
-                var count = $("#sss>div").length;
-//                alert(count);
-                //定义一个 菜名、份数、单价、小计、的空数组来装他们的值
-                var cname = [];var fenshu = [];var danjia = [];var xiaoji = []; var d=[];
-                //for循环出菜名、份数、单价、小计
-                for(i=0;i<count;i++){
-                    var cai = $(".cai").eq(i).html();
-                    var fen = $(".fen").eq(i).html();
-                    var jia = $(".jia").eq(i).html();
-                    var xj = $(".xj").eq(i).html();
-                   
-//                    var hj = $(".hj").eq(i).html();
-//                    var pei = $(".pei").eq(i).html();
-                    //将上面循环出的菜名、份数、单价、小计装入 之前创建的空数组
-                    cname[i]=cai; fenshu[i]=fen; danjia[i]=jia; xiaoji[i]=xj;
-//                    d[i]=[cname,fenshu,danjia,xiaoji];
-                      //弹出菜名、份数、单价、小计
-//                    alert(cai);alert(fen);alert(jia);alert(xj);alert(hj);alert(pei);
-//                       console.log(d);
-                }
-                //输出到控制台
-//                console.log(cname,fenshu,danjia,xiaoji,hj,pei);
-
-                $.ajax({
-                        url:'/creade_order',
-                        type:'post',
-                        async:true,
-                        data:{cname:cname,fenshu:fenshu,danjia:danjia,xiaoji:xiaoji,hj:hj,pei:pei},
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success:function(data){
-                            if(data == 'y'){
-                                //Ajax请求成功返回“Y” 页面跳转/order
-                                  window.location.href="/order?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}";
-                            }
-                        },
-                        error:function(){
-                            alert('失败');
-                        }
-                    })
-            });
-        </script>-->
+//            $("#buts").bind("click",function(){
+//                //获取 合计 、 配送费的值给个变量
+//                var hj = $('.hj').html();
+//                var pei = $('.pei').html();
+//                //计算 id=sss 下面的div 有多少个
+//                var count = $("#sss>div").length;
+////                alert(count);
+//                //定义一个 菜名、份数、单价、小计、的空数组来装他们的值
+//                var cname = [];var fenshu = [];var danjia = [];var xiaoji = []; var d=[];
+//                //for循环出菜名、份数、单价、小计
+//                for(i=0;i<count;i++){
+//                    var cai = $(".cai").eq(i).html();
+//                    var fen = $(".fen").eq(i).html();
+//                    var jia = $(".jia").eq(i).html();
+//                    var xj = $(".xj").eq(i).html();
+//                   
+////                    var hj = $(".hj").eq(i).html();
+////                    var pei = $(".pei").eq(i).html();
+//                    //将上面循环出的菜名、份数、单价、小计装入 之前创建的空数组
+//                    cname[i]=cai; fenshu[i]=fen; danjia[i]=jia; xiaoji[i]=xj;
+////                    d[i]=[cname,fenshu,danjia,xiaoji];
+//                      //弹出菜名、份数、单价、小计
+////                    alert(cai);alert(fen);alert(jia);alert(xj);alert(hj);alert(pei);
+////                       console.log(d);
+//                }
+//                //输出到控制台
+////                console.log(cname,fenshu,danjia,xiaoji,hj,pei);
+//
+//                $.ajax({
+//                        url:'/creade_order',
+//                        type:'post',
+//                        async:true,
+//                        data:{cname:cname,fenshu:fenshu,danjia:danjia,xiaoji:xiaoji,hj:hj,pei:pei},
+//                        headers: {
+//                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                        },
+//                        success:function(data){
+//                            if(data == 'y'){
+//                                //Ajax请求成功返回“Y” 页面跳转/order
+//                                  window.location.href="/order?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}";
+//                            }
+//                        },
+//                        error:function(){
+//                            alert('失败');
+//                        }
+//                    })
+//            });
+        </script>
 
         <script>angular.bootstrap(document, ["app"]);</script>
          

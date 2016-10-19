@@ -32,37 +32,91 @@
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="70">订单编号</th>
-					<th width="80">菜品所属类别</th>
-				
+					<th width="80">订单编号</th>
 					<th width="120">菜品名</th>
-					<th>总计价格</th>
+                                        <th>留言</th>
+                                        <th>下单时间</th>
+					<th>单价</th>
+                                        <th>收货人</th>
+                                        <th width="90">电话</th>
 					<th>送货地址</th>
-					<th>电话</th>
-					<th>收货人</th>
 					<th>付款方式</th>
-					<th width="100">操作</th>
+					<th>状态</th>
+					<th width="60">操作</th>
 				</tr>
 			</thead>
 			<tbody>
+                           @foreach($list as $info)
 				<tr class="text-c">
 					<td><input name="" type="checkbox" value=""></td>
-					<td>11111111111</td>
-					
-					<td class="text-1">湘菜</td>
-					<td class="text-l"> 绝味龙虾</td>
-					<td class="text-l">132.98</td>
-					<td class="text-l"> 回龙观IT兄弟连</td>
-					<td class="text-l">18515197094</td>
-					<td class="text-l">谭伟</td>
+					<td>{{ $info->number }}</td>
+					<td class="text-1">{{ $info->cname }}</td>
+					<td class="text-l">{{ $info->content }}</td>
+                                        <td class="text-l">{{ $info->data }}</td>
+					<td class="text-l">{{ $info->Price }}元</td>
+					<td class="text-l">{{ $info->name }}</td>
+					<td class="text-l">{{ $info->phone}}</td>
+					<td class="text-l">{{ $info->address }}</td>
 					<td class="text-l">货到付款</td>
-					<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_brand_edit('发货','codeing.html','1')" href="javascript:;" title="发货"><i class="Hui-iconfont">&#xe669;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td class="text-l">@if( $info->express == 1)
+                                                            未发货
+                                                            @elseif( $info->express  == 2)
+                                                            已发货
+                                                            @endif</td>
+                                        <td class="f-14 product-brand-manage"><a style="text-decoration:none"  onclick="test({{ $info->id }},2)" title="发货"><i class="Hui-iconfont">&#xe669;</i></a>
+                                        
+                                        </td>
 				</tr>
+                            @endforeach
 			</tbody>
 		</table>
 	</div>
 </div>
-<script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script>
+<script>
+    function test(id,zt){
+            $.ajax({
+                url:'/Orderoperation',
+                type:'get',
+                async:true,
+                data:{id:id,zt:zt},
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    if(data === 'y'){
+                        window.location.reload();
+                    }
+                },
+                error:function(){
+                    alert('ajax请求失败');
+                }
+            });
+    }
+    function deletedd(id){
+        if(confirm("确认删除订单吗")){
+            $.ajax({
+                url:'/Orderodelete',
+                type:'get',
+                async:true,
+                data:{id:id},
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    if(data === 'y'){
+                        window.location.reload();
+                    }else{
+                        alert('不能删除未发货的订单');
+                    }
+                },
+                error:function(){
+                    alert('ajax请求失败');
+                }
+            });
+       }
+    }
+</script>
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script>
 <script type="text/javascript" src="{{ asset('Admin/lib/laypage/1.2/laypage.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/My97DatePicker/WdatePicker.js') }}"></script> 

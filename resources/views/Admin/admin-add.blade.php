@@ -26,23 +26,22 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>添加管理员 - 管理员管理 - 外卖超人后台管理系统</title>
-<meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+<title>添加管理员</title>
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" id="form-admin-add">
+	<form class="form form-horizontal" id="form-admin-add" action="{{ URL('admin-add') }}" method="post">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="adminName" name="adminName">
+			<input type="text" class="input-text" value="" placeholder="帐号不能为空" id="name" name="name">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
+			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码不能为空" id="password" name="password">
 		</div>
 	</div>
 	<div class="row cl">
@@ -54,7 +53,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
+			<input type="text" class="input-text" value="" placeholder="请填写正确的手机号" id="phone" name="phone">
 		</div>
 	</div>
 	<div class="row cl">
@@ -64,13 +63,21 @@
 		</div>
 	</div>
 	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>地址：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" placeholder="请填写正确的地址" name="address" id="address">
+		</div>
+	</div>
+	<div class="row cl">
 		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 		</div>
 	</div>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 	</form>
 </article>
-
 <!--_footer 作为公共模版分离出去--> 
 <script type="text/javascript" src="http://lib.h-ui.net/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="http://lib.h-ui.net/layer/2.1/layer.js"></script> 

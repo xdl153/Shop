@@ -1,6 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<style>
+.snake{
+	color:blue;
+	font-size:20px;
+	font-weight:bold;
+	position:absolute;
+}
+</style>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -26,8 +34,8 @@
 <body>
 <div class="page-container">
 	<p class="f-20 text-success">欢迎登录外卖超人管理员后台<span class="f-14">v2.4</span>后台系统！</p>
-
-	<p>登录时间：</p>
+	<div id='did' style='color:red;margin-left:650px;margin-top:-50px;width:500px;height:50px;background:#ccc;font-size:30px;line-height:50px;'></div>
+	<p>地址：{{ session('adminuser')->address }}</p>
 
 	<table class="table table-border table-bordered table-bg mt-20">
 		<thead>
@@ -37,17 +45,17 @@
 		</thead>
 		<tbody>
 			<tr>
-				<th width="30%">注册时间</th>
-				<td><span id="lbServerName"></span></td>
+				<th width="30%">登录名</th>
+				<td><span id="lbServerName"></span>{{ session('adminuser')->name }}</td>
 			</tr>
 			<tr>
-				<td>登录名</td>
-				<td></td>
+				<td>邮箱</td>
+				<td>{{ session('adminuser')->email }}</td>
 			</tr>
 
 			<tr>
-				<td>状态</td>
-				<td></td>
+				<td>手机号</td>
+				<td>{{ session('adminuser')->phone }}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -73,6 +81,65 @@ var _hmt = _hmt || [];
 })();
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<!--特效文字-->
+<script>
+// (function(){
+// 	// 1.准备
+// 	var msg = '超级管理员';
+// 	var str = '';
+// 	// 2.循环把每个字放到标签内
+// 	for(var i = 0; i < msg.length; i++){
+// 		str += '<span id="snake'+ i +'" class="snake">';
+// 			str += msg[i];
+// 		str += '</span>';
+// 	}
+// 	document.write(str);
+
+// 	window.onmousemove = function(events){
+// 		// 
+// 		document.title = 'X:' + events.clientX + 'Y:' + events.clientY;
+
+// 		var i = 0;
+// 		var timer = setInterval(function(){
+// 			if( i >= msg.length - 1){
+// 				clearInterval(timer);
+// 			}
+
+// 			// 找对象，
+// 			var span = document.getElementById('snake'+i);
+// 			span.style.left = events.clientX + i * 30 + 20 + 'px';
+// 			span.style.top  = events.clientY + 'px';
+// 			i++;
+// 		},30);
+// 	}
+// })();
+// </script>
+<!--获取时间戳-->
+<script type="text/javascript">
+//获取div对象
+var did = document.getElementById('did');
+
+//定时调用输出时间
+setInterval(function(){
+	//获取当前时间作为对象，如果你放到外面，只能获取new那一刻的时间
+	var date = new Date();
+
+	var y = date.getFullYear();		//获取4位数的年份
+	var m = date.getMonth()+1;		//获取月份（0-11）
+	var d = date.getDate();			//获取天数
+
+	var h = date.getHours();		//获取时
+	var i = date.getMinutes();		//获取分
+	var s = date.getSeconds();		//获取秒
+
+	s = (s<10)?'0'+s:s;
+
+	var info = y+'-'+m+'-'+d+' '+h+':'+i+':'+s;
+	did.innerHTML = '当前系统时间：'+info;
+},1000);
+// document.write(date.getTime());	//获取时间戳
 </script>
 </body>
 </html>

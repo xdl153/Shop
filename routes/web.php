@@ -15,9 +15,34 @@
 //前台***********************项目
 //Index首页视图路由
 Route::get("/","MyShop\IndexController@index");
-// Route::get("/",function(){
-    // return view("index");
-// });
+//中间件路由群组
+Route::group(["prefix"=>"/","middleware"=>"zhongjian"],function(){
+
+Route::get("/order","MyShop\OrderController@order");
+
+//order_success下订单成功页面视图路由
+Route::get("/order_success","MyShop\Order_SuccessController@success");
+
+
+});
+//order下订单(送餐信息)页面视图路由
+Route::post("/create_order","MyShop\OrderController@creade_order");
+//添加送货地址
+Route::post("/add","MyShop\OrderController@add");
+//修改送货地址
+Route::post('/update','MyShop\OrderController@update');
+//删除送货地址
+Route::delete('/del',"MyShop\OrderController@destroy");
+//提交订单
+Route::post('/tijiao',"MyShop\OrderController@tijiao");
+//送货地址
+Route::post("/songhuodizhi","MyShop\OrderController@shdz");
+Route::post("/ord","MyShop\OrderController@ord");
+
+
+	
+	
+
 //Index首页用户手动输入ajax路由
 Route::post("/addseek","MyShop\IndexController@addseek");	
 
@@ -27,7 +52,6 @@ Route::post("/addseek","MyShop\IndexController@addseek");
 Route::get("/login","MyShop\LoginController@login");
 //登录
 Route::post("/dologin","MyShop\LoginController@dologin");
-
 
 //登录完
 //退出清除session
@@ -98,9 +122,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 
 //member_order查看订单视图路由
  Route::get("/member_order{id?}","MyShop\Member_OrderController@member_order");
-	// Route::get("/member_order{id?}",function(){
-	// 	return view("Shop.member_order");
-	// });
+ //用户查看订单删除
+ Route::post("/order_delete","MyShop\Member_OrderController@order_delete");
+//pinlun用户评论
+ Route::post("/comment","MyShop\Member_OrderController@comment");
 	
 //member_index账号管理视图路由
 // Route::get("/member_index","MyShop\Member_IndexController@member_index");
@@ -156,21 +181,15 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
  //shop_detaildelete取消收藏餐厅
  Route::POST("//shop_detailtdelete","MyShop\Shop_DetailController@shop_detaildelete");
 //shop_intro餐厅介绍视图路由
-// Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
-	Route::get("/shop_intro",function(){
-		return view("Shop.shop_intro");
-	});
+ Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
+
 
 //shop_comment餐厅评论视图路由
  Route::get("/shop_comment","MyShop\Shop_CommentController@shop_comment");
-//	Route::get("/shop_comment",function(){
-//		return view("Shop.shop_comment");
-//	});
+
  
 //shop_order大家都在点页面视图路由
-	Route::get("/shop_order",function(){
-		return view("Shop.shop_order");
-	});
+// Route::get("/shop_order","MyShop\Shop_orderController@shop_order");
 
 //feedback用户反馈
 Route::post("/feedback","MyShop\FeedbackControoler@store");
@@ -191,30 +210,26 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 		return view("Shop.contact");
 	});
         
-//order下订单(送餐信息)页面视图路由
-Route::post("/create_order","MyShop\OrderController@creade_order");
-Route::get("/order","MyShop\OrderController@order");
-//添加送货地址
-Route::post("/add","MyShop\OrderController@add");
-//修改送货地址
-Route::post('/update','MyShop\OrderController@update');
-//删除送货地址
-Route::delete('/del',"MyShop\OrderController@destroy");
-//提交订单
-Route::post('/tijiao',"MyShop\OrderController@tijiao");
-//送货地址
-Route::post("/songhuodizhi","MyShop\OrderController@shdz");
-Route::post("/ord","MyShop\OrderController@ord");
 
 
-//order_success下订单成功页面视图路由
-	Route::get("/order_success",function(){
-		return view("Shop.order_success");
-	});
+
+
+	
+	
+
+
+
+
 
 
 
 //后台***********************项目
+
+// 查看信息页面
+	Route::get("Admin/member-show",function(){
+		return view("Admin.member-show");
+	});
+
 // 登录表单 
 	Route::get("Admin/login","MyAdmin\LoginController@login");
 
@@ -237,26 +252,25 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
 	});
 
-// 查看信息页面
-	Route::get("Admin/member-show",function(){
-		return view("Admin.member-show");
-	});
-
-
 // 用户列表
-	Route::get("article_list","MyAdmin\UserlistController@article");
+	Route::get("article-list","MyAdmin\UserlistController@article");
+
+// 执行修改用户密码
+	Route::post("change-password","MyAdmin\ChangeController@change_password");
+	Route::get("change-password","MyAdmin\ChangeController@update");
+
+// 执行删除用户
+	Route::get("del","MyAdmin\ChangeController@delete");
+
+// 添加用户页面
+ 	Route::get("article-add","MyAdmin\ChangeController@add");
+
+ // 执行添加
+ 	Route::post("article-add","MyAdmin\ChangeController@article_add");
 
  //用户反馈列表
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
-        Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
-// 执行修改页面
-	Route::post("change-password","MyAdmin\ChangeController@update");
-
-// 添加用户页面
- 	Route::get("/article-add",function(){return view("/Admin.article-add");});
-
- // 执行添加
- 	Route::post("Admin/article-add","MyAdmin\ChangeController@add");
+    	Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
 
 //member-del停用的用户
  	Route::get("/member-del",function(){return view("/Admin.member-del");});
@@ -282,21 +296,22 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
  	Route::get("product-category-reviewed","MyAdmin\ChangeController@product_category_reviewed");
 
 //管理员列表
- 	Route::get("admin-list","MyAdmin\ChangeController@admin_list");
+ 	Route::get("admin-list","MyAdmin\AdminController@admin_list");
+//添加管理员视图
+ 	Route::get("admin-add","MyAdmin\AdminController@admin_add");
+//执行添加管理员
+ 	Route::post("admin-add","MyAdmin\AdminController@add");
 
- //admin-add添加管理员
-   	Route::get("/admin-add",function(){
- 		return view("/Admin.admin-add");
- 	}); 
+//修改管理员视图
+ 	Route::get("admin-edit","MyAdmin\AdminController@admin_edit");
+//执行修改管理员
+ 	Route::post("admin-edit","MyAdmin\AdminController@edit");
+//执行删除管理员
+ 	Route::get("delete","MyAdmin\AdminController@delete");
 
 //system-base系统设置
    	Route::get("/system-base",function(){
  		return view("/Admin.system-base");
- 	});
-
-//system-log系统日志
-   	Route::get("/system-log",function(){
- 		return view("/Admin.system-log");
  	});
 
 
@@ -371,20 +386,16 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
  		return view("/Business.menu-cance");
  	});
 
-//orderform-list订单列表
- 	Route::get("/orderform-list",function(){
- 		return view("/Business.orderform-list");
- 	});
-
+//订单列表
+ 	Route::get("/orderform-list","MyBusiness\OrderController@index");
+//未完成订单
+        Route::get("/orderform-unfinished","MyBusiness\OrderController@wwcdd");
+//修改订单状态
+        Route::get("/Orderoperation","MyBusiness\OrderController@Orderoperation");
+//删除订单
+        Route::get("/Orderodelete","MyBusiness\OrderController@Orderodelete");
 //orderform-accomplish已完成的订单
- 	Route::get("/orderform-accomplish",function(){
- 		return view("/Business.orderform-accomplish");
- 	});
-
-//orderform-unfinished已完成的订单
- 	Route::get("/orderform-unfinished",function(){
- 		return view("/Business.orderform-unfinished");
- 	});
+ 	Route::get("/orderform-accomplish","MyBusiness\OrderController@ywcdd");
 
 //comment-info反馈列表
  	Route::get("/comment-info",function(){

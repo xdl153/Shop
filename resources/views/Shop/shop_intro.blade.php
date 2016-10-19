@@ -33,22 +33,61 @@
     </head>
     <body class="day " ng-controller="bodyCtrl"  day-or-night>
         <section class="common-back" id="wrapBackground">
-                <!--<header id="header">
+
+                <header id="header">
                     <div class="common-width clearfix">
                         <h1 class="fl">
                             <a class="logo base-logo" href="/">外卖超人</a>
                         </h1>
 
-                            <ul class="member" login-box>
-                                <li><a href="/" class="index">首页</a></li>
-                                <li class="login-register"><a href="{{ URL('/login') }}" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span><a href="{{ URL('/register') }}" referer-url  rel="nofollow" class="register">注册</a></li>
-                                <li><a href="{{ URL('/order') }}" class="order-center"  rel="nofollow">查看订单</a></li>
-                                <li class=""><a href="{{ URL('/gifts') }}"  rel="nofollow">氪星礼品站</a></li>
-                                <li class="phone-client "><a href="#"  rel="nofollow" target="_blank"><span>手机客户端</span></a></li>
+                            <ul id="member" class="member" login-box>
+                                    <li><a href="shop_list?id={{ $_GET['id'] }}" class="index">首页</a></li>
+                                    <li class="login-register">
+                                    @if(empty(session("username")))
+                                        <a href="/login?id={{ $_GET['id'] }}&status=1"  class="login"  >登录</a>
+                                        <span class="cg">/</span><a href="/login?id={{ $_GET['id'] }}&status=2"  class="register">注册</a></li>
+                                    @else
+                                        <li class="userName">
+                                                <a href="/member_index?id={{ $_GET['id'] }}" draw-user>{{ session("username") }}<em></em></a>
+                                                <div>
+                                                    <p><a href="/member_index?id={{ $_GET['id'] }}" >账号管理</a></p>
+                                                    <p><a href="/member_addr?id={{ $_GET['id'] }}" >地址管理</a></p>
+                                                    <p class="no-bo"><a  href="#" onclick="exit()">退出</a></p>
+                                                </div>
+                                        </li>
+                                            <li><a href="/member_order?id={{ $_GET['id'] }}" class="order-center" >查看订单</a></li>
+                                            <li class=""><a href="/member_collect?id={{ $_GET['id'] }}" >我的收藏</a></li>
+                                            <li class=""><a  href="#" onclick="exit()">退出</a></li>
+                                    @endif					
+                                            <input type="hidden" value="{{ $_GET['id'] }}" id="hidden">
+                                        <script type="text/javascript">
+	
+                                            function exit(){
+                                                var hiddenid = $('#hidden').val();
+		                              	$.ajax({
+		                                   url:'/logout',
+		                                   type:'post', 
+		                                   async:true,
+		                                   headers: {
+		                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                                   },
+		                                   success:function(a){
+		                                    if( a === 'y'){
+		                                    	location.reload();
+                                       		}else{
+                                           		alert('退出失败');
+                                       		}
+		                                   },
+		                                   error:function(){
+		                                       alert('ajax失败');
+		                                   }
+                           			 	});
+                          			};
+                                        </script>
                             </ul>
 
                     </div>
-                </header>-->
+                </header>
 
             <div id="main-box">
                  <!--二维码-->
@@ -65,24 +104,24 @@
 
 
             <section class="menupage-main common-width">
-
+    @foreach($bus as $b)
     <header class="nav clearfix">
         <div class="fl clearfix nav-des">
-            <img src="http://dhcrestaurantlogo.dhero.cn/1592?v=1415630726" alt="[半价菜][送可乐]樱花日本料理" class="fl" />
+            <img src="{{ asset('Shop') }}{{ $b->photo }}" alt="{{ $b->name }}" class="fl" />
             <div class="fl nav-des-text">
-                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">[半价菜][送可乐]樱花日本料理</h2>
+                <h2 class="ellipsis" title="[半价菜][送可乐]樱花日本料理">{{ $b->name }}</h2>
                 <div class="clearfix">
                     <div class="fl nav-review">
-                        <div style="width:65.00px;"></div>
+                        <div style="width:{{ $b->grade }}.00px;"></div>
                     </div>
-                    <p class="nav-review-x">5星</p>
+                    <!--<p class="nav-review-x">5星</p>-->
                 </div>
             </div>
         </div>
         <div class="fr clearfix nav-right">
 
             <div class="fl nav-right-blast line-right">
-                <p>150<span style="font-size:12px;color:#999;">元</span></p>
+                <p>30<span style="font-size:12px;color:#999;">元</span></p>
                 <span>起送</span>
             </div>
 
@@ -99,12 +138,12 @@
             </div>
         </div>
     </header>
-
+    @endforeach
     <ul class="clearfix menu-nav-list" scroll-position-static="160">
-        <li class="no-line active"><a href="{{ URL('/shop_intro') }}">餐厅介绍</a></li>
-        <li><a href="{{ URL('/shop_detail') }}">菜单</a></li>
-        <li  class=""><a href="{{ URL('/shop_comment') }}">评论</a></li>
-            <li ><a href="{{ URL('/shop_order') }}" id='point-tab'>大家都在点</a></li>
+        <li class="no-line active"><a href="{{ URL('/shop_intro') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">餐厅介绍</a></li>
+        <li><a href="{{ URL('/shop_detail') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">菜单</a></li>
+        <li  class=""><a href="{{ URL('/shop_comment') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">评论</a></li>
+            <!--<li ><a href="{{ URL('/shop_order') }}" id='point-tab'>大家都在点</a></li>-->
 
     </ul>
 
@@ -119,9 +158,9 @@
                             <p class="hours"><label>营业时间 ：</label>[09:00-22:30]</p>
 
 
-                            <p><label>送餐时间 ：</label>12-62分钟</p>
+                            <p><label>送餐时间 ：</label>12-60分钟</p>
 
-                                            <p><label>餐厅地址 ：</label>宋园路地铁站</p>
+                                            <p><label>餐厅地址 ：</label>北京路地铁站</p>
                                             <!-- <div class="last clearfix">
                             <label class="fl">活动服务 ：</label>
                             <div class="fl">
@@ -139,7 +178,7 @@
                                     </header>
                                     <section class="description fs12 lh15">
 
-                            樱花日本料理采用东北有机大米。精选食材。纯净水运作。进口调料。。樱花日本料理特色布丁。。油淋鸡等等月月有活动。。。如果网络不行下予定订单。。请来电18964778118订餐。电话订餐O2160517883。。。最终解释权归本店所有
+                            北京地铁1号线化身欧洲杯“绝味鸭脖专列号”，整个车厢涂装成大气的战斗红，车体上还有弹幕不断飘过。借助欧洲杯热点，绝味鸭脖玩转车体弹幕，标志和主视觉陆续登陆重庆、深圳、上海等城市地铁。请来电18964778118订餐。电话订餐O2160517883。。。最终解释权归本店所有
 
                     </section>
                             </article>

@@ -35,12 +35,19 @@
         <th class="text-r" style="font-size:20px;">帐号：</th>
         <td style="font-size:20px;color:red;">{{ session('adminuser')->name }}</td>
       </tr>
-
       <tr>
-        <th class="text-r" style="font-size:20px;">注册时间：</th>
-        <td style="font-size:20px;color:pink">{{ session('adminuser')->regitime }}</td>
+        <th class="text-r" style="font-size:20px;">邮箱：</th>
+        <td style="color:pink">{{ session('adminuser')->email }}</td>
       </tr>
-      <div><a style="font-size:50px;color:yellow;" href="{{ URL('Admin/index') }}">Home</a></div>
+      <tr>
+        <th class="text-r" style="font-size:20px;">地址：</th>
+        <td style="color:blue">{{ session('adminuser')->address }}</td>
+      </tr>
+      <tr>
+        <th class="text-r" style="font-size:20px;">电话：</th>
+        <td style="color:yellow">{{ session('adminuser')->phone }}</td>
+      </tr>
+      <div><a style="font-size:50px;color:#cccc;" href="{{ URL('Admin/index') }}">Home</a></div>
     </tbody>
   </table>
 </div>

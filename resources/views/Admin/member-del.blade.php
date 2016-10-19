@@ -21,10 +21,10 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>删除的用户</title>
+<title>用户回收站</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 删除的用户<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 用户回收站<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c"> 
 
@@ -36,11 +36,6 @@
 				<th width="25"><input type="checkbox" name="" value=""></th>
 				<th width="80">ID</th>
 				<th width="100">用户名</th>
-				<th width="40">性别</th>
-				<th width="90">手机</th>
-				<th width="150">邮箱</th>
-				<th width="">地址</th>
-				<th width="130">加入时间</th>
 				<th width="70">状态</th>
 				<th width="100">操作</th>
 			</tr>
@@ -48,13 +43,8 @@
 		<tbody>
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>1</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','360','400')">张三</u></td>
-				<td>男</td>
-				<td>13000000000</td>
-				<td>admin@mail.com</td>
-				<td class="text-l">北京市 海淀区</td>
-				<td>2014-6-11 11:11:42</td>
+				<td></td>
+				<td><u style="text-decoration:none;" class="text-primary"></u></td>
 				<td class="td-status"><span class="label label-danger radius">已删除</span></td>
 				<td class="td-manage"><a style="text-decoration:none" href="javascript:;" onClick="member_huanyuan(this,'1')" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
@@ -76,7 +66,7 @@ $(function(){
 		"bStateSave": true,//状态保存
 		"aoColumnDefs": [
 		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+		  {"orderable":false,"aTargets":[0,4,4]}// 制定列不参与排序
 		]
 	});
 	$('.table-sort tbody').on( 'click', 'tr', function () {

@@ -39,7 +39,10 @@ class Shop_DetailController extends Controller
         }
                 //返回视图
                 session()->forget("cai");
+                session()->forget("dizhi");
                 session()->forget("count");
+                session()->forget("oid");
+                session()->forget("bid");
                 return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun,'enshrine'=>$enshrine]);
                 
 	}

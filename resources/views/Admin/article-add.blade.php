@@ -31,7 +31,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{ URL('Admin/article-add') }}" method="post" class="form form-horizontal" id="form-member-add">
+	<form action="{{ URL('article-add') }}" method="post" class="form form-horizontal" id="form-member-add">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
@@ -46,12 +46,19 @@
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" value="" placeholder="两次密码需一致" id="password" name="password2">
+			</div>
+		</div>
+		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 			</div>
 		</div>
-		<div style="font-size:50px;margin-left:200px;color:red;">欢迎注册啊</div>
-		<div style="font-size:35px;margin-left:200px;color:yellow;">注册就送妹子</div>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 	</form>
 </article>
 
