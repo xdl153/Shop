@@ -176,7 +176,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 //	Route::get("/shop_detail",function(){
 //		return view("Shop.shop_detail");
 //	});
-
+//shop_detailinsert收藏餐厅
+ Route::POST("/shop_detailinsert","MyShop\Shop_DetailController@shop_detailinsert");
+ //shop_detaildelete取消收藏餐厅
+ Route::POST("//shop_detailtdelete","MyShop\Shop_DetailController@shop_detaildelete");
 //shop_intro餐厅介绍视图路由
  Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
 
@@ -213,6 +216,8 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 
 	
 	
+
+
 
 
 
@@ -331,12 +336,28 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 //修改手机号
  	Route::get("dealer-phone","MyBusiness\ChangepasswordController@dealer_phone");
  	Route::post("dealer-phone","MyBusiness\ChangepasswordController@updatephone");
-//店铺信息
- 	Route::get("business-info","MyBusiness\ChangepasswordController@business_info");
-//添加店铺视图
- 	Route::get("business-brand","MyBusiness\ChangepasswordController@business_brand");
-//添加店铺
- 	Route::post("business-brand","MyBusiness\ChangepasswordController@business_brand_add");
+//business-info店铺信息
+ 	Route::get("/business-info","MyBusiness\BusinessInfocontroller@Business_info");
+//business-on关闭店铺
+ 	Route::post("/business-on","MyBusiness\BusinessInfocontroller@Business_on");
+//business-off开启店铺
+ 	Route::post("/business-off","MyBusiness\BusinessInfocontroller@Business_off");
+//business-brand修改店铺信息
+ 	Route::get("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_brandupdate");
+//执行修改店铺信息
+ 	Route::post("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_update");
+
+//删除配送地址
+ 	Route::post("/business-districtdel","MyBusiness\BusinessBrandupdateController@Business_districtdel");
+//添加配送地址城市级联
+ 	Route::post("/business-districtadd","MyBusiness\BusinessBrandupdateController@Business_districtadd");
+
+//business-brand添加店铺页面
+ 	Route::get("/business-brand","MyBusiness\BusinessaddController@Business_brand");
+//business-brandadd执行添加店铺
+ 	Route::post("/business-brandadd","MyBusiness\BusinessaddController@Business_brandadd");
+///business-category店铺类别
+ 	Route::post("//business-category","MyBusiness\BusinessaddController@Business_category");
 //执行文件上传 
 	// Route::post("business-brand","MyBusiness\ChangepasswordController@uploadfile");
 //menu-brand添加菜品

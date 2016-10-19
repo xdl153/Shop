@@ -7,6 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <LINK rel="Bookmark" href="{{ asset('Admin/favicon.ico') }}" >
 <LINK rel="Shortcut Icon" href="{{ asset('Admin/favicon.ico') }}" />
 <!--[if lt IE 9]>
@@ -32,68 +33,96 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+	
+	<form action="/business-brandadd" method="post" class="form form-horizontal" id="form-member-add"  enctype="multipart/form-data">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>店铺名</label>
 			<div class="formControls col-xs-4 col-sm-3">
 				<input type="text" class="input-text" value="" placeholder="" id="username" name="username">
 			</div>
 		</div>
+
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>营业执照</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 营业执照</a>
-				<input type="file" multiple name="file-2" class="input-file">
-				</span> </div>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属类别</label>
+			<div class="formControls col-xs-4 col-sm-3"> 
+			<span class="select-box">
+			<select class="select" size="1" name="category">
+					
+			</select>
+			</span>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>营业时间</label>
+			<div class="formControls col-xs-4 col-sm-3">
+				<input type="text" class="input-text" value="" placeholder="" id="shopopen" name="shopopen">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>休息时间</label>
+			<div class="formControls col-xs-4 col-sm-3">
+				<input type="text" class="input-text" value="" placeholder="" id="shopon" name="shopon">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>起送价</label>
+			<div class="formControls col-xs-4 col-sm-3">
+				<input type="text" class="input-text" value="" placeholder="" id="money"  name="money">
+			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>店铺地址</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="" placeholder="" id="mobile" name="mobile">
+				<input type="text" class="input-text" value="" placeholder="" id="address" name="address">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>收款账号</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" placeholder="@" name="email" id="email">
+				<input type="text" class="input-text" value="" id="account" name="account">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>店铺照片</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
+				<input class="input-text upload-url" type="text" name="uploadfile" value="" style="width:200px">
 				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 店铺照片</a>
-				<input type="file" multiple name="file-2" class="input-file">
-				</span> </div>
-		</div>
+				<input type="file" name="file" multiple  class="input-file">
+				</span> 
+			</div>
+		</div>	
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>配送范围</label>
-			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">
-				<select class="select" size="1" name="city">
-					<option value="" selected>请选择城市</option>
-					<option value="1">北京</option>
-					<option value="2">上海</option>
-					<option value="3">广州</option>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>配送范围</label>
+			<div class="formControls col-xs-2 col-sm-2" name='div1'> 
+				<span class="select-box">
+				<select id="cid" class="select"  name="sele">
+						
 				</select>
-				</span> </div>
+				</span>
+
+			</div>
 		</div>
+		
+			
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>电话</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" placeholder="常用电话号码" name="email" id="email">
+				<input type="text" class="input-text" value="" id="phone" placeholder="常用电话号码" name="phone">
 			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="submit" onclick="fun()" value="&nbsp;&nbsp;添加店铺&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
 </article>
 
 <!--_footer 作为公共模版分离出去--> 
-<script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script src="Shop/js/jquery-1.8.3.min.js"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/icheck/jquery.icheck.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery.validation/1.14.0/jquery.validate.min.js') }}"></script> 
@@ -122,6 +151,24 @@ $(function(){
 			sex:{
 				required:true,
 			},
+			shopopen:{
+				required:true,
+			},
+			shopon:{
+				required:true,
+			},
+			money:{
+				required:true,
+			},
+			account:{
+				required:true,
+			},
+			phone:{
+				required:true,
+			},
+			address:{
+				required:true,
+			},
 			mobile:{
 				required:true,
 				isMobile:true,
@@ -133,17 +180,87 @@ $(function(){
 			uploadfile:{
 				required:true,
 			},
+
 			
 		},
 		onkeyup:false,
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-			//$(form).ajaxSubmit();
-			var index = parent.layer.getFrameIndex(window.name);
-			//parent.$('.btn-refresh').click();
-			parent.layer.close(index);
+			return true;
+			
 		}
+	});
+});
+$.ajax({
+   url:'/business-category',
+   type:'post', 
+   async:true,
+   dataType:'json',
+   headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   },
+
+   success:function(data){
+   		for(var i = 0;i < data.length;i++)
+        $("select[name=category]").append("<option value="+data[i].id+">"+data[i].name+"</option>");
+   },
+   error:function(){
+       alert('ajax失败');
+   }
+});
+
+//添加配送地址城市级联
+$.ajax({
+    url:'/business-districtadd',               //请求地址
+    type:'post',                //请求方式
+    async:true,                 //是否异步
+    data:{upid:0},          //发送的数据
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    dataType:'json',            //响应的数据类型
+    success:function(data){     //成功回调函数
+    	console.log(data);
+        for (var i = 0; i < data.length; i++) {
+            $('#cid').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+        };
+    },
+    error:function(){
+        alert('ajax请求失败1'); //失败回调
+    }
+});
+$("select[name=sele]").live('change',function(){
+	// alert(1);
+	$(this).nextAll("select").remove();
+	var ob = $(this);
+	// alert(1);
+	$.ajax({
+	    url:'/business-districtadd',               //请求地址
+	    type:'post',                //请求方式
+	    async:true,                 //是否异步
+	    data:{upid:($(this).val())},    //发送的数据
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    },
+	    dataType:'json',            //响应的数据类型
+	    success:function(data){     //成功回调函数
+	        	
+	    	// alert(data);
+	        console.log(data);
+	        if(data.length>0){
+
+	            var select = $("<select name='sele' class='select'><option value='-1'>--请选择--</option></select>")
+	            for (var i = 0; i < data.length; i++) {
+	                $(select).append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+	            };
+	            ob.after(select);
+	        }
+	        
+	    },
+	    error:function(){
+	        alert('ajax请求失败');  //失败回调
+	    }
 	});
 });
 </script> 

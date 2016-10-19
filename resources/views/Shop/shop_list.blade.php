@@ -360,7 +360,7 @@
 											class="restaurant-item fl c_a{{ $info['id'] }} c_all p_all p_150 p_coupon  "
 											data-price='{{ $info['money'] }}' data-count="{{ $info['count'] }}" data-title="bad girl bbq">
 											<div class="img-box fl">
-												<a href="/shop_detail?bid={{ $info['id'] }}">
+												<a href="/shop_detail?bid={{ $info['id'] }}&id={{ $_GET['id'] }}">
 													<img src="http://dhcrestaurantlogo.dhero.cn/0" width="82px" height="82px" data-src="Shop/{{ $info['photo'] }}">
 												</a>
 											</div>

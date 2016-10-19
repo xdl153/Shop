@@ -132,14 +132,70 @@
                 <p>37<span style="font-size:12px;color:#999;">分钟</span></p>
                 <span>送餐时间</span>
             </div>
-            <div class="fl nav-right-collect line-left">
-
-                    <div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div>
+            <!--判断用户是否登录-->
+            @if(session('userid'))
+                <!--判断用户是否已收藏店铺-->
+                @if($enshrine)
+                <div class="fl nav-right-collect line-left">
+                    <div class="collect collect" onclick="qsc({{ $_GET['bid'] }})" title="取消收藏"></div>
+                    <div class="collect-success">收藏成功</div>
+                    <div id="review-text">已收藏</div>
+                </div>
+                @else
+                <div class="fl nav-right-collect line-left">
+                    <div class="collect not-collect" onclick="sc({{ $_GET['bid'] }})" title="收藏店铺"></div>
                     <div class="collect-success">收藏成功</div>
                     <div id="review-text">未收藏</div>
-
+                </div>
+                @endif
+            @else
+            <div class="fl nav-right-collect line-left">
+                    <div class="collect not-collect" onclick=alert('请登录') title="收藏餐厅"></div>
+                    <div class="collect-success">收藏成功</div>
+                    <div id="review-text">未收藏</div>
             </div>
+            @endif
+          
         </div>
+        <script type="text/javascript">
+            //收藏店铺
+            function sc(bid){
+                jQuery.ajax({
+                   url:'/shop_detailinsert',
+                   type:'post', 
+                   async:true,
+                   data:{bid:bid},
+                   headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                   },
+                   success:function(data){
+                        window.location.reload();
+                   },
+                   error:function(){
+                       alert('ajax失败');
+                   }
+                });
+            }
+            //取消收藏
+            function qsc(bid){
+                jQuery.ajax({
+                   url:'/shop_detailtdelete',
+                   type:'post', 
+                   async:true,
+                   data:{bid:bid},
+                   headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                   },
+                   success:function(data){
+                    // alert(data);
+                        window.location.reload();
+                   },
+                   error:function(){
+                       alert('ajax失败');
+                   }
+                });
+            }
+        </script>
     </header>
     <ul class="clearfix menu-nav-list" scroll-position-static="160">
         <li class="no-line "><a href="{{ URL('/shop_intro') }}?bid={{ $_GET['bid'] }}&id={{ $_GET['id'] }}">餐厅介绍</a></li>

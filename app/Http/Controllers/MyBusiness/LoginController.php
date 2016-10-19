@@ -27,7 +27,7 @@ class LoginController extends Controller
                             return back()->with("msg","请输入用户或密码");
                         }
 
-            $ob = \DB::table('user')->where("name",$name)->first();
+            $ob = \DB::table('dealer')->where("name",$name)->first();
             if($ob)
                         {
                 //4 判断密码是否正确
