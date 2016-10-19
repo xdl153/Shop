@@ -17,7 +17,11 @@ class zhongjian
     {
 		//判断session中是否有userid
 		if(empty(session()->get('userid'))){
-			return redirect("/");
+				return redirect("/");
+		}else{
+			if(empty(session()->get('cai'))){
+				return redirect("/");
+			}
 		}
         return $next($request);
     }

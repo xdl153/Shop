@@ -76,7 +76,7 @@
                 <p>或电脑直接下载</p>
                 <div class="down-btn">
                     <a href="/marketing/imessage/" target="_blank" class="ios" title="iOS下载">iOS下载</a>
-                    <a href="/marketing/android/" target="_blank" class="Android" title="Android下载">Android下载</a>
+                    <a href="/marketing/android/andriud.apk" target="_blank" class="Android" title="Android下载">Android下载</a>
                 </div>
                 <p>也可以从各大应用市场搜索下载外卖超人</p>
                 <div class="chaoren-weixin">

@@ -4,13 +4,23 @@
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 		<meta name="description" content="" />
-		<meta name="viewport" content="user-scalable=no">
-		
+		<meta name="viewport" content="user-scalable=no">	
 		<meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
 		<meta name="baidu-site-verification" content="IYCrtVH0i1" />
 		<meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="Shop/js/jquery-1.8.3.min.js"></script>
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <!-- kefuQQ -->
+                <style type="text/css">
+                * { padding: 0; margin: 0; font-size: 12px; }
+                    body{height:2000px;} 
+                ul { list-style: none; }
+                a { text-decoration: none; }
+                </style>
+                <link rel="stylesheet" href="Shop/css/kefu.css">   
+                <script src="Shop/js/jquery.js"></script>
+                <!-- kefu QQ-->
+                <script src="Shop/js/jquery-1.8.3.min.js"></script>
 		<link rel="icon" type="image/png" href="images/favicon.ico"/>
 		
 		<script type="text/javascript">
@@ -34,7 +44,6 @@
 	</head>
 	<body class="day " ng-controller="bodyCtrl"  day-or-night>
 		<section class="common-back" id="wrapBackground">
-			
 				<header id="header">
 					<div class="common-width clearfix">
 						<h1 class="fl">
@@ -75,7 +84,7 @@
                                            },
                                            success:function(a){
                                             if( a === 'y'){
-                                                location.reload();
+                                                window.location.href="/shop_list?id="+hiddenid+"";
                                             }else{
                                                 alert('退出失败');
                                             }
@@ -127,14 +136,15 @@
 					<header>历史订单</header>
 					
 		<section class="user-center-body order" id="orderBody">
+        @if(isset($list))
             @if(session("userid"))
             @foreach($list as $l)
             <div class="order-list ">
                  <div class="order-hd">
-                    <span><i>订单编号：</i>{{ $l->number }}</span><i>创建时间：</i>{{ $l->data  }}
-                 </div>
+                    <i>订单编号：</i><span id='bianhao'>{{ $l->number }}</span><i>创建时间：</i>{{ $l->data  }}　　 
+                 </div>   
                  <div class="order-bd clearfix">
-                     <div class="fl restaurant-msg">
+                    <div class="fl restaurant-msg">
                          <div>
                              <img src="{{ asset('/Shop') }}{{ $l->photo }}" alt="" class="fl" height="43" width="43">
                              <i class="fl">{{ $l->name }}</i>
@@ -143,23 +153,19 @@
                             <i class="fl"></i>
                             <span class="fl">餐厅电话：{{ $l->phone }}</span>
                         </p>
-                     </div>
+                    </div>
                      <div class="fl order-type padding-margin">
                          <p>订单类型：{{ ($l->type)==1?"餐到付款":"" }}</p>
-                         <p>订单状态：{{ ($l->express)==2?"送货成功":"待送出" }}</p>
+                         <p>订单状态：{{ ($l->express)==2?"送货成功":"在路上" }}</p>
                      </div>
                      <div class="fl order-total padding-margin">
                          <p>订单金额</p>
                          <p><i>￥{{ $l->money }}</i></p>
                      </div>
                      <div class="order-operate fl padding-margin">
-
-
-                                <p><a href="javascript:;" oid="11982902" data-name="豪大大鸡排鞍山支路店" success-review="" class="btn btn-order success-review">去评论</a></p>
-
-
-
-
+                        <p>
+                            <a href="javascript:;" oid="{{ $l->bid }}" data-name="{{ $l->name }}" success-review="" class="btn btn-order success-review">评论</a>　<i id='sc' class="btn btn-order success-review">删除</i>
+                        </p>
                         <p>
                             <a href="javascript:" id='did' order-number="" orderid="11982902" class="btn_a see-details">查看详情<i></i></a>
                         </p>
@@ -224,6 +230,9 @@
             </div>
             @endforeach
             @endif
+        @else
+        
+        @endif
     </section>
 			
 	
@@ -359,7 +368,7 @@
 						<span ng-if="isTimeError" class="time-error">请选择送餐时间！</span>
 					</li>
 				</ul>
-				<p class="songGift">评论即可送氪星币</p>
+				<p class="songGift">评论有礼</p>
 				<div class="tc">
 					<button class="btn btn-success" ng-click="submitReview()">确认</button>
 					<button class="btn btn-cancel" ng-click="cancelReview()">取消</button>
@@ -507,13 +516,85 @@
 		
 		
 		<script>
-			var reviewUrl = "/mobile/ajax/order_review/",favoriteUrl = "/ajax/restaurant/0/favorite/";
+			var reviewUrl = "/comment",favoriteUrl = "/ajax/restaurant/0/favorite/";
 		</script>
 		<script src="{{ asset('Shop/js/user_center.js') }}"></script>
 		
 
 		<script>angular.bootstrap(document, ["app"]);</script>
-		
+                <!-- QQ客服 -->
+		<div id="box-kefu">
+                    <div class="kefu-close"></div>
+                    <div class="kefu-open">
+                        <div>
+                        <ul>
+                            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=1531555719&site=qq&menu=yes" target="_blank"><i class="qq"></i>在线客服</a></li>
+                            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=1030985069&site=qq&menu=yes" target="_blank"><i class="qq"></i>在线客服</a></li>
+                            <!--<li><a href="http://www.97zzw.com/plus/guestbook.php#liuyan" target="_blank"><i class="txt"></i>咨询留言</a></li>-->
+                        </ul>
+                        </div>
+                        <a href="javascript:;" class="close">关闭</a>
+                    </div>
+                </div>
+                <!-- -->
+                <script type='text/javascript'>
+                    $('#sc').click(function(){
+                        var bh = $('#bianhao').html();
+//                        alert(bh);
+                            $.ajax({
+                                url:'/order_delete',
+                                type:'post',
+                                async:true,
+                                data:{bh:bh},
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success:function(data){
+                                    if(data == 'y'){
+                                        //Ajax请求成功返回“Y” 页面跳转/order
+                                            window.location.reload();
+                                    }else{
+                                        alert('订单尚未完成,无法删除');
+                                    }
+                                },
+                                error:function(){
+                                    alert('失败');
+                                }
+                            })
+                    })
+                </script>
+                <script>var online= new Array();</script>
+                <script src="http://webpresence.qq.com/getonline?Type=1&645481746:1712816412:645481746:"></script>
+                <script>
+                (function($){
+                    for (var i=0; i<online.length; i++) {
+                        if (online[i]) jQuery("#box-kefu .qq").eq(i).addClass("online");
+                    }
+                    var _open = $("#box-kefu").find(".kefu-open"),
+                        _close = $("#box-kefu").find(".kefu-close");
+                    _open.find("a").hover(function(){
+                        $(this).stop(true,true).animate({paddingLeft:20},200).find("i").stop(true,true).animate({left:75},200);
+                    },function(){
+                        $(this).stop(true,true).animate({paddingLeft:35},200).find("i").stop(true,true).animate({left:10},200);
+                    });
 
+
+                    _open.find(".close").click(function(){
+                        _open.animate({width:148},200,function(){
+                            _open.animate({width:0},200,function(){
+                                _close.animate({width:34},200);
+
+                            });
+                        });
+                    });
+                    _close.click(function(){
+                        _close.animate({width:44},200,function(){
+                            _close.animate({width:0},200,function(){
+                                _open.animate({width:138},200);
+                            });
+                        });
+                    });
+                })(jQuery)
+                </script>
 	</body>
 </html>

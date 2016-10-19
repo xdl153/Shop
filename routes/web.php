@@ -40,7 +40,6 @@ Route::post("/songhuodizhi","MyShop\OrderController@shdz");
 Route::post("/ord","MyShop\OrderController@ord");
 
 
-
 	
 	
 
@@ -123,9 +122,10 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 
 //member_order查看订单视图路由
  Route::get("/member_order{id?}","MyShop\Member_OrderController@member_order");
-	// Route::get("/member_order{id?}",function(){
-		// return view("Shop.member_order");
-	// });
+ //用户查看订单删除
+ Route::post("/order_delete","MyShop\Member_OrderController@order_delete");
+//pinlun用户评论
+ Route::post("/comment","MyShop\Member_OrderController@comment");
 	
 //member_index账号管理视图路由
 // Route::get("/member_index","MyShop\Member_IndexController@member_index");
@@ -178,21 +178,15 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
 //	});
 
 //shop_intro餐厅介绍视图路由
-// Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
-	Route::get("/shop_intro",function(){
-		return view("Shop.shop_intro");
-	});
+ Route::get("/shop_intro","MyShop\Shop_IntroController@shop_intro");
+
 
 //shop_comment餐厅评论视图路由
  Route::get("/shop_comment","MyShop\Shop_CommentController@shop_comment");
-//	Route::get("/shop_comment",function(){
-//		return view("Shop.shop_comment");
-//	});
+
  
 //shop_order大家都在点页面视图路由
-	Route::get("/shop_order",function(){
-		return view("Shop.shop_order");
-	});
+// Route::get("/shop_order","MyShop\Shop_orderController@shop_order");
 
 //feedback用户反馈
 Route::post("/feedback","MyShop\FeedbackControoler@store");
@@ -220,20 +214,9 @@ Route::post("/feedback","MyShop\FeedbackControoler@store");
 	
 	
 
+
+
 //后台***********************项目
-//后台界面 需要登录才能访问的内容 
-Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
-//网站后台首页
-	Route::get("index","MyAdmin\IndexController@index");
-//执行退出 
-	Route::get("logout","MyAdmin\LoginController@logout");
-//后台桌面
-	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
-	});
-// 管理员查看信息页面
-	Route::get("Admin/member-show",function(){
-		return view("Admin.member-show");
-	});
 // 登录表单 
 	Route::get("Admin/login","MyAdmin\LoginController@login");
 
@@ -243,14 +226,33 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 // 验证码
 	Route::get("Admin/captcha/{tmp?}","MyAdmin\LoginController@captcha");
 
+//后台界面 需要登录才能访问的内容 
+Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
+
+//网站后台首页
+	Route::get("index","MyAdmin\IndexController@index");
+
+//执行退出 
+	Route::get("logout","MyAdmin\LoginController@logout");
+
+//后台桌面
+	Route::get("welcome","MyAdmin\WelcomeController@welcomes");
+	});
+
+// 查看信息页面
+	Route::get("Admin/member-show",function(){
+		return view("Admin.member-show");
+	});
+
+
 // 用户列表
-	Route::get("article-list","MyAdmin\UserlistController@article");
+	Route::get("article_list","MyAdmin\UserlistController@article");
 
  //用户反馈列表
 	Route::get("picture-list","MyAdmin\ChangeController@picture_list");
-
-// 修改页面
-	Route::get("change-password","MyAdmin\ChangeController@update");
+        Route::get("picturelistdelete","MyAdmin\ChangeController@picturelistdelete");
+// 执行修改页面
+	Route::post("change-password","MyAdmin\ChangeController@update");
 
 // 添加用户页面
  	Route::get("/article-add",function(){return view("/Admin.article-add");});
@@ -296,20 +298,33 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
  		return view("/Admin.system-log");
  	});
 
+
+
+
+
 //商家后台***********************项目
 
+
+// 登录表单 
+	Route::get("Business/login","MyBusiness\LoginController@login_s");
+// 执行登录 
+	Route::post("Business/login","MyBusiness\LoginController@dologin_s");
+// 验证码
+	Route::get("Business/captcha/{tmp?}","MyBusiness\LoginController@captcha_s");
+
+
+Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 //网站后台首页
-	Route::get("busi","MyBusiness\BusinessController@index");
+	Route::get("busi","MyBusiness\BusinessController@index_s");
+
 //后台桌面
 	Route::get("welcome","MyBusiness\BusinessController@welcome");
-// 登录表单 
-	Route::get("login","MyBusiness\BusinessController@login");
-// 执行登录 
-	Route::post("login","MyBusiness\BusinessController@dologin");
-// 验证码
-	Route::get("captcha/{tmp?}","MyBusiness\BusinessController@captcha");
+
 //执行退出 
-	Route::get("logout","MyBusiness\BusinessController@logout");
+	Route::get("logout","MyBusiness\LoginController@logout_s");
+
+	});
+
 //修改密码
  	Route::get("dealer-password","MyBusiness\ChangepasswordController@dealer_password");
  	Route::post("dealer-password","MyBusiness\ChangepasswordController@update");

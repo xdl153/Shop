@@ -11,10 +11,10 @@
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <script type="text/javascript" src="lib/PIE_IE678.js"></script>
 <![endif]-->
-<link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
-<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('Business/static/h-ui/css/H-ui.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('Business/static/h-ui.admin/css/H-ui.login.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('Business/static/h-ui.admin/css/style.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('Business/lib/Hui-iconfont/1.0.7/iconfont.css') }}" rel="stylesheet" type="text/css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -70,8 +70,8 @@
   </div>
 </div>
 <div class="footer">商家后台 一个勤劳的老板</div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="{{ asset('Business/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('Business/static/h-ui/js/H-ui.js') }}"></script> 
 <script>
 var _hmt = _hmt || [];
 (function() {

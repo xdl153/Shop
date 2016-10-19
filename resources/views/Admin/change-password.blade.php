@@ -33,9 +33,9 @@
 	<form action="{{URL('Admin/change-password')}}" method="post" class="form form-horizontal" id="form-change-password">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="row cl">
-			@foreach($list as $li)
+
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账户：</label>
-			<div class="formControls col-xs-8 col-sm-9" bb="{{ $li->id }}">{{ $li->name }}</div>
+			<div class="formControls col-xs-8 col-sm-9"></div>
 
 		</div>
 		<div class="row cl">
@@ -52,10 +52,10 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input onclick='edit(this.id)' id='{{ $li->id }}' cc='{{ $li->name }}' class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+				<input onclick='' class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
 			</div>
 		</div>
-			@endforeach
+
 	</form>
 </article>
 <script>
