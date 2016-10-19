@@ -14,7 +14,7 @@ class Shop_listController extends Controller
 	{		
 			
 			//查询该地址的店铺ID
-			$list=\DB::select("select * from address as a,business as b where b.id=a.bid and b.status=1 and b.examine=2 and a.did={$_GET['id']}");
+			$list=\DB::select("select * from address as a,business as b,dealer as d where d.id=b.did and d.examine=2 and b.id=a.bid and b.status=1 and b.examine=2 and a.did={$_GET['id']}");
 			//判断改地址内是否有配送的店铺
 			if(!$list){
 				return back()->with('msc','1');

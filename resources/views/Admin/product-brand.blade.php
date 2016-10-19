@@ -41,7 +41,7 @@
 					<th>用户名</th>
 					<th width="100">商家名</th>
 					<th width="100">商家电话</th>
-					<th width="100">审核状态</th>
+					<th width="100">商家审核状态</th>
 					<th>店铺数量</th>
 					<th>操作</th>
 				</tr>

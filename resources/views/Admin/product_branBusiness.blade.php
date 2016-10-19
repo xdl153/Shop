@@ -2,9 +2,7 @@
 <html>
 <head>
 	<title></title>
-	<script type="text/javascript">	
-		(function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
-	</script>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="{{ asset('Shop/css/common.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('Shop/css/restaurant.css') }}"/>
 	<script src="Shop/js/jquery-1.8.3.min.js"></script>
@@ -52,12 +50,66 @@
 				</script>
 			</div>
 		</li>
-		<div style="font-size:14px;padding-left:300px;padding-top:30px;">状态：审核中 </div>
-		<div style="font-size:14px;padding-left:300px;padding-top:10px;">操作：审核通过</div>
+		<div style="font-size:14px;padding-left:300px;padding-top:30px;">状态：
+			@if($busi->examine == 1)
+				审核中
+			@elseif($busi->examine == 2)
+				已通过审核
+			@else
+				审核不通过
+			@endif
+		</div>
+		<div style="font-size:14px;padding-left:300px;padding-top:10px;">操作：
+			@if($busi->examine == 1)
+				<a href='javascript:' onclick='fun({{ $busi->id }})'>通过审核</a>
+			@elseif($busi->examine == 2)
+				<a href='javascript:' onclick='fun1({{ $busi->id }})'>审核不通过</a>
+			@else
+				<a href='javascript:' onclick='fun({{ $busi->id }})'>通过审核</a>
+			@endif
+		</div>
 	</ul>
 	@endforeach
 	</div>
 </content>
 
 </body>
+<script type="text/javascript">
+	function fun(id)
+	{
+		$.ajax({
+           url:'/product-brandBusinesson',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                window.location.reload();
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
+	}
+	function fun1(id)
+	{
+		$.ajax({
+           url:'/product-brandBusinessoff',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                window.location.reload();
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
+	}
+</script>
 </html>

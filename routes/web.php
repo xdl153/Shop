@@ -280,6 +280,11 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 
 //商家店铺信息
  	Route::get("product-brandBusiness","MyAdmin\DealerlistController@product_branBusiness");
+//商家店铺审核不通过
+ 	Route::post("product-brandBusinessoff","MyAdmin\DealerlistController@product_branBusinessoff");
+ //商家店铺审核通过
+ 	Route::post("product-brandBusinesson","MyAdmin\DealerlistController@product_branBusinesson");
+   	
         //加载商家审核视图
         Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
         //审核商家

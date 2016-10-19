@@ -46,6 +46,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			@if($info)
 			@foreach($info as $in)
 			<tr class="text-c">
 				<td>{{ $in->name }}</td>
@@ -89,6 +90,7 @@
 				</td>
 			</tr>
 			@endforeach
+			@endif
 		</tbody>
 	</table>
 	</div>

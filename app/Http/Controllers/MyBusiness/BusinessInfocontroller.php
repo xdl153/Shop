@@ -21,6 +21,10 @@ class BusinessInfocontroller extends Controller
     	foreach($info as $in){
             $address[] = \DB::select("select * from address as a,district as d where bid={$in->id} and d.id=a.did");
         }
+        if(!$info){
+            $info = '';
+            $address = '';
+        }
         // dd($address);
     	return view("/Business.business-info",["info"=>$info,"address"=>$address]);
     }
