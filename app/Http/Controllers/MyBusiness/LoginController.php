@@ -27,35 +27,27 @@ class LoginController extends Controller
                 return back()->with("msg","请输入用户或密码");
             }
             $ob = \DB::table('dealer')->where("name",$name)->first();
-            if($ob)
-                        {
+            if($ob){
                 //4 判断密码是否正确
-                if($ob->password==$password)
-                                    {
+                if($ob->password==$password){
                            //5 判断验证码是否正确
-                                  $mycode = session()->get("code");
-                                                  $mycodes=$request->input('code');
-                                                  if(empty($mycodes))
-                                                  {
-                                                        return back()->with("msg","验证码不能为空");
-                                                  }
-                                  elseif($mycode!=$request->input('code'))
-                                                  {
-                                    return back()->with("msg","验证码错误");
-                                }
-                                                else
-                                                {
-                                                    //9 写入session
-                                                    session()->set("userid",$ob);
-                                                    session()->set("adminuser",$ob);
-                                                    //10 跳转到后台首页
-                                                    return redirect("Business/busi");
-                                                 }
-                    
+                      $mycode = session()->get("code");
+                      $mycodes=$request->input('code');
+                      if(empty($mycodes)){
+                           return back()->with("msg","验证码不能为空");
+                      }elseif($mycode!=$request->input('code')){
+                            return back()->with("msg","验证码错误");
+                      }elseif($ob->examine !=2){
+                          return view("/Admin.Toexamine");
+                      }else{
+                          //9 写入session
+                          session()->set("userid",$ob);
+                          session()->set("adminuser",$ob);
+                          //10 跳转到后台首页
+                          return redirect("Business/busi");
+                      }
                 }
-            }
-                        else
-                        {
+            }else{
                 return back()->with("msg","帐号或密码错误");
             }
     }
