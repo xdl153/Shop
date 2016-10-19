@@ -37,10 +37,10 @@
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="70">用户名</th>
+					<th width="25">反馈ID</th>
 					<th width="80">电话</th>
 					<th width="120">时间</th>
-					<th width="100">内容</th>
+					<th width="200">内容</th>
                                         <th width="100">操作</th>
 				</tr>
 			</thead>
@@ -48,7 +48,7 @@
 			@foreach($li as $p)
 				<tr id="a{{ $p->id }}" class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<td >{{ $p->uid }}</td>
+					<td >{{ $p->id }}</td>
 					<td>{{ $p->phone }}</td>
 					<td>{{ $p->data }}</td>
 					<td>{{ $p->content }}</td>

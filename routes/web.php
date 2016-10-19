@@ -349,20 +349,16 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
  		return view("/Business.menu-cance");
  	});
 
-//orderform-list订单列表
- 	Route::get("/orderform-list",function(){
- 		return view("/Business.orderform-list");
- 	});
-
+//订单列表
+ 	Route::get("/orderform-list","MyBusiness\OrderController@index");
+//未完成订单
+        Route::get("/orderform-unfinished","MyBusiness\OrderController@wwcdd");
+//修改订单状态
+        Route::get("/Orderoperation","MyBusiness\OrderController@Orderoperation");
+//删除订单
+        Route::get("/Orderodelete","MyBusiness\OrderController@Orderodelete");
 //orderform-accomplish已完成的订单
- 	Route::get("/orderform-accomplish",function(){
- 		return view("/Business.orderform-accomplish");
- 	});
-
-//orderform-unfinished已完成的订单
- 	Route::get("/orderform-unfinished",function(){
- 		return view("/Business.orderform-unfinished");
- 	});
+ 	Route::get("/orderform-accomplish","MyBusiness\OrderController@ywcdd");
 
 //comment-info反馈列表
  	Route::get("/comment-info",function(){
