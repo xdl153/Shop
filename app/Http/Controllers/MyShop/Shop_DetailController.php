@@ -43,7 +43,7 @@ class Shop_DetailController extends Controller
                 session()->forget("count");
                 session()->forget("oid");
                 session()->forget("bid");
-                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun]);
+                return view("Shop.shop_detail",['menu'=>$menu,'bs'=>$bs,'coun'=>$coun,'enshrine'=>$enshrine]);
                 
 	}
 
