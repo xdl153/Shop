@@ -96,14 +96,7 @@ class OrderController extends Controller {
             }
             $m = \DB::insert('insert into site (uid,did,name,phone,address) values(?,?,?,?,?)',[$uid,$id,$name,$phone,$add]);
                //返回视图json格式
-//            $dizhiss = \DB::select('select name from district where id ='.$id);
-//            foreach($dizhiss as $v){
-//                foreach($v as $a){
-//                    $dizhis=$a;
-//                }
-//            }
-////            dd($dizhis);
-//            session(['weizhi'=>$dizhis]);
+
             return response()->json(['status'=>'ok']);
             break;
             case $s > 25:
@@ -230,7 +223,7 @@ class OrderController extends Controller {
             $ds=array_filter($v);
             $ls = \DB::insert('insert into details (oid,cname,num,price,uid) values (?,?,?,?,?)',[$oid,$v['name'],$v['q'],$v['p'],$uid]);
         }
-        
+//        
         return "y";
 //         return response()->json(['status'=>'ok']);
     }

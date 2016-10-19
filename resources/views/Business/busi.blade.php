@@ -42,7 +42,7 @@
 			</nav>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
-					<li>欢迎进入商家后台</li>
+					<li>{{ session('adminuser')->name }}</li>
 					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="#">个人信息</a></li>
@@ -102,9 +102,9 @@
 			<dt><i class="Hui-iconfont">&#xe620;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="{{ URL('orderform-list') }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
-					<li><a _href="{{ URL('orderform-accomplish') }}" data-title="已完成订单" href="javascript:void(0)">已完成订单</a></li>
-					<li><a _href="{{ URL('orderform-unfinished') }}" data-title="未完成订单" href="javascript:void(0)">未完成订单</a></li>
+					<li><a _href="{{ URL('/orderform-list') }}?id={{ session('adminuser')->id }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
+					<li><a _href="{{ URL('/orderform-unfinished') }}?id={{ session('adminuser')->id }}" data-title="未完成订单" href="javascript:void(0)">未完成订单</a></li>
+                                        <li><a _href="{{ URL('/orderform-accomplish') }}?id={{ session('adminuser')->id }}" data-title="已完成订单" href="javascript:void(0)">已完成订单</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -123,7 +123,7 @@
 	<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
-				<li class="active"><span title="我的桌面" data-href="{{ URL('welcome') }}">我的桌面</span><em></em></li>
+				<li class="active"><span title="我的桌面" data-href="{{ URL('Business/welcome') }}">我的桌面</span><em></em></li>
 			</ul>
 		</div>
 		<div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
@@ -131,7 +131,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="{{ URL('welcome') }}"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="{{ URL('Business/welcome') }}"></iframe>
 		</div>
 	</div>
 </section>

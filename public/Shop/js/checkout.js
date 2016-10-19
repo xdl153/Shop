@@ -228,17 +228,19 @@ var bindModule = (function(){
                     http.post(place_order_url,placeOrderData)
                         .success(function(d){
                             if(d.status == 'ok' && d.order_id){
+//                                alert('11');
                                 if(cache.judgeMode()){
                                     try{
                                         gaFunc(cart_items_json,placeOrderData.pay_type);
                                     }catch(e){}
-                                    
+//                                    alert('22');
                                     cache.removeItem(cache.buildCacheKey(restaurantId));
                                     setTimeout(function(){
                                         scope.commitCheck=true;
                                         locationConfirm(placeOrderData.pay_type);
                                     },2000)
                                 }else{
+//                                    alett('333');
                                     scope.commitCheck=true;
                                     locationConfirm(placeOrderData.pay_type);
                                 }
@@ -250,10 +252,11 @@ var bindModule = (function(){
                                     scope.couponConfirm=true;
                                     scope.couponConfirmMsg=d.failed_msg;
                                     scope.showFullLoading = false;
+//                                    location.reload();
                                 }else{
                                     scope.showFullLoading = false;
                                     scope.showError = true;
-//                                    alert('weiti');
+                                    alert('weiti');
                                     scope.errorMsg = d.failed_msg;
                                 }
                             }      
