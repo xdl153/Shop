@@ -284,6 +284,7 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
         Route::post("jsonfh","MyAdmin\ChangeController@jsonfh");
         Route::get('/email','MyShop\EmailController@index');
         //审核不同意
+        //
         //Route::get("Toexamine",function(){return });
 //评论列表
  	Route::get("product-list","MyAdmin\ChangeController@product_list");
