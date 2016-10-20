@@ -13,7 +13,7 @@ class BusinessInfocontroller extends Controller
     public function Business_info()
     {
     	//获取用户ID
-    	$MyId = session('adminuser')->id;
+    	$MyId = session('userid')->id;
     	
     	//查询商家信息
     	$info = \DB::select("select b.*,c.name as cname from business as b,category as c where did={$MyId} and c.id=b.cid");

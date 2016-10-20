@@ -26,7 +26,7 @@
 <body>
 <div class="page-container">
 	<p class="f-20 text-success">欢迎登录商家后台<span class="f-14">v2.4</span>后台系统！</p>
-	<p>地址：{{ session('adminuser')->address }}</p>
+	<p></p>
 
 	<table class="table table-border table-bordered table-bg mt-20">
 		<thead>
@@ -37,16 +37,16 @@
 		<tbody>
 			<tr>
 				<th width="30%">登录名</th>
-				<td><span id="lbServerName"></span>{{ session('adminuser')->name }}</td>
+				<td><span id="lbServerName"></span>{{ session('userid')->name }}</td>
 			</tr>
 			<tr>
 				<td>邮箱</td>
-				<td>{{ session('adminuser')->email }}</td>
+				<td>{{ session('userid')->email }}</td>
 			</tr>
 
 			<tr>
 				<td>手机号</td>
-				<td>{{ session('adminuser')->phone }}</td>
+				<td>{{ session('userid')->phone }}</td>
 			</tr>
 		</tbody>
 	</table>
