@@ -84,7 +84,7 @@ Route::post("Modifypass","MyShop\ModifyPasswordController@Modifypass");
 //商家注册
 
 //查询客户端输入的用户名是否存在
-Route::post("Business","MyShop\BusinessController@FindBusiness");
+Route::post("qtBusiness","MyShop\BusinessController@FindBusiness");
 //查询客户端输入的手机号码是否存在
 Route::post("FindBusinessPhone","MyShop\BusinessController@FindBusinessPhone");
 //查询客户端输入的邮箱是否存在
@@ -433,5 +433,5 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 //orderform-accomplish已完成的订单
  	Route::get("/orderform-accomplish","MyBusiness\OrderController@ywcdd");
 
-//comment-info评论信息
- 	Route::get("/comment-info","MyBusiness\CommentinfoController@Commentinfo");
+//comment-info反馈列表
+ 	Route::get("/commentinfo","MyBusiness\CommentController@index");
