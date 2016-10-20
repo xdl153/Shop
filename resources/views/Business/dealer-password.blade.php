@@ -30,11 +30,11 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="{{ URL('Business/dealer-password') }}" method="post" class="form form-horizontal" id="form-change-password">
+	<form action="dealer-update?id={{ $sql->id }}" method="post" class="form form-horizontal" id="form-change-password">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账户：</label>
-			<div class="formControls col-xs-8 col-sm-9" style="font-size:20px;color:red;">{{ session('adminuser')->name }}</div>
+			<div class="formControls col-xs-8 col-sm-9" style="font-size:20px;color:red;">{{ $sql->name }}</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
@@ -54,6 +54,9 @@
 			</div>
 		</div>
 	</form>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </article>
 
 <!--_footer 作为公共模版分离出去-->

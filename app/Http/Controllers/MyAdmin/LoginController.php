@@ -26,19 +26,22 @@ class LoginController extends Controller
                         if($password  == ''  && $name == ''){
                             return back()->with("msg","请输入用户或密码");
                         }
-
     		$ob = \DB::table('useradmin')->where("name",$name)->first();
+                  //判断管理员是否开启
+                  if($ob->status != '1'){
+                          return back()->with("msg","您的帐号已被关闭");
+                  }
     		if($ob)
                         {
-    			//4 判断密码是否正确
+    			//判断密码是否正确
     			if($ob->password==$password)
-                                    {
-			               //5 判断验证码是否正确
+                                   {
+			               //判断验证码是否正确
 		                          $mycode = session()->get("code");
                                                   $mycodes=$request->input('code');
                                                   if(empty($mycodes))
                                                   {
-                                                        return back()->with("msg","验证码不能为空");
+                                                     return back()->with("msg","验证码不能为空");
                                                   }
                         		  elseif($mycode!=$request->input('code'))
                                                   {
@@ -46,14 +49,13 @@ class LoginController extends Controller
                         		}
                                                 else
                                                 {
-                                                    //9 写入session
+                                                    //写入session
                                                     session()->set("adminuser",$ob);
                                                     //10 跳转到后台首页
                                                     return redirect("Admin/index");
                                                  }
-    				
-    			}
-    		}
+    			        }
+    		         }
                         else
                         {
     			return back()->with("msg","帐号或密码错误");

@@ -40,10 +40,11 @@
 					</li>
 				</ul>
 			</nav>
+							<div id='did' style='color:#ffffff;margin-left:500px;margin-top:-38px;width:600px;height:30px;font-size:20px;line-height:30px;'></div>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
 					<li>{{ session('adminuser')->name }}</li>
-					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">欢迎登录商家后台 <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="#">个人信息</a></li>
 							<li><a href="#">切换账户</a></li>
@@ -139,6 +140,33 @@
 <script type="text/javascript" src="{{ asset('Admin/lib/layer/2.1/layer.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui/js/H-ui.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
+
+<!--获取时间戳-->
+<script type="text/javascript">
+//获取div对象
+var did = document.getElementById('did');
+
+//定时调用输出时间
+setInterval(function(){
+	//获取当前时间作为对象，如果你放到外面，只能获取new那一刻的时间
+	var date = new Date();
+
+	var y = date.getFullYear();		//获取4位数的年份
+	var m = date.getMonth()+1;		//获取月份（0-11）
+	var d = date.getDate();			//获取天数
+
+	var h = date.getHours();		//获取时
+	var i = date.getMinutes();		//获取分
+	var s = date.getSeconds();		//获取秒
+
+	s = (s<10)?'0'+s:s;
+
+	var info = y+'-'+m+'-'+d+' '+h+':'+i+':'+s;
+	did.innerHTML = '当前系统时间：'+info;
+},1000);
+// document.write(date.getTime());	//获取时间戳
+</script>
+
 <script type="text/javascript">
 
 /*图片-添加*/
