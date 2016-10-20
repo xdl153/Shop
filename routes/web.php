@@ -387,20 +387,27 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
  	Route::post("//business-category","MyBusiness\BusinessaddController@Business_category");
 //执行文件上传 
 	// Route::post("business-brand","MyBusiness\ChangepasswordController@uploadfile");
+
+        
 //menu-brand添加菜品
- 	Route::get("/menu-brand",function(){
- 		return view("/Business.menu-brand");
- 	});
-
+        Route::get("/menu-brand","MyBusiness\Menu_listController@menu_add");
+        Route::post("/addcai","MyBusiness\Menu_listController@addcai");
 //menu-list菜单列表
- 	Route::get("/menu-list",function(){
- 		return view("/Business.menu-list");
- 	});
-
+        Route::get("/menu-list","MyBusiness\Menu_listController@menu_list");
+        //设置是否推荐
+        Route::post("/tuijian",'MyBusiness\Menu_listController@tuijian');
+        //删除菜品
+        Route::post("/del",'MyBusiness\Menu_listController@del');
+        //修改菜品
+        Route::get("/menu-brand_update","MyBusiness\Menu_listController@xiugai");
+        Route::post("/menu-brand_update","MyBusiness\Menu_listController@edit");
+        
+////menu-cance回收站
+//        Route::get("/menu-cance","MyBusiness\Menu_listController@ment_cance");
 //menu-cance回收站
- 	Route::get("/menu-cance",function(){
- 		return view("/Business.menu-cance");
- 	});
+// 	Route::get("/menu-cance",function(){
+// 		return view("/Business.menu-cance");
+// 	});
 
 //订单列表
  	Route::get("/orderform-list","MyBusiness\OrderController@index");
