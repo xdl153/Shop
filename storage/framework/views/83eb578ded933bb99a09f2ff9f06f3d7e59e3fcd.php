@@ -843,22 +843,22 @@
 			var sections = [
 			<?php $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 			{
-					"description": null,
-					"image": null,
-					"recommended": true,
-					"id": <?php echo e($m->bid); ?>,
-					"menu_items": [{
-						"qiniu_url": "",
-						"additions": [],
-						"name": "<?php echo e($m->name); ?>",
-						"optionsets": [],
-						"ordercount": 8,
-						"position": 0,
-						"price": <?php echo e($m->price); ?>,
-						"id": <?php echo e($m->id); ?>,
-						"description": ""
+                            "description": null,
+                            "image": null,
+                            "recommended": true,
+                            "id": <?php echo e($m->bid); ?>,
+                            "menu_items": [{
+                                    "qiniu_url": "",
+                                    "additions": [],
+                                    "name": "<?php echo e($m->name); ?>",
+                                    "optionsets": [],
+                                    "ordercount": 8,
+                                    "position": 0,
+                                    "price": <?php echo e($m->price); ?>,
+                                    "id": <?php echo e($m->id); ?>,
+                                    "description": ""
 				}],
-					"name": "\u5e97\u4e3b\u63a8\u8350"
+                                "name": "\u5e97\u4e3b\u63a8\u8350"
 			},
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 			],

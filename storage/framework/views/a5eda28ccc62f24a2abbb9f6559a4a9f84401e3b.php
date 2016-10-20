@@ -38,29 +38,25 @@
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="70">ID</th>
-					<th width="80">地区</th>
-					<th width="100">店铺名</th>
-					<th width="120">营业时间</th>
-					<th>休息时间</th>
-					<th width="100">店铺电话</th>
-					<th width="100">店铺星级</th>
-					<th width="100">收款帐号</th>
-					<th width="100">审核状态</th>
+					<th>用户名</th>
+					<th width="100">商家名</th>
+					<th width="100">商家电话</th>
+					<th width="100">商家审核状态</th>
+					<th>店铺数量</th>
+					<th>操作</th>
 				</tr>
 			</thead>
-			<?php $__currentLoopData = $product; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+			<?php $__currentLoopData = $dealer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 			<tbody>
 				<tr class="text-c">
 					<td width="25"><input type="checkbox" name="" value=""></td>
 					<td><?php echo e($p->id); ?></td>
-					<td width="130"><?php echo e($p->address); ?></td>
 					<td><?php echo e($p->name); ?></td>
-					<td><?php echo e($p->shopopen); ?></td>
-					<td><?php echo e($p->shopon); ?></td>
+					<td><?php echo e($p->username); ?></td>
 					<td><?php echo e($p->phone); ?></td>
-					<td><?php echo e($p->grade); ?></td>
-					<td><?php echo e($p->account); ?></td>
-					<td><?php echo e($p->examine); ?></td>
+					<td> <?php if($p->examine == 1): ?> 审核中 <?php elseif($p->examine == 2): ?> 审核通过 <?php else: ?> 审核不通过 <?php endif; ?> </td>
+					<td><?php echo e($p->count); ?></td>
+					<td><a href="javascript:;" onclick="member_edit('<?php echo e($p->username); ?>的店铺','product-brandBusiness?id=<?php echo e($p->id); ?>','4','630','410')">查看店铺</a></td>
 				</tr>
 			</tbody>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
@@ -79,9 +75,12 @@ $('.table-sort').dataTable({
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
+	  {"orderable":false,"aTargets":[0,4]}// 制定列不参与排序
 	]
 });
+function member_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
 </script>
 </body>
 </html>
