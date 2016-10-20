@@ -61,11 +61,11 @@
 		</div>
 		<div style="font-size:14px;padding-left:300px;padding-top:10px;">操作：
 			@if($busi->examine == 1)
-				<a href='javascript:' onclick='fun({{ $busi->id }})'>通过审核</a>
+				<a href='javascript:' onclick='fun({{ $busi->id }},{{ $busi->name }})'>通过审核</a>
 			@elseif($busi->examine == 2)
-				<a href='javascript:' onclick='fun1({{ $busi->id }})'>审核不通过</a>
+				<a href='javascript:' onclick='fun1({{ $busi->id }},{{ $busi->name }})'>审核不通过</a>
 			@else
-				<a href='javascript:' onclick='fun({{ $busi->id }})'>通过审核</a>
+				<a href='javascript:' onclick='fun({{ $busi->id }},{{ $busi->name }})'>通过审核</a>
 			@endif
 		</div>
 	</ul>
@@ -75,13 +75,13 @@
 
 </body>
 <script type="text/javascript">
-	function fun(id)
+	function fun(id,name)
 	{
 		$.ajax({
            url:'/product-brandBusinesson',
            type:'post', 
            async:true,
-           data:{id:id},
+           data:{id:id,name:name},
            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
@@ -94,13 +94,13 @@
            }
         });
 	}
-	function fun1(id)
+	function fun1(id,name)
 	{
 		$.ajax({
            url:'/product-brandBusinessoff',
            type:'post', 
            async:true,
-           data:{id:id},
+           data:{id:id,name:name},
            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
