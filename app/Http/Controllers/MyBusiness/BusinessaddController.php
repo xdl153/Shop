@@ -26,7 +26,7 @@ class BusinessaddController extends Controller
 	public function Business_brandadd(Request $request)
 	{
 		//获取商家ID
-		$MyId = session('userid')->id;
+		$MyId = session('businessuserid')->id;
 		$name = $_POST['username'];
 		// $category = $_POST['category'];
 		$cid = $_POST['category'];

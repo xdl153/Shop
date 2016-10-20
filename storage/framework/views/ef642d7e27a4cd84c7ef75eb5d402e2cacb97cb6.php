@@ -35,10 +35,11 @@
 				<th>店铺名</th>
 				<th>店铺类别</th>
 				<th>照片</th>
-				<th>店铺地址</th>
+				<th width='150'>店铺地址</th>
 				<th>收款账号</th>
 				<th>配送范围</th>
 				<th>电话</th>
+                                <th>售货量</th>
 				<th>审核信息</th>
 				<th>状态</th>
 				<th>操作</th>
@@ -66,6 +67,7 @@
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 				</td>
 				<td><?php echo e($in->phone); ?></td>
+                                <td> <?php echo e($in->count); ?></td>
 				<td> <?php if($in->examine == '3'): ?> 审核不通过 <?php elseif($in->examine == '2'): ?> 审核通过 <?php elseif($in->examine == '1'): ?> 审核中 <?php endif; ?></td>
 				<td class="td-status">
 					<?php if($in->status == '2'): ?>

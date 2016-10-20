@@ -324,6 +324,19 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 //执行删除管理员
  	Route::get("delete","MyAdmin\AdminController@delete");
 
+//category-list分类列表
+ 	Route::get("/category-list","MyAdmin\CategoryController@category_list");
+ //category-del删除分类
+ 	Route::post("/category-del","MyAdmin\CategoryController@category_del");
+ //category-upd分类修改
+ 	Route::get("/category-upd","MyAdmin\CategoryController@category_upd");
+ //category-upd分类确认修改
+ 	Route::post("/category-upd","MyAdmin\CategoryController@category_upda");
+//category-add添加分类
+ 	Route::get("/category-add","MyAdmin\CategoryController@category_add");
+//category-add执行添加分类
+ 	Route::post("/category-add","MyAdmin\CategoryController@category_addr");
+
 //系统设置视图
  	Route::get("system-base","MyAdmin\SystemController@system_base");
 //执行系统设置

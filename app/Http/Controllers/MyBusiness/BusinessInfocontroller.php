@@ -13,10 +13,15 @@ class BusinessInfocontroller extends Controller
     public function Business_info()
     {
     	//获取用户ID
-    	$MyId = session('userid')->id;
+    	$MyId = session('businessuserid')->id;
     	
     	//查询商家信息
-    	$info = \DB::select("select b.*,c.name as cname from business as b,category as c where did={$MyId} and c.id=b.cid");
+    	$info = \DB::select("select b.*,c.name as cname,
+            (select count(*) from orderform as o where b.id=o.bid and o.express=2) as count 
+            from 
+            business as b,
+            category as c 
+            where did={$MyId} and c.id=b.cid");
         // 店铺配送范围
     	foreach($info as $in){
             $address[] = \DB::select("select * from address as a,district as d where bid={$in->id} and d.id=a.did");
