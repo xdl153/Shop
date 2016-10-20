@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\MyAdmin;
 
 use Illuminate\Http\Request;
-
+use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -34,6 +34,21 @@ class DealerlistController extends Controller
         $id=$_POST['id'];
 
         \DB::table('business')->where('id',$id)->update(['examine'=>'3']);
+
+        $ar = \DB::select("select email,username from dealer where id={$id}");
+        echo $ar;
+        $username = $ar->username;
+            $email = $ar->email;
+            $data = [
+                'email' => $email,
+                'name' => $username,
+                'title' => '您好,超人外卖商家入驻审核结果'
+                ];
+    
+                $re = Mail::send('Admin.failemail', ['user' => env('MAIL_USERNAME')], function ($message) use ($data) {
+                    $message->to($data['email'], $data['name'])->subject($data['title']);
+                });
+            
     }
 
     //店铺审核通过
@@ -43,5 +58,20 @@ class DealerlistController extends Controller
         $id=$_POST['id'];
 
         \DB::table('business')->where('id',$id)->update(['examine'=>'2']);
+
+        $ar = \DB::select("select email,username from dealer where id={$id}");
+
+        $username = $ar->username;
+            $email = $ar->email;
+            $data = [
+                'email' => $email,
+                'name' => $username,
+                'title' => '您好,超人外卖商家入驻审核结果'
+                ];
+
+                $re = Mail::send('Admin.email', ['user' => env('MAIL_USERNAME')], function ($message) use ($data) {
+                    $message->to($data['email'], $data['name'])->subject($data['title']);
+                });
+            
     }
 }

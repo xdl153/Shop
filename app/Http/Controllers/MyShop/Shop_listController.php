@@ -24,6 +24,7 @@ class Shop_listController extends Controller
 					select b.*,c.name as cname,
 					(select count(*) from orderform as o where o.bid=b.id and o.express=2) as count
 					from business as b,category as c,address as a where a.did={$_GET['id']}  and b.status=1 and a.bid=b.id and b.examine=2 and c.id=b.cid");
+			// dd($info);
 			if($info){
 			//获取当前时间戳
 			$date=strtotime(date('y-m-d H:i:s',time()));

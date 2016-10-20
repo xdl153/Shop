@@ -89,6 +89,7 @@
                 window.location.reload();
            },
            error:function(){
+
                alert('ajax失败');
            }
         });
