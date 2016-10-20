@@ -20,7 +20,7 @@ class Shop_DetailController extends Controller
                       $bid=$value;
                 }
 		//查询菜单 菜名，图片，菜的价格，bid，店铺有多少个菜
-		$menu = \DB::select('select bid,id,name,price,num,images from menu where bid='.$bid);
+		$menu = \DB::select('select bid,id,name,price,num,images from menu where recommend = 2 and bid='.$bid);
                 $bs= \DB::select('select grade,name,photo from business where id='.$bid);
                 $coun=\DB::select('select count(bid) as c from menu where bid='.$bid);
 //                dd($menu);

@@ -225,7 +225,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/3f0cb3ddef76ff13c8bae9ab5651783ae7a60fe6",
+                "url": "https://packagist.phpcomposer.com/files/Gregwar/Captcha/3f0cb3ddef76ff13c8bae9ab5651783ae7a60fe6.zip",
                 "reference": "3f0cb3ddef76ff13c8bae9ab5651783ae7a60fe6",
                 "shasum": ""
             },
@@ -530,16 +530,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.3.18",
+            "version": "v5.3.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9bee167d173857c25966c19afdaa66f127ca6784"
+                "reference": "f1a5bb417b3e0d1949fe84617eacd1a14d75d7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9bee167d173857c25966c19afdaa66f127ca6784",
-                "reference": "9bee167d173857c25966c19afdaa66f127ca6784",
+                "url": "https://packagist.phpcomposer.com/files/laravel/framework/f1a5bb417b3e0d1949fe84617eacd1a14d75d7f1.zip",
+                "reference": "f1a5bb417b3e0d1949fe84617eacd1a14d75d7f1",
                 "shasum": ""
             },
             "require": {
@@ -654,24 +654,24 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-10-08 01:51:20"
+            "time": "2016-10-17 19:35:14"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.28",
+            "version": "1.0.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "a9663643ff2d16d7f66ed1e0d3212c5491bc9044"
+                "reference": "75138bb14160f3ba963750aa95e08d1d394fb198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a9663643ff2d16d7f66ed1e0d3212c5491bc9044",
-                "reference": "a9663643ff2d16d7f66ed1e0d3212c5491bc9044",
+                "url": "https://packagist.phpcomposer.com/files/thephpleague/flysystem/75138bb14160f3ba963750aa95e08d1d394fb198.zip",
+                "reference": "75138bb14160f3ba963750aa95e08d1d394fb198",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
@@ -737,7 +737,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-10-07 12:20:37"
+            "time": "2016-10-18 16:20:02"
         },
         {
             "name": "maximebf/debugbar",
@@ -1030,7 +1030,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://packagist.phpcomposer.com/files/paragonie/random_compat/c0125896dbb151380ab47e96c621741e79623beb.zip",
                 "reference": "c0125896dbb151380ab47e96c621741e79623beb",
                 "shasum": ""
             },
@@ -1128,7 +1128,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://packagist.phpcomposer.com/files/php-fig/log/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d.zip",
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
@@ -1247,7 +1247,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/a07797b986671b0dc823885a81d5e3516b931599",
+                "url": "https://packagist.phpcomposer.com/files/ramsey/uuid/a07797b986671b0dc823885a81d5e3516b931599.zip",
                 "reference": "a07797b986671b0dc823885a81d5e3516b931599",
                 "shasum": ""
             },
@@ -1380,7 +1380,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/6cb0872fb57b38b3b09ff213c21ed693956b9eb0",
+                "url": "https://packagist.phpcomposer.com/files/symfony/console/6cb0872fb57b38b3b09ff213c21ed693956b9eb0.zip",
                 "reference": "6cb0872fb57b38b3b09ff213c21ed693956b9eb0",
                 "shasum": ""
             },
@@ -1441,7 +1441,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/e2b3f74a67fc928adc3c1b9027f73e1bc01190a8",
+                "url": "https://packagist.phpcomposer.com/files/symfony/debug/e2b3f74a67fc928adc3c1b9027f73e1bc01190a8.zip",
                 "reference": "e2b3f74a67fc928adc3c1b9027f73e1bc01190a8",
                 "shasum": ""
             },
@@ -1498,7 +1498,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/c0c00c80b3a69132c4e55c3e7db32b4a387615e5",
+                "url": "https://packagist.phpcomposer.com/files/symfony/event-dispatcher/c0c00c80b3a69132c4e55c3e7db32b4a387615e5.zip",
                 "reference": "c0c00c80b3a69132c4e55c3e7db32b4a387615e5",
                 "shasum": ""
             },
@@ -1558,7 +1558,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
+                "url": "https://packagist.phpcomposer.com/files/symfony/finder/205b5ffbb518a98ba2ae60a52656c4a31ab00c6f.zip",
                 "reference": "205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
                 "shasum": ""
             },
@@ -1607,7 +1607,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/5114f1becca9f29e3af94374f1689c83c1aa3d97",
+                "url": "https://packagist.phpcomposer.com/files/symfony/http-foundation/5114f1becca9f29e3af94374f1689c83c1aa3d97.zip",
                 "reference": "5114f1becca9f29e3af94374f1689c83c1aa3d97",
                 "shasum": ""
             },
@@ -1660,7 +1660,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/dc339d6eebadfa6e39c52868b4d4a715eff13c69",
+                "url": "https://packagist.phpcomposer.com/files/symfony/http-kernel/dc339d6eebadfa6e39c52868b4d4a715eff13c69.zip",
                 "reference": "dc339d6eebadfa6e39c52868b4d4a715eff13c69",
                 "shasum": ""
             },
@@ -1909,7 +1909,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/66de154ae86b1a07001da9fbffd620206e4faf94",
+                "url": "https://packagist.phpcomposer.com/files/symfony/process/66de154ae86b1a07001da9fbffd620206e4faf94.zip",
                 "reference": "66de154ae86b1a07001da9fbffd620206e4faf94",
                 "shasum": ""
             },
@@ -1958,7 +1958,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/8edf62498a1a4c57ba317664a4b698339c10cdf6",
+                "url": "https://packagist.phpcomposer.com/files/symfony/routing/8edf62498a1a4c57ba317664a4b698339c10cdf6.zip",
                 "reference": "8edf62498a1a4c57ba317664a4b698339c10cdf6",
                 "shasum": ""
             },
@@ -2033,7 +2033,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/93013a18d272e59dab8e67f583155b78c68947eb",
+                "url": "https://packagist.phpcomposer.com/files/symfony/translation/93013a18d272e59dab8e67f583155b78c68947eb.zip",
                 "reference": "93013a18d272e59dab8e67f583155b78c68947eb",
                 "shasum": ""
             },
@@ -2097,7 +2097,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/70bfe927b86ba9999aeebd829715b0bb2cd39a10",
+                "url": "https://packagist.phpcomposer.com/files/symfony/var-dumper/70bfe927b86ba9999aeebd829715b0bb2cd39a10.zip",
                 "reference": "70bfe927b86ba9999aeebd829715b0bb2cd39a10",
                 "shasum": ""
             },
@@ -2350,6 +2350,105 @@
             "time": "2015-05-11 14:41:42"
         },
         {
+            "name": "illuminate/contracts",
+            "version": "v5.3.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/contracts.git",
+                "reference": "ce5d73c6015b2054d32f3f8530767847b358ae4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/illuminate/contracts/ce5d73c6015b2054d32f3f8530767847b358ae4e.zip",
+                "reference": "ce5d73c6015b2054d32f3f8530767847b358ae4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Contracts\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Contracts package.",
+            "homepage": "https://laravel.com",
+            "time": "2016-09-26 20:36:27"
+        },
+        {
+            "name": "illuminate/support",
+            "version": "v5.3.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/support.git",
+                "reference": "aa685c61c88a69b2e0e86310e65ef5ad2ebf2448"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/illuminate/support/aa685c61c88a69b2e0e86310e65ef5ad2ebf2448.zip",
+                "reference": "aa685c61c88a69b2e0e86310e65ef5ad2ebf2448",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "~1.0",
+                "ext-mbstring": "*",
+                "illuminate/contracts": "5.3.*",
+                "paragonie/random_compat": "~1.4|~2.0",
+                "php": ">=5.6.4"
+            },
+            "replace": {
+                "tightenco/collect": "self.version"
+            },
+            "suggest": {
+                "illuminate/filesystem": "Required to use the composer class (5.2.*).",
+                "symfony/process": "Required to use the composer class (3.1.*).",
+                "symfony/var-dumper": "Required to use the dd function (3.1.*)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Support\\": ""
+                },
+                "files": [
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Support package.",
+            "homepage": "https://laravel.com",
+            "time": "2016-10-02 01:14:47"
+        },
+        {
             "name": "mockery/mockery",
             "version": "0.9.5",
             "source": {
@@ -2520,7 +2619,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "url": "https://packagist.phpcomposer.com/files/phpDocumentor/ReflectionDocBlock/8331b5efe816ae05461b7ca1e721c01b46bafb3e.zip",
                 "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
                 "shasum": ""
             },
@@ -2918,7 +3017,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/60c32c5b5e79c2248001efa2560f831da11cc2d7",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/60c32c5b5e79c2248001efa2560f831da11cc2d7.zip",
                 "reference": "60c32c5b5e79c2248001efa2560f831da11cc2d7",
                 "shasum": ""
             },
@@ -3000,7 +3099,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit-mock-objects/238d7a2723bce689c79eeac9c7d5e1d623bb9dc2.zip",
                 "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
                 "shasum": ""
             },
@@ -3572,7 +3671,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/ca809c64072e0fe61c1c7fb3c76cdc32265042ac",
+                "url": "https://packagist.phpcomposer.com/files/symfony/css-selector/ca809c64072e0fe61c1c7fb3c76cdc32265042ac.zip",
                 "reference": "ca809c64072e0fe61c1c7fb3c76cdc32265042ac",
                 "shasum": ""
             },
@@ -3625,7 +3724,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/bb7395e8b1db3654de82b9f35d019958276de4d7",
+                "url": "https://packagist.phpcomposer.com/files/symfony/dom-crawler/bb7395e8b1db3654de82b9f35d019958276de4d7.zip",
                 "reference": "bb7395e8b1db3654de82b9f35d019958276de4d7",
                 "shasum": ""
             },
@@ -3681,7 +3780,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/368b9738d4033c8b93454cb0dbd45d305135a6d3",
+                "url": "https://packagist.phpcomposer.com/files/symfony/yaml/368b9738d4033c8b93454cb0dbd45d305135a6d3.zip",
                 "reference": "368b9738d4033c8b93454cb0dbd45d305135a6d3",
                 "shasum": ""
             },

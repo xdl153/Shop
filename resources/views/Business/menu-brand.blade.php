@@ -30,42 +30,57 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+	<form action="{{ URL('/addcai') }}" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属类别</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属菜系</label>
+			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">    
+				<select class="select" size="1" name="cp">
+					<option value="-1" selected>请选泽菜系</option>
+                                    @foreach($caip as $cai)
+					<option value="{{ $cai->id }}">{{ $cai->name }}</option>
+                                    @endforeach
+				</select>
+				</span> 
+			</div>
+		</div>
+                <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择店铺</label>
 			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">
-				<select class="select" size="1" name="city">
-					<option value="" selected>请选泽类别</option>
-					<option value="1">北京</option>
-					<option value="2">上海</option>
-					<option value="3">广州</option>
+				<select class="select" size="1" name="dp">
+					<option value="-1" selected>请选泽店铺</option>
+                                        @foreach($bus as $b)
+					<option value="{{ $b->id }}">{{ $b->name }}</option>
+                                        @endforeach
 				</select>
 				</span> 
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>店铺</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>菜品名称</label>
 			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">
-				<select class="select" size="1" name="city">
-					<option value="" selected>请选择店铺</option>
-					<option value="1">北京</option>
-					<option value="2">上海</option>
-					<option value="3">广州</option>
-				</select>
+                                <input type="text" class="select" size="1" name="cname" placeholder="请填写您需要的菜名">
+				</span> 
+			</div>
+		</div>
+                <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>菜品金额</label>
+			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">
+                                <input type="text" class="select" size="1" name="price"  placeholder="请填写金额">
 				</span> 
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>图片</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>菜品图片</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 店铺照片</a>
-				<input type="file" multiple name="file-2" class="input-file">
-				</span>
-			 </div>
+				<input class="input-text upload-url" type="text" name="uploadfile" value="" style="width:200px">
+				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 菜品照片</a>
+				<input type="file" name="file" multiple  class="input-file">
+				</span> 
+			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>介绍</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>菜品介绍</label>
 			<div class="formControls col-xs-5 col-sm-5">
 				<textarea name="beizhu" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="textarealength(this,100)"></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
@@ -74,6 +89,7 @@
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                                <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
@@ -98,39 +114,39 @@ $(function(){
 		increaseArea: '20%'
 	});
 	
-	$("#form-member-add").validate({
-		rules:{
-			username:{
-				required:true,
-				minlength:2,
-				maxlength:16
-			},
-			sex:{
-				required:true,
-			},
-			mobile:{
-				required:true,
-				isMobile:true,
-			},
-			email:{
-				required:true,
-				email:true,
-			},
-			uploadfile:{
-				required:true,
-			},
-			
-		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
-			//$(form).ajaxSubmit();
-			var index = parent.layer.getFrameIndex(window.name);
-			//parent.$('.btn-refresh').click();
-			parent.layer.close(index);
-		}
-	});
+//	$("#form-member-add").validate({
+//		rules:{
+//			username:{
+//				required:true,
+//				minlength:2,
+//				maxlength:16
+//			},
+//			sex:{
+//				required:true,
+//			},
+//			mobile:{
+//				required:true,
+//				isMobile:true,
+//			},
+//			email:{
+//				required:true,
+//				email:true,
+//			},
+//			uploadfile:{
+//				required:true,
+//			},
+//			
+//		},
+//		onkeyup:false,
+//		focusCleanup:true,
+//		success:"valid",
+//		submitHandler:function(form){
+//			//$(form).ajaxSubmit();
+//			var index = parent.layer.getFrameIndex(window.name);
+//			//parent.$('.btn-refresh').click();
+//			parent.layer.close(index);
+//		}
+//	});
 });
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->

@@ -843,22 +843,22 @@
 			var sections = [
 			@foreach($menu as $m)
 			{
-					"description": null,
-					"image": null,
-					"recommended": true,
-					"id": {{ $m->bid }},
-					"menu_items": [{
-						"qiniu_url": "",
-						"additions": [],
-						"name": "{{ $m->name }}",
-						"optionsets": [],
-						"ordercount": 8,
-						"position": 0,
-						"price": {{ $m->price }},
-						"id": {{ $m->id }},
-						"description": ""
+                            "description": null,
+                            "image": null,
+                            "recommended": true,
+                            "id": {{ $m->bid }},
+                            "menu_items": [{
+                                    "qiniu_url": "",
+                                    "additions": [],
+                                    "name": "{{ $m->name }}",
+                                    "optionsets": [],
+                                    "ordercount": 8,
+                                    "position": 0,
+                                    "price": {{ $m->price }},
+                                    "id": {{ $m->id }},
+                                    "description": ""
 				}],
-					"name": "\u5e97\u4e3b\u63a8\u8350"
+                                "name": "\u5e97\u4e3b\u63a8\u8350"
 			},
 			@endforeach
 			],
