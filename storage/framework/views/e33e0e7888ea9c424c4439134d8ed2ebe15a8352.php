@@ -28,7 +28,7 @@
         <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 菜单管理 <span class="c-gray en">&gt;</span> 菜单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
         <div class="page-container">
 
-                <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong><?php $__currentLoopData = $co; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?><?php echo e($c->count); ?><?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?></strong> 条</span> </div>
+                <div class="cl pd-5 bg-1 bk-gray mt-20">  <span class="r">共有数据：<strong><?php $__currentLoopData = $co; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?><?php echo e($c->count); ?><?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?></strong> 条</span> </div>
                 <div class="mt-20">
                         <table class="table table-border table-bordered table-bg table-sort">
                                 <thead>
@@ -56,17 +56,25 @@
                                                 <!--<td></td>-->
                                                 <td><img src="<?php echo e(asset('Shop')); ?><?php echo e($l->images); ?>" style="width:35px;height:35px;"></td>
                                                 <td><?php echo e($l->price); ?></td>
-                                                <td class="zt" name="a<?php echo e($l->mid); ?>"><?php echo e($l->recommend); ?></td>
+                                                <td class="zt" name="a<?php echo e($l->mid); ?>"><?php echo e($l->recommend == '1' ? '上架' : '下架'); ?></td>
+                                                <input type='hidden' name="a<?php echo e($l->mid); ?>" value="<?php echo e($l->recommend); ?>">
                                                 <td class="f-14 product-brand-manage">
-                                                    <a style="text-decoration:none" class="ml-5 tj"  href="javascript:fun(<?php echo e($l->mid); ?>);" title="推荐">
-                                                        <i class="Hui-iconfont">&#xe6dc;</i>
-                                                    </a> 
+                                                    <?php if($l->recommend == '2'): ?>
+                                                        <a style="text-decoration:none" class="ml-5 tj"  href="javascript:fun(<?php echo e($l->mid); ?>);" title="上架">
+                                                            <i class="Hui-iconfont">&#xe6dc;</i>
+                                                        </a> 
+                                                    <?php else: ?>
+                                                         <a style="text-decoration:none" class="ml-5 tj"  href="javascript:fun(<?php echo e($l->mid); ?>);" title="下架">
+                                                            <i class="Hui-iconfont">&#xe6de;</i>
+                                                        </a> 
+                                                    <?php endif; ?>
+                                                   
                                                    <a title="编辑" href="javascript:;" onclick="member_edit('编辑','/menu-brand_update?id=<?php echo e($l->mid); ?>','4','','510')" class="ml-5" style="text-decoration:none">
                                                         <i class="Hui-iconfont">&#xe6df;</i></a>
                                                     </a> 
-                                                    <a style="text-decoration:none" class="ml-5 sc"  href="javascript:del(<?php echo e($l->mid); ?>);" title="删除">
+                                                    <!-- <a style="text-decoration:none" class="ml-5 sc"  href="javascript:del(<?php echo e($l->mid); ?>);" title="删除">
                                                         <i class="Hui-iconfont">&#xe6e2;</i>
-                                                    </a>
+                                                    </a> -->
                                                 </td>
 
                                         </tr>
@@ -84,7 +92,7 @@
         <script type="text/javascript" src="<?php echo e(asset('Admin/static/h-ui.admin/js/H-ui.admin.js')); ?>"></script> 
         <script type="text/javascript">
             function fun(id){
-                var rmd = $("td[name=a"+id+"]").html();
+                var rmd = $("input[name=a"+id+"]").val();
 //                alert(rmd);
                     $.ajax({
                         url:'/tuijian',

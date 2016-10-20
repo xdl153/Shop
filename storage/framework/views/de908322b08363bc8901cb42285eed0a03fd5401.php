@@ -113,7 +113,7 @@
 			<dt><i class="Hui-iconfont">&#xe622;</i> 评论信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<?php echo e(URL('comment-info')); ?>" data-title="评论列表" href="javascript:void(0)">评论列表</a></li>
+					<li><a _href="<?php echo e(URL('/commentinfo')); ?>?id=<?php echo e(session('businessuserid')->id); ?>" data-title="评论列表" href="javascript:void(0)">评论列表</a></li>
 				</ul>
 			</dd>
 		</dl>

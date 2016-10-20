@@ -156,7 +156,7 @@
                     </div>
                      <div class="fl order-type padding-margin">
                          <p>订单类型：{{ ($l->type)==1?"餐到付款":"" }}</p>
-                         <p>订单状态：{{ ($l->express)==2?"送货成功":"在路上" }}</p>
+                         <p class="sh">订单状态：{{ ($l->express)==2?"送货成功":"路途当中" }}</p>
                      </div>
                      <div class="fl order-total padding-margin">
                          <p>订单金额</p>
@@ -164,7 +164,7 @@
                      </div>
                      <div class="order-operate fl padding-margin">
                         <p>
-                            <a href="javascript:;" oid="{{ $l->bid }}" data-name="{{ $l->name }}" success-review="" class="btn btn-order success-review">评论</a>　<i  class="btn btn-order success-review cs">删除</i>
+                            <a href="javascript:;" oid="{{ $l->bid }}" data-name="{{ $l->name }}" success-review="" class="btn btn-order success-review pl">评论</a>　<i  class="btn btn-order success-review cs">删除</i><i  class="btn btn-order success-review qr">确认收货</i>
                         </p>
                         <p>
                             <a href="javascript:" id='did' order-number="" orderid="11982902" class="btn_a see-details">查看详情<i></i></a>
@@ -213,7 +213,7 @@
                                         <!-- ngIf: order['11982902'].comment -->
                                     </div>
                                     <div class="total fr">
-                                        <p>配送费：<span ng-bind="order['11982902'].delivery_fee|currency:'￥'" class="ng-binding"></span></p>
+                                        <p>配送费：0.00<span ng-bind="order['11982902'].delivery_fee|currency:'￥'" class="ng-binding"></span></p>
                                         <!-- ngIf: order['11982902'].coupon_amount -->
                                         <!-- ngIf: order['11982902'].red_packet_amount -->
                                         <!-- <p>活动优惠：<span ng-bind="order['11982902'].total_remit_amount|currency:'￥'"></span></p> -->
@@ -538,6 +538,12 @@
                 </div>
                 <!-- -->
                 <script type='text/javascript'>
+                    if($('.sh').html() == '订单状态：送货成功'){
+                            $(".qr").hide();
+                    }
+                    if($('.sh').html() == '订单状态：路途当中'){
+                            $(".pl").hide();
+                    }
                     $('.cs').click(function(){
                         var bh = $('#bianhao').html();
 //                        alert(bh);
@@ -554,7 +560,30 @@
                                         //Ajax请求成功返回“Y” 页面跳转/order
                                             window.location.reload();
                                     }else{
-                                        alert('订单尚未完成,无法删除');
+                                        alert('订单正在处理中..');
+                                    }
+                                },
+                                error:function(){
+                                    alert('失败');
+                                }
+                            })
+                    })
+                    //确认订单
+                    $('.qr').click(function(){
+                        var bh = $('#bianhao').html();
+//                        alert(bh);
+                            $.ajax({
+                                url:'/queren',
+                                type:'post',
+                                async:true,
+                                data:{bh:bh},
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success:function(data){
+                                    if(data == 'y'){
+                                               $(".qr").hide();
+                                            window.location.reload();
                                     }
                                 },
                                 error:function(){

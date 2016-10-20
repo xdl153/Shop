@@ -60,12 +60,23 @@ class BusinessInfocontroller extends Controller
         //获取店铺ID
         $id = $_POST['id'];
 
-        //修改数据表开启该店铺
-        \DB::table("business")->where('id',$id)->delete();
-        \DB::table("comment")->where('bid',$id)->delete();
-        \DB::table("menu")->where('bid',$id)->delete();
-        \DB::table("address")->where('bid',$id)->delete();
-        \DB::table("orderform")->where('bid',$id)->delete();
-        \DB::table("enshrine")->where('bid',$id)->delete();
+        //查询该店铺是否有未送达的订单
+        $order = \DB::select("select * from orderform where bid={$id} and not express=3");
+        if(empty($order)){
+                //修改数据表开启该店铺
+            \DB::table("business")->where('id',$id)->delete();
+            \DB::table("comment")->where('bid',$id)->delete();
+            \DB::table("menu")->where('bid',$id)->delete();
+            \DB::table("address")->where('bid',$id)->delete();
+            \DB::table("orderform")->where('bid',$id)->delete();
+            \DB::table("enshrine")->where('bid',$id)->delete();
+            \DB::delete("delete from orderform where bid={$id}");
+
+            echo json_encode('y');
+        }else{
+            echo json_encode('n');
+        }
+        
+        
     }
 }

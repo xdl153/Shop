@@ -153,7 +153,7 @@ app.directive("successReview",function(){
                 scope['closeReview' + oid] = function(){
                     elem.off('click');
                     elem.remove();
-                    scope.statusDom.text("订单状态：完成");
+                    scope.statusDom.text("订单状态：送货成功");
                     //elem.attr("href",scope.href);
                 }
             });

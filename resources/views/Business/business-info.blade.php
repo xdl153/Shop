@@ -192,17 +192,24 @@ function member_edit(title,url,id,w,h){
 /*用户-删除*/
 function member_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
-		$(obj).parents("tr").remove();
+		
 		$.ajax({
            url:'/business-del',
            type:'post', 
            async:true,
            data:{id:id},
+           dataType:'json',
            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success:function(data){
-                layer.msg('已删除!',{icon:1,time:1000});
+           		if(data == 'y'){
+           			layer.msg('已删除!',{icon:1,time:1000});
+           			$(obj).parents("tr").remove();
+           		}else{
+           			alert('不能删除该店铺，该店铺可能含有未完成订单');
+           		}
+           		// alert(data);
            },
            error:function(){
                alert('ajax失败');
