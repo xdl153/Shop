@@ -84,9 +84,17 @@ class Member_OrderController extends Controller
                 return "y";
             }else{
                 return "n";
+            }          
+        }
+        
+        //确认订单
+        public function queren(Request $request){
+            $bh=$request->only('bh')['bh'];
+            $m=\DB::update('UPDATE orderform SET express=2 where number='.$bh);
+            if($m>0){
+                return "y";
+            }else{
+                return "n";
             }
-
-//            
-            
         }
 }
