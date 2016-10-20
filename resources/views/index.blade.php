@@ -354,7 +354,7 @@
 				</form>
 			</div>
 			<div class="common-dialog-footer">
-				咨询加QQ群：666666
+				咨询加QQ：732691747
 			</div>
 		</dh-dialog>
 		
