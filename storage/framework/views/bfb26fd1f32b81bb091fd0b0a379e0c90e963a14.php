@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+<!--[if lt IE 9]>
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/html5.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/respond.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/PIE_IE678.js')); ?>"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/static/h-ui/css/H-ui.min.css')); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/static/h-ui.admin/css/H-ui.admin.css')); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/lib/Hui-iconfont/1.0.7/iconfont.css')); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/lib/icheck/icheck.css')); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/static/h-ui.admin/skin/default/skin.css')); ?>" id="skin" />
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('Admin/static/h-ui.admin/css/style.css')); ?>" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>商家列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商家管理 <span class="c-gray en">&gt;</span> 商家列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<!--29行到34行是显示条数和检索-->
+	<div class="text-c">
+		<form class="Huiform" method="post" action="" target="_self">
+
+		</form>
+	</div>
+
+		<table class="table table-border table-bordered table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="70">ID</th>
+					<th width="80">用户名</th>
+					<th width="100">联系人</th>
+					<th width="120">手机号码</th>
+                                        <th width="120">邮箱</th>
+                                        <th width="220">操作</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+                            <?php $__currentLoopData = $list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+				<tr class="text-c">
+					<td width="25"><input type="checkbox" name="" value=""></td>
+					<td><?php echo e($p->id); ?></td>
+					<td width="130"><?php echo e($p->name); ?></td>
+					<td><?php echo e($p->username); ?></td>
+					<td><?php echo e($p->phone); ?></td>
+					<td><?php echo e($p->email); ?></td>
+                                        <?php if( $p->examine == 1): ?>
+                                            <td>状态　:　审核中　操作　:<a onclick="operation(<?php echo e($p->id); ?>,2);">通过</a></td>
+                                        <?php elseif( $p->examine == 2): ?>
+                                            <td>状态　:　通过　操作　:<a onclick="operation(<?php echo e($p->id); ?>,3);">不通过</a></td
+                                        <?php elseif( $p->examine == 3): ?>
+                                            <td>状态　:　不通过　操作　:<a onclick="operation(<?php echo e($p->id); ?>,2);">通过</a></td>
+                                        <?php endif; ?>
+				</tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+			</tbody>
+			
+		</table>
+	</div>
+</div>
+<!-- <script type="text/javascript" src="<?php echo e(asset('Admin/lib/jquery/1.9.1/jquery.min.js')); ?>"></script>  -->
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/jquery-1.8.3.min.js')); ?>"></script> 
+<script>
+    function operation(id,a){
+        if(confirm("审核通过会通过电子邮箱通知商家!!!请误重复操作!!!!")){
+            $.ajax({
+                url:'/operationBusiness',
+                type:'post',
+                async:true,
+                data:{id:id,aa:a},
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    if(data === 'y'){
+                        location.reload();
+                    }else{
+                        alert('no');
+                    }
+                },
+                error:function(){
+                    alert('ajax失败111');
+                }
+            });
+        }
+    }
+</script>
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/layer/2.1/layer.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/My97DatePicker/WdatePicker.js')); ?>"></script> 
+<script type="text/javascript" src="<?php echo e(asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js')); ?>"></script> 
+<script type="text/javascript" src="<?php echo e(asset('Admin/static/h-ui/js/H-ui.js')); ?>"></script> 
+<script type="text/javascript" src="<?php echo e(asset('Admin/static/h-ui.admin/js/H-ui.admin.js')); ?>"></script> 
+
+<script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"aoColumnDefs": [
+	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
+	]
+});
+</script>
+</body>
+</html>

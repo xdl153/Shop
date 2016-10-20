@@ -30,21 +30,22 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="http://www.baidu.com" method="post" class="form form-horizontal" id="form-change-password">
+	<form action="update-phone?id={{ $sql->id }}" method="post" class="form form-horizontal" id="form-change-password">
+	    <input type="hidden" name="_token" value="{{csrf_token()}}">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原电话：</label>
-			<div class="formControls col-xs-8 col-sm-9"> 张三 </div>
+			<div class="formControls col-xs-8 col-sm-9">{{ $sql->name }}</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新电话：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="password" class="input-text" autocomplete="off" placeholder="不修改请留空" name="newpassword" id="newpassword">
+				<input type="text" class="input-text" autocomplete="off" placeholder="不修改请留空" name="phone" id="phone">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认电话：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="password" class="input-text" autocomplete="off" placeholder="不修改请留空" name="newpassword2" id="new-password2">
+				<input type="text" class="input-text" autocomplete="off" placeholder="不修改请留空" name="phone2" id="nphone2">
 			</div>
 		</div>
 		<div class="row cl">
@@ -53,6 +54,9 @@
 			</div>
 		</div>
 	</form>
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </article>
 
 <!--_footer 作为公共模版分离出去-->

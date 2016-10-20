@@ -9,12 +9,33 @@ use App\Http\Controllers\Controller;
 use Session;
 class AdminController extends Controller
 {
-	//管理员列表
-	public function admin_list()
-	{
-		$admin_list = \DB::table('useradmin')->get();
-		return view("Admin.admin-list",['admin_list'=>$admin_list]);
-	}
+    //管理员列表
+    public function admin_list()
+    {
+            $admin_list = \DB::table('useradmin')->get();
+            return view("Admin.admin-list",['admin_list'=>$admin_list]);
+    }
+
+    //关闭店铺
+    public function admin_on()
+    {
+    	//获取店铺ID
+    	$id = $_POST['id'];
+
+    	//修改数据表关闭该店铺
+    	\DB::table("useradmin")->where('id',$id)->update(["status"=>"2"]);
+    }
+
+    //开启店铺
+    public function admin_off()
+    {
+    	//获取店铺ID
+    	$id = $_POST['id'];
+
+    	//修改数据表开启该店铺
+    	\DB::table("useradmin")->where('id',$id)->update(["status"=>"1"]);
+    	}
+
 	//添加管理员视图
 	public function admin_add()
 	{

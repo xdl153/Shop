@@ -13,13 +13,17 @@ class BusinessInfocontroller extends Controller
     public function Business_info()
     {
     	//获取用户ID
-    	$MyId = session('adminuser')->id;
+    	$MyId = session('userid')->id;
     	
     	//查询商家信息
     	$info = \DB::select("select b.*,c.name as cname from business as b,category as c where did={$MyId} and c.id=b.cid");
         // 店铺配送范围
     	foreach($info as $in){
             $address[] = \DB::select("select * from address as a,district as d where bid={$in->id} and d.id=a.did");
+        }
+        if(!$info){
+            $info = '';
+            $address = '';
         }
         // dd($address);
     	return view("/Business.business-info",["info"=>$info,"address"=>$address]);

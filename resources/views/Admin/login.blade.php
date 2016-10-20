@@ -69,7 +69,7 @@
     </form>
   </div>
 </div>
-<div class="footer">Copyright 你的公司名称 by H-ui.admin.v2.3</div>
+<div class="footer" style="font-size:20px;">超级管理员登录<a style="color:blue" href="/">|||外卖超人外卖网用心做，做最好</a></div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="static/h-ui/js/H-ui.js"></script> 
 <script>

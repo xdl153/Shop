@@ -24,28 +24,41 @@ class LoginController extends Controller
             $name = $request->input('name');
             $password = sha1($request->input('password'));
             if($password  == ''  && $name == ''){
+
                 return back()->with("msg","请输入用户或密码");
             }
+
             $ob = \DB::table('dealer')->where("name",$name)->first();
+
             if($ob){
                 //4 判断密码是否正确
                 if($ob->password==$password){
                            //5 判断验证码是否正确
-                      $mycode = session()->get("code");
-                      $mycodes=$request->input('code');
+                      $mycode = session()->get("Businecode");
+
+                      $mycodes=$request->input('Businecode');
+
                       if(empty($mycodes)){
+
                            return back()->with("msg","验证码不能为空");
-                      }elseif($mycode!=$request->input('code')){
+
+                      }elseif($mycode!=$request->input('Businecode')){
+
                             return back()->with("msg","验证码错误");
+
                       }elseif($ob->examine !=2){
+
                           return view("/Admin.Toexamine");
+
                       }else{
                           //9 写入session
                           session()->set("userid",$ob);
-                          session()->set("adminuser",$ob);
+
                           //10 跳转到后台首页
                           return redirect("Business/busi");
                       }
+                }else{
+                  return back()->with("msg","帐号或密码错误");
                 }
             }else{
                 return back()->with("msg","帐号或密码错误");
@@ -58,14 +71,15 @@ class LoginController extends Controller
             //获取验证码的内容
                 $phrase = $builder->getPhrase();
             //把内容存入session
-                session()->flash('code',$phrase);
+                session()->flash('Businecode',$phrase);
         return response($builder->output())->header('Content-type','image/jpeg');
     }
     //执行退出
     public function logout_s()
     {
         //忘记session
-        session()->forget("adminuser");
+        session()->forget("userid");
+        
         //重定向
         return redirect("Business/login");
     }

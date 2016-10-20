@@ -280,6 +280,11 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 
 //商家店铺信息
  	Route::get("product-brandBusiness","MyAdmin\DealerlistController@product_branBusiness");
+//商家店铺审核不通过
+ 	Route::post("product-brandBusinessoff","MyAdmin\DealerlistController@product_branBusinessoff");
+ //商家店铺审核通过
+ 	Route::post("product-brandBusinesson","MyAdmin\DealerlistController@product_branBusinesson");
+   	
         //加载商家审核视图
         Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
         //审核商家
@@ -297,23 +302,32 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
 
 //管理员列表
  	Route::get("admin-list","MyAdmin\AdminController@admin_list");
+
+//business-on关闭管理员
+ 	Route::post("/admin-on","MyAdmin\AdminController@admin_on");
+
+//business-off开启管理员
+ 	Route::post("/admin-off","MyAdmin\AdminController@admin_off");
+
 //添加管理员视图
  	Route::get("admin-add","MyAdmin\AdminController@admin_add");
+
 //执行添加管理员
  	Route::post("admin-add","MyAdmin\AdminController@add");
 
 //修改管理员视图
  	Route::get("admin-edit","MyAdmin\AdminController@admin_edit");
+
 //执行修改管理员
  	Route::post("admin-edit","MyAdmin\AdminController@edit");
+
 //执行删除管理员
  	Route::get("delete","MyAdmin\AdminController@delete");
 
-//system-base系统设置
-   	Route::get("/system-base",function(){
- 		return view("/Admin.system-base");
- 	});
-
+//系统设置视图
+ 	Route::get("system-base","MyAdmin\SystemController@system_base");
+//执行系统设置
+ 	Route::post("system","MyAdmin\SystemController@system_up");
 
 
 
@@ -343,10 +357,10 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 
 //修改密码
  	Route::get("dealer-password","MyBusiness\ChangepasswordController@dealer_password");
- 	Route::post("dealer-password","MyBusiness\ChangepasswordController@update");
+ 	Route::post("dealer-update","MyBusiness\ChangepasswordController@update_password");
 //修改手机号
  	Route::get("dealer-phone","MyBusiness\ChangepasswordController@dealer_phone");
- 	Route::post("dealer-phone","MyBusiness\ChangepasswordController@updatephone");
+ 	Route::post("update-phone","MyBusiness\ChangepasswordController@update_phone");
 //business-info店铺信息
  	Route::get("/business-info","MyBusiness\BusinessInfocontroller@Business_info");
 //business-on关闭店铺

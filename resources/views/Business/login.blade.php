@@ -42,7 +42,7 @@
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <input class="input-text size-L" type="text" style="width:150px;" name="code">
+          <input class="input-text size-L" type="text" style="width:150px;" name="Businecode">
           <img src="{{ URL('Business/captcha/{time}') }}" onclick="this.src='{{ URL('Business/captcha') }}/'+Math.random()">
       </div>
 

@@ -31,40 +31,40 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 基本设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add">
+	<form class="form form-horizontal" id="form-article-add" action="{{ URL('system') }}" method="post">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div id="tab-system" class="HuiTab">
 			<div class="tabBar cl"><span>基本设置</span></div>
 			<div class="tabCon">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站名称：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-title" placeholder="控制在25个字、50个字节以内" value="" class="input-text">
+						<input type="text" id="website-title" placeholder="最好起个帅点的" value="" name="name" class="input-text">
 					</div>
 				</div>
 				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>关键词：</label>
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站开关：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-Keywords" placeholder="5个左右,8汉字以内,用英文,隔开" value="" class="input-text">
+					开：<input type="radio" name="kg1" value="1">
+					关：<input type="radio" name="kg2" value="2">
 					</div>
 				</div>
 				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>描述：</label>
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Logo：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-description" placeholder="空制在80个汉字，160个字符以内" value="" class="input-text">
+						<input type="file" id="website-description" placeholder="" value="" name="file" class="input-text">
 					</div>
 				</div>
-
-
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>底部版权信息：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-copyright" placeholder="&copy; 2016 外卖超人后台管理系统" value="" class="input-text">
+						<input type="text" id="website-copyright" name="banquan" placeholder="&copy; 2016 外卖超人后台管理系统" value="" class="input-text">
 					</div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2">备案号：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-icp" placeholder="京ICP备00000000号" value="" class="input-text">
+						<input type="text" id="website-icp" placeholder="京ICP备00000000号" name="beianhao" value="" class="input-text">
 					</div>
 				</div>
 			</div>

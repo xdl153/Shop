@@ -1,14 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<style>
-.snake{
-	color:blue;
-	font-size:20px;
-	font-weight:bold;
-	position:absolute;
-}
-</style>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -34,7 +26,6 @@
 <body>
 <div class="page-container">
 	<p class="f-20 text-success">欢迎登录外卖超人管理员后台<span class="f-14">v2.4</span>后台系统！</p>
-	<div id='did' style='color:red;margin-left:650px;margin-top:-50px;width:500px;height:50px;background:#ccc;font-size:30px;line-height:50px;'></div>
 	<p>地址：{{ session('adminuser')->address }}</p>
 
 	<table class="table table-border table-bordered table-bg mt-20">
@@ -64,9 +55,13 @@
 
 <footer class="footer mt-20">
 	<div class="container">
-		<p>感谢jQuery、layer、laypage、Validform、UEditor、My97DatePicker、iconfont、Datatables、WebUploaded、icheck、highcharts、bootstrap-Switch<br>
+		<p><a href="/">投资赞助人、</a><a href="/">外卖糗事</a>、<a href="/">男女趣事</a>、<a href="/">高手在民间、</a><br>
 			Copyright &copy;2015 H-ui.admin v2.3 All Rights Reserved.<br>
-			本后台系统由<a href="http://www.h-ui.net/" target="_blank" title="H-ui前端框架">H-ui前端框架</a>提供前端技术支持</p>
+			本后台系统由<a href="/" target="_blank" title="外卖超人">外卖最良心</a>提供外卖大师</p>
+			<p><a href="/">友情链接：外卖超人只做最好的</a></p>
+		<img src="/Admin/1.png" style="width:100px;">
+		<img src="/Admin/2.png" style="width:100px;">
+		<img src="/Admin/1.jpg" style="width:50px;">
 	</div>
 </footer>
 <script type="text/javascript" src="{{ asset('Admin/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
@@ -81,65 +76,5 @@ var _hmt = _hmt || [];
 })();
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
-</script>
-
-<!--特效文字-->
-<script>
-// (function(){
-// 	// 1.准备
-// 	var msg = '超级管理员';
-// 	var str = '';
-// 	// 2.循环把每个字放到标签内
-// 	for(var i = 0; i < msg.length; i++){
-// 		str += '<span id="snake'+ i +'" class="snake">';
-// 			str += msg[i];
-// 		str += '</span>';
-// 	}
-// 	document.write(str);
-
-// 	window.onmousemove = function(events){
-// 		// 
-// 		document.title = 'X:' + events.clientX + 'Y:' + events.clientY;
-
-// 		var i = 0;
-// 		var timer = setInterval(function(){
-// 			if( i >= msg.length - 1){
-// 				clearInterval(timer);
-// 			}
-
-// 			// 找对象，
-// 			var span = document.getElementById('snake'+i);
-// 			span.style.left = events.clientX + i * 30 + 20 + 'px';
-// 			span.style.top  = events.clientY + 'px';
-// 			i++;
-// 		},30);
-// 	}
-// })();
-// </script>
-<!--获取时间戳-->
-<script type="text/javascript">
-//获取div对象
-var did = document.getElementById('did');
-
-//定时调用输出时间
-setInterval(function(){
-	//获取当前时间作为对象，如果你放到外面，只能获取new那一刻的时间
-	var date = new Date();
-
-	var y = date.getFullYear();		//获取4位数的年份
-	var m = date.getMonth()+1;		//获取月份（0-11）
-	var d = date.getDate();			//获取天数
-
-	var h = date.getHours();		//获取时
-	var i = date.getMinutes();		//获取分
-	var s = date.getSeconds();		//获取秒
-
-	s = (s<10)?'0'+s:s;
-
-	var info = y+'-'+m+'-'+d+' '+h+':'+i+':'+s;
-	did.innerHTML = '当前系统时间：'+info;
-},1000);
-// document.write(date.getTime());	//获取时间戳
-</script>
 </body>
 </html>

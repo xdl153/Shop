@@ -48,6 +48,8 @@
         <td style="color:yellow">{{ session('adminuser')->phone }}</td>
       </tr>
       <div><a style="font-size:50px;color:#cccc;" href="{{ URL('Admin/index') }}">Home</a></div>
+          <img src="/Admin/1.png" style="width:200px;">
+          <img src="/Admin/1.jpg" style="width:200px;">
     </tbody>
   </table>
 </div>
