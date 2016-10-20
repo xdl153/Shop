@@ -52,7 +52,7 @@ class LoginController extends Controller
 
                       }else{
                           //9 写入session
-                          session()->set("userid",$ob);
+                          session()->set("businessuserid",$ob);
 
                           //10 跳转到后台首页
                           return redirect("Business/busi");
@@ -78,7 +78,7 @@ class LoginController extends Controller
     public function logout_s()
     {
         //忘记session
-        session()->forget("userid");
+        session()->forget("businessuserid");
         
         //重定向
         return redirect("Business/login");
