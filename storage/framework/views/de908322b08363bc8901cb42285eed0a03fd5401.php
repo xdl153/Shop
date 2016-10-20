@@ -95,7 +95,7 @@
 				<ul>
 					<li><a _href="<?php echo e(URL('menu-list')); ?>" data-title="菜单列表" href="javascript:void(0)">菜单列表</a></li>
 					<li><a _href="<?php echo e(URL('menu-brand')); ?>" data-title="添加菜品" href="javascript:void(0)">添加菜品</a></li>
-					<li><a _href="<?php echo e(URL('menu-cance')); ?>" data-title="回收站" href="javascript:void(0)">回收站</a></li>
+					<!--<li><a _href="<?php echo e(URL('menu-cance')); ?>" data-title="回收站" href="javascript:void(0)">回收站</a></li>-->
 				</ul>
 			</dd>
 		</dl>

@@ -53,7 +53,7 @@
 <!--                                                <td>12</td>-->
                                                 <td>{{ $l->mname }}</td>
                                                 <td>{{ $l->bname }}</td>
-                                                <!--<td>{{ $l->cgname }}</td>-->
+                                                <!--<td></td>-->
                                                 <td><img src="{{ asset('Shop') }}{{ $l->images }}" style="width:35px;height:35px;"></td>
                                                 <td>{{ $l->price }}</td>
                                                 <td class="zt" name="a{{ $l->mid }}">{{ $l->recommend }}</td>

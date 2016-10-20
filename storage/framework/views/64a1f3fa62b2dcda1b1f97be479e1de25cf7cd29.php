@@ -141,7 +141,7 @@
             <?php $__currentLoopData = $list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
             <div class="order-list ">
                  <div class="order-hd">
-                    <i>订单编号：</i><span id='bianhao'><?php echo e($l->number); ?></span><i>创建时间：</i><?php echo e($l->data); ?>　　 
+                     <i>订单编号：</i><span id='bianhao'><?php echo e($l->number); ?></span><i>创建时间：</i><?php echo e($l->data); ?>　　 
                  </div>   
                  <div class="order-bd clearfix">
                     <div class="fl restaurant-msg">
@@ -164,7 +164,7 @@
                      </div>
                      <div class="order-operate fl padding-margin">
                         <p>
-                            <a href="javascript:;" oid="<?php echo e($l->bid); ?>" data-name="<?php echo e($l->name); ?>" success-review="" class="btn btn-order success-review">评论</a>　<i id='sc' class="btn btn-order success-review">删除</i>
+                            <a href="javascript:;" oid="<?php echo e($l->bid); ?>" data-name="<?php echo e($l->name); ?>" success-review="" class="btn btn-order success-review">评论</a>　<i  class="btn btn-order success-review cs">删除</i>
                         </p>
                         <p>
                             <a href="javascript:" id='did' order-number="" orderid="11982902" class="btn_a see-details">查看详情<i></i></a>
@@ -538,7 +538,7 @@
                 </div>
                 <!-- -->
                 <script type='text/javascript'>
-                    $('#sc').click(function(){
+                    $('.cs').click(function(){
                         var bh = $('#bianhao').html();
 //                        alert(bh);
                             $.ajax({

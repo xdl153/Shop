@@ -32,7 +32,7 @@
 <article class="page-container">
 	<form action="{{ URL('/addcai') }}" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-		<div class="row cl">
+<!--		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属菜系</label>
 			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">    
 				<select class="select" size="1" name="cp">
@@ -43,12 +43,11 @@
 				</select>
 				</span> 
 			</div>
-		</div>
+		</div>-->
                 <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择店铺</label>
 			<div class="formControls col-xs-4 col-sm-3"> <span class="select-box">
 				<select class="select" size="1" name="dp">
-					<option value="-1" selected>请选泽店铺</option>
                                         @foreach($bus as $b)
 					<option value="{{ $b->id }}">{{ $b->name }}</option>
                                         @endforeach
@@ -114,39 +113,31 @@ $(function(){
 		increaseArea: '20%'
 	});
 	
-//	$("#form-member-add").validate({
-//		rules:{
-//			username:{
-//				required:true,
-//				minlength:2,
-//				maxlength:16
-//			},
-//			sex:{
-//				required:true,
-//			},
-//			mobile:{
-//				required:true,
-//				isMobile:true,
-//			},
-//			email:{
-//				required:true,
-//				email:true,
-//			},
-//			uploadfile:{
-//				required:true,
-//			},
-//			
-//		},
-//		onkeyup:false,
-//		focusCleanup:true,
-//		success:"valid",
-//		submitHandler:function(form){
-//			//$(form).ajaxSubmit();
+	$("#form-member-add").validate({
+		rules:{
+			cname:{
+				required:true,
+			},
+			price:{
+				required:true,
+			},
+			uploadfile:{
+				required:true,
+			},
+			beizhu:{
+				required:true,
+			},
+			
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			//$(form).ajaxSubmit();
 //			var index = parent.layer.getFrameIndex(window.name);
-//			//parent.$('.btn-refresh').click();
-//			parent.layer.close(index);
-//		}
-//	});
+                        return true;
+		}
+	});
 });
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->

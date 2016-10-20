@@ -12,9 +12,9 @@ class Menu_listController extends Controller
     //menu-list菜单列表
     public function menu_list(Request $request){
         
-        $did=$request->session()->get('userid')->id;
-        $list = \DB::select('SELECT bu.name AS bname,bu.photo AS bphoto,m.name AS mname,m.images,m.price,m.recommend,cg.name AS cgname,m.id AS mid FROM business AS bu,menu AS m,category AS cg WHERE m.cid=cg.id AND m.bid=bu.id AND bu.did='.$did);
-        $co = \DB::select('SELECT count(*) as count FROM business AS bu,menu AS m,category AS cg WHERE m.cid=cg.id AND m.bid=bu.id AND bu.did='.$did);
+        $did=$request->session()->get('businessuserid')->id;
+        $list = \DB::select('SELECT bu.name AS bname,bu.photo AS bphoto,m.name AS mname,m.images,m.price,m.recommend,m.id AS mid FROM business AS bu,menu AS m WHERE m.bid=bu.id AND bu.did='.$did);
+        $co = \DB::select('SELECT count(*) as count FROM business AS bu,menu AS m WHERE m.bid=bu.id AND bu.did='.$did);
 //        dd($list);
         return view("/Business.menu-list",['list'=>$list,'co'=>$co]);
     }
@@ -42,7 +42,7 @@ class Menu_listController extends Controller
 
     //menu-brand--添加菜品
     public function menu_add(Request $request){
-        $did=$request->session()->get('userid')->id;
+        $did=$request->session()->get('businessuserid')->id;
         $caip = \DB::select('select * from category');
         $bus = \DB::select('select id,name from business where did='.$did);
         return view("/Business.menu-brand",['caip'=>$caip,'bus'=>$bus]);
@@ -58,8 +58,8 @@ class Menu_listController extends Controller
 	    		$photo = "/images/".$filename;
 	    	}
 //            dd($photo);
-        $data = $request->only('cp','dp','cname','price','beizhu');
-        $m = \DB::table('menu')->insert([ ['cid' => "{$data['cp']}",'bid' =>"{$data['dp']}",'name' =>"{$data['cname']}",'images' =>"{$photo}",'price' =>"{$data['price']}",'caipin' =>"{$data['beizhu']}"] ]);
+        $data = $request->only('dp','cname','price','beizhu');
+        $m = \DB::table('menu')->insert([ ['bid' =>"{$data['dp']}",'name' =>"{$data['cname']}",'images' =>"{$photo}",'price' =>"{$data['price']}",'caipin' =>"{$data['beizhu']}"] ]);
         
         return $this->menu_list($request);
     }
@@ -68,7 +68,7 @@ class Menu_listController extends Controller
     public function xiugai(Request $request){
         $id = $request->only('id');
 //        dd($id['id']);
-        $did = $request->session()->get('userid')->id;
+        $did = $request->session()->get('businessuserid')->id;
         $caip = \DB::select('select * from category');
         $bus = \DB::select('select id,name from business where did='.$did);
         $sel = \DB::select('select * from menu where id='.$id['id']);
