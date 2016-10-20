@@ -61,11 +61,12 @@
 		</div>
 		<div style="font-size:14px;padding-left:300px;padding-top:10px;">操作：
 			<?php if($busi->examine == 1): ?>
-				<a href='javascript:' onclick='fun(<?php echo e($busi->id); ?>,<?php echo e($busi->name); ?>)'>通过审核</a>
+				<a href='javascript:' onclick='fun(<?php echo e($busi->id); ?>)'>通过审核</a>
+                                <a href='javascript:' onclick='fun1(<?php echo e($busi->id); ?>)'>审核不通过</a>
 			<?php elseif($busi->examine == 2): ?>
-				<a href='javascript:' onclick='fun1(<?php echo e($busi->id); ?>,<?php echo e($busi->name); ?>)'>审核不通过</a>
+				<a href='javascript:' onclick='fun1(<?php echo e($busi->id); ?>)'>审核不通过</a>
 			<?php else: ?>
-				<a href='javascript:' onclick='fun(<?php echo e($busi->id); ?>,<?php echo e($busi->name); ?>)'>通过审核</a>
+				<a href='javascript:' onclick='fun(<?php echo e($busi->id); ?>)'>通过审核</a>
 			<?php endif; ?>
 		</div>
 	</ul>
@@ -75,18 +76,20 @@
 
 </body>
 <script type="text/javascript">
-	function fun(id,name)
+	function fun(id)
 	{
 		$.ajax({
            url:'/product-brandBusinesson',
            type:'post', 
            async:true,
-           data:{id:id,name:name},
+           data:{id:id},
            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success:function(data){
+
                 window.location.reload();
+           	
            },
            error:function(){
 
@@ -94,18 +97,20 @@
            }
         });
 	}
-	function fun1(id,name)
+	function fun1(id)
 	{
 		$.ajax({
            url:'/product-brandBusinessoff',
            type:'post', 
            async:true,
-           data:{id:id,name:name},
+           data:{id:id},
            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success:function(data){
+          
                 window.location.reload();
+          	
            },
            error:function(){
                alert('ajax失败');

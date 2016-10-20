@@ -23,6 +23,7 @@ class LoginController extends Controller
         //获得表单提交的用户和密码
             $name = $request->input('name');
             $password = sha1($request->input('password'));
+            // dd(sha1(123456));
             if($password  == ''  && $name == ''){
 
                 return back()->with("msg","请输入用户或密码");

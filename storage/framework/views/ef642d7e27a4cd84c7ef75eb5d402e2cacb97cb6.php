@@ -87,7 +87,10 @@
 					
 					<a title="编辑" href="javascript:;" onclick="member_edit('编辑','business-brandupdate?id=<?php echo e($in->id); ?>','4','','510')" class="ml-5" style="text-decoration:none">
 					<i class="Hui-iconfont">&#xe6df;</i></a> 
-					
+					<?php if($in->examine == '3'): ?>
+					<a style="text-decoration:none" class="ml-5" onClick="member_del(this,'<?php echo e($in->id); ?>')" href="javascript:;" title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a>	
+					<?php endif; ?>
 				</td>
 			</tr>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
@@ -184,15 +187,27 @@ function member_start(obj,id,tid){
 function member_edit(title,url,id,w,h){
 	layer_show(title,url,w,h);
 }
-/*密码-修改*/
-function change_password(title,url,id,w,h){
-	layer_show(title,url,w,h);	
-}
+
 /*用户-删除*/
 function member_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
+		$.ajax({
+           url:'/business-del',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                layer.msg('已删除!',{icon:1,time:1000});
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
+		
 	});
 }
 </script> 

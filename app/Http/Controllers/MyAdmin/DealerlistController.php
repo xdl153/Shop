@@ -34,20 +34,6 @@ class DealerlistController extends Controller
         $id=$_POST['id'];
 
         \DB::table('business')->where('id',$id)->update(['examine'=>'3']);
-
-        $ar = \DB::select("select email,username from dealer where id={$id}");
-        // echo $ar;
-        $username = '515607552';
-            $email = '515607552@qq.com';
-            $data = [
-                'email' => $email,
-                'name' => $username,
-                'title' => '您好,超人外卖商家店铺 绝味鸭脖 审核结果'
-                ];
-    
-                $re = Mail::send('Admin.failemail', ['user' => env('MAIL_USERNAME')], function ($message) use ($data) {
-                    $message->to($data['email'], $data['name'])->subject($data['title']);
-                });
             
     }
 
@@ -56,24 +42,9 @@ class DealerlistController extends Controller
     {
         //获取商家ID
         $id=$_POST['id'];
-        $name = $_POST['name'];
+        //$name = $_POST['name'];
         \DB::table('business')->where('id',$id)->update(['examine'=>'2']);
 
-        $ar = \DB::select("select email,username from dealer where id={$id}");
-
-        $username = '515607552';
-        $email = '515607552@qq.com';
-        // $username = $ar->username;
-        //     $email = $ar->email;
-            $data = [
-                'email' => $email,
-                'name' => $username,
-                'title' => '您好,超人外卖商家店铺 绝味鸭脖 审核结果'
-                ];
-
-                $re = Mail::send('Admin.email', ['user' => env('MAIL_USERNAME')], function ($message) use ($data) {
-                    $message->to($data['email'], $data['name'])->subject($data['title']);
-                });
             
     }
 }

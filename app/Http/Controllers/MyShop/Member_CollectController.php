@@ -23,7 +23,7 @@ class Member_CollectController extends Controller
 		if($enshrine){
 		//遍历用户收藏的店铺信息、所属类别、派送范围
 			foreach($enshrine as $enshr){
-				$business[] = \DB::select("select b.id,b.name,b.photo,b.grade,b.cid,
+				$business[] = \DB::select("select b.id,b.status,b.examine,b.name,b.photo,b.grade,b.cid,
 						(select name from category as c where c.id=b.cid) as cname 
 						from business as b where b.id={$enshr->bid} ");
 				//查询店铺的配送范围

@@ -367,6 +367,8 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
  	Route::post("/business-on","MyBusiness\BusinessInfocontroller@Business_on");
 //business-off开启店铺
  	Route::post("/business-off","MyBusiness\BusinessInfocontroller@Business_off");
+//business-del删除店铺
+ 	Route::post("/business-del","MyBusiness\BusinessInfocontroller@Business_del");
 //business-brand修改店铺信息
  	Route::get("/business-brandupdate","MyBusiness\BusinessBrandupdateController@Business_brandupdate");
 //执行修改店铺信息
@@ -411,7 +413,5 @@ Route::group(["prefix"=>"Business","middleware"=>"mybusi"],function(){
 //orderform-accomplish已完成的订单
  	Route::get("/orderform-accomplish","MyBusiness\OrderController@ywcdd");
 
-//comment-info反馈列表
- 	Route::get("/comment-info",function(){
- 		return view("/Business.comment-info");
- 	});
+//comment-info评论信息
+ 	Route::get("/comment-info","MyBusiness\CommentinfoController@Commentinfo");

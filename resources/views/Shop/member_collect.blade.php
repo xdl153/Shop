@@ -134,6 +134,7 @@
                     @if($business['0'])
                     @foreach($business as $info)
                         @foreach($info as $in)
+                        @if($in->status == 1 && $in->examine == 2)
                     <li class="restaurant-item fl trans" name="li{{ $in->id }}">
                         <div class="img-box fl">
                             <a href="shop_detail?id={{ $_GET['id'] }}&bid={{ $in->id }}"><img src="Shop/{{ $in->photo }}" width="82px" height="82px"></a>
@@ -164,7 +165,40 @@
                             <a href="javascript:_confirm1({{ $in->id }})">&times;</a>
                         </div>
                     </li>
+                        @else
+                        <li class="restaurant-item fl trans" name="li{{ $in->id }}" style="background-color:#CDCDCD;">
+                        <div class="img-box fl">
+                            <a href="javascript:"><img src="Shop/{{ $in->photo }}" width="82px" height="82px"></a>
+                        </div>
+                        <article class="restaurant-introduce fl">
+                            <h3 class="ellipsis"><a href="/shanghai/ji-xiang-hun-tun-gao-an-lu-dian/menu/">{{ $in->name }}</a></h3>
+                            <dl class="clearfix">
+                                <dt class="fl">{{ $in->cname }}</dt>
+                                <dd class="r-small-star fl">
+                                    <div class="r-small-star score" style="width:{{ $in->grade }}px"></div>
+                                </dd>
+                            </dl>
+                            <dl class="clearfix">
+                                 <dt class="fl">派送范围：</dt>
+                                @foreach($address as $add)
+                                @foreach($add as $ad)
+                                
+                                    @if($ad->bid == $in->id)
+                                    <dt class="fl">{{ $ad->name }}</dt>
+
+                                    @endif
+                                @endforeach
+                                @endforeach
+                            </dl>
+                        </article>
+                        <div class="close-favorite" >
+                            <input type="hidden" value="{{ $in->id }}">
+                            <a href="javascript:_confirm1({{ $in->id }})">&times;</a>
+                        </div>
+                    </li>
+                          @endif
                         @endforeach
+                       
                     @endforeach
                     @endif
             </ul>

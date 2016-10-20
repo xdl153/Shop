@@ -52,11 +52,13 @@ class Shop_listController extends Controller
 				$t++;
 			}
 				//查询该地址内所有的店铺数量与地址名
-				$district = \DB::select("select name,(select count(*) from address where did={$_GET['id']}) as count from district where id={$_GET['id']}");
+				$district = \DB::select("select name,(select count(*) from address as a,business as b where a.did={$_GET['id']} and b.id=a.bid and b.status=1 and b.examine=2) as count from district where id={$_GET['id']}");
 				//查询所有类别
 				$category = \DB::select("select * from category");
-	            return view("Shop.shop_list",["business"=>$business,"category"=>$category,"district"=>$district]);
-			}else{
+//	            return view("Shop.shop_list",["business"=>$business,"category"=>$category,"district"=>$district]);
+			 return view("Shop.shop_list",["business"=>$business,"category"=>$category,"district"=>$district]);
+                    
+                                }else{
 				return redirect("/index");
 			}
 	}

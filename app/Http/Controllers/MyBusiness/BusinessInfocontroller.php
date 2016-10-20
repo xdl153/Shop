@@ -48,4 +48,19 @@ class BusinessInfocontroller extends Controller
     	//修改数据表开启该店铺
     	\DB::table("business")->where('id',$id)->update(["status"=>"1"]);
     }
+
+     //删除店铺
+    public function Business_del()
+    {
+        //获取店铺ID
+        $id = $_POST['id'];
+
+        //修改数据表开启该店铺
+        \DB::table("business")->where('id',$id)->delete();
+        \DB::table("comment")->where('bid',$id)->delete();
+        \DB::table("menu")->where('bid',$id)->delete();
+        \DB::table("address")->where('bid',$id)->delete();
+        \DB::table("orderform")->where('bid',$id)->delete();
+        \DB::table("enshrine")->where('bid',$id)->delete();
+    }
 }
