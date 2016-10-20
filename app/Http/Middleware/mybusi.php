@@ -15,7 +15,7 @@ class mybusi
      */
     public function handle($request, Closure $next)
     {
-        if(empty(session()->get('userid'))){//检查adminuser里面是否有值 
+        if(empty(session()->get('businessuserid'))){//检查adminuser里面是否有值 
             return redirect("Business/login");
         }
         return $next($request);

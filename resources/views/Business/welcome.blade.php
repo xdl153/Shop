@@ -37,16 +37,16 @@
 		<tbody>
 			<tr>
 				<th width="30%">登录名</th>
-				<td><span id="lbServerName"></span>{{ session('userid')->name }}</td>
+				<td><span id="lbServerName"></span>{{ session('businessuserid')->name }}</td>
 			</tr>
 			<tr>
 				<td>邮箱</td>
-				<td>{{ session('userid')->email }}</td>
+				<td>{{ session('businessuserid')->email }}</td>
 			</tr>
 
 			<tr>
 				<td>手机号</td>
-				<td>{{ session('userid')->phone }}</td>
+				<td>{{ session('businessuserid')->phone }}</td>
 			</tr>
 		</tbody>
 	</table>

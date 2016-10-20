@@ -43,7 +43,7 @@
 							<div id='did' style='color:#ffffff;margin-left:500px;margin-top:-38px;width:600px;height:30px;font-size:20px;line-height:30px;'></div>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
-					<li>{{ session('userid')->name }}</li>
+					<li>{{ session('businessuserid')->name }}</li>
 					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">欢迎登录商家后台 <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="#">个人信息</a></li>
@@ -103,9 +103,9 @@
 			<dt><i class="Hui-iconfont">&#xe620;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="{{ URL('/orderform-list') }}?id={{ session('userid')->id }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
-					<li><a _href="{{ URL('/orderform-unfinished') }}?id={{ session('userid')->id }}" data-title="未完成订单" href="javascript:void(0)">未完成订单</a></li>
-                                        <li><a _href="{{ URL('/orderform-accomplish') }}?id={{ session('userid')->id }}" data-title="已完成订单" href="javascript:void(0)">已完成订单</a></li>
+					<li><a _href="{{ URL('/orderform-list') }}?id={{ session('businessuserid')->id }}" data-title="订单列表" href="javascript:void(0)">订单列表</a></li>
+					<li><a _href="{{ URL('/orderform-unfinished') }}?id={{ session('businessuserid')->id }}" data-title="未完成订单" href="javascript:void(0)">未完成订单</a></li>
+                                        <li><a _href="{{ URL('/orderform-accomplish') }}?id={{ session('businessuserid')->id }}" data-title="已完成订单" href="javascript:void(0)">已完成订单</a></li>
 				</ul>
 			</dd>
 		</dl>
