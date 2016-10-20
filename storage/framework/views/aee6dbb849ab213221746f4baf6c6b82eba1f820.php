@@ -246,6 +246,7 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
 <!-- 登录 -->
 <script src="<?php echo e(asset('Shop/js/jquery-1.8.3.min.js')); ?>"></script>
 <script>
+    var hiddenid = $('#hidden').val();
     $("#yzmyzm").html("获取验证码");
     $("#yzmyzm").click(function(){
         

@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<?php echo e(asset('Admin/lib/html5.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('Admin/lib/respond.min.js')); ?>"></script>
@@ -53,8 +54,24 @@
 				<td><?php echo e($a->phone); ?></td>
 				<td><?php echo e($a->email); ?></td>
 				<td><?php echo e($a->address); ?></td>
-				<td class="td-status"><span class="label label-success radius">已启用</span></td>
-				<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+				<td class="td-status">
+					<?php if($a->status == '2'): ?>
+						<span class="label label-defaunt radius">已停用</span>
+					<?php else: ?>
+						<span class="label label-success radius">已启用</span>
+					<?php endif; ?>
+				</td>
+				<td class="td-manage">
+					<?php if($a->status == '2'): ?>
+						<a style="text-decoration:none" onClick="member_start(this,'<?php echo e($a->id); ?>','<?php echo e($a->id); ?>')" href="javascript:;" title="启用">
+							<i class="Hui-iconfont">&#xe6e1;</i>
+						</a>
+					<?php else: ?>
+						<a style="text-decoration:none" onClick="member_stop(this,'<?php echo e($a->id); ?>','<?php echo e($a->id); ?>')" href="javascript:;" title="停用">
+							<i class="Hui-iconfont">&#xe631;</i>
+						</a>
+					<?php endif; ?>
+
 				<a title="修改管理员" href="javascript:id<?php echo e($a->id); ?>" onclick="member_edit('修改管理员','admin-edit?id=<?php echo e($a->id); ?>','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i>
 				<a class="ml-5" style="text-decoration:none" href="delete?id=<?php echo e($a->id); ?>">删除</a>
 			</tr>
@@ -102,7 +119,21 @@ function member_stop(obj,id){
 $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
+		$.ajax({
+           url:'admin-on',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                layer.msg('已停用!',{icon: 5,time:id});
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
 	});
 }
 
@@ -112,7 +143,21 @@ function member_start(obj,id){
 		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
-		layer.msg('已启用!',{icon: 6,time:1000});
+		$.ajax({
+           url:'admin-off',
+           type:'post', 
+           async:true,
+           data:{id:id},
+           headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success:function(data){
+                layer.msg('已启用!',{icon: 6,time:id});
+           },
+           error:function(){
+               alert('ajax失败');
+           }
+        });
 	});
 }
 /*用户-编辑*/
