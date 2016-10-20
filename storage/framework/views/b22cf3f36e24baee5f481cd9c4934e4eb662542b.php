@@ -70,7 +70,7 @@
 		</table>
 	</div>
 </div>
-<script type="text/javascript" src="<?php echo e(asset('Admin/lib/jquery/1.9.1/jquery.min.js')); ?>"></script> 
+<!-- <script type="text/javascript" src="<?php echo e(asset('Admin/lib/jquery/1.9.1/jquery.min.js')); ?>"></script>  -->
 <script type="text/javascript" src="<?php echo e(asset('Admin/lib/jquery-1.8.3.min.js')); ?>"></script> 
 <script>
     function operation(id,a){
@@ -91,7 +91,7 @@
                     }
                 },
                 error:function(){
-                    alert('ajax失败');
+                    alert('ajax失败111');
                 }
             });
         }

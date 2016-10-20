@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('Shop/static/css/common.css') }}"/>
     <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('Shop/static/css/login.css') }}"/>
-    <script src="{{ asset('Shop/js/qtjs.js') }}"></script>
+    
 
     <!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="{{ asset('Shop/static/css/frontPage-ie8-fix.css') }}" /><![endif]-->
     <!--[if lte IE 10]><script>document.createElement('footer');document.createElement('header');document.createElement('nav');document.createElement('section');document.createElement('article');</script><![endif]-->
@@ -50,7 +50,7 @@
                 <div class="login_tab" id="loginTab">
                    
                     @if($_GET['status'] == '1')
-                        <span class="login-btn active">登录</span><span class="register-btn ''">注册</span>
+                        <span id="dlaa" class="login-btn active">登录</span><span id="zcaa" class="register-btn ''">注册</span>
                     @else
                         <span class="login-btn ">登录</span><span class="register-btn active">注册</span>
                     @endif
@@ -119,7 +119,7 @@
                             </div>
                             <div class="captcha-item">
                                 <div class="form-group captcha clearfix">
-                                    <input type="text" id='abc' style="width: 140px;" maxlength="4" class="form-text" placeholder="输入验证码"/><button id="yzmyzm" onclick="settime(this);yzm();" style="width: 130px;margin: 0;height: 43px;background: #7fc11c;font-size: 16px;border: none;color: white;cursor: pointer;border-radius: 2px;font-family: "Microsoft YaHei";">获取验证码</button>
+                                    <input type="text" id='abc' style="width: 140px;" maxlength="4" class="form-text" placeholder="输入验证码"/><button id="yzmyzm" style="width: 130px;margin: 0;height: 43px;background: #7fc11c;font-size: 16px;border: none;color: white;cursor: pointer;border-radius: 2px;font-family: "Microsoft YaHei";">获取验证码</button>
                                 </div>
                                 <div class="form-error-message"></div>
                             </div>
@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-error-message"></div>
                     <div>
-                        <button class="form-btn"  id="button" onclick="register();">确认注册</button>
+                        <button class="form-btn"  id="button">确认注册</button>
                     </div>
                     
                 </div>
@@ -243,10 +243,98 @@ var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
 })(document);
 //-->
 </script>
-<!-- End Baidu Remarketing code -->
-
 <!-- 登录 -->
 <script src="{{ asset('Shop/js/jquery-1.8.3.min.js') }}"></script>
+<script>
+    $("#yzmyzm").html("获取验证码");
+    $("#yzmyzm").click(function(){
+        
+        var sj = $("#aaa").val();
+        if(sj == ''){
+            $("#yzmyzm").html("请输入手机号码");
+        }else{
+            if(!(/^1[34578]\d{9}$/.test(sj))){
+                    $("#yzmyzm").html("请输入正确的手机号码");
+            }else{
+                $.ajax({
+                    url:'/code',
+                    type:'post',
+                    async:true,
+                    data:{id:sj},
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(data){
+                            if(data === 'y'){
+                                $("#yzmyzm").html("验证码已发送");
+                                $("#yzmyzm").attr("disabled", true);
+                             
+                            }
+                    },
+                    error:function(){
+                            alert('失败');
+                    }
+                })
+            }
+        }
+    });
+
+  
+
+$("#button").click(function(){
+    var code = $("#abc").val();
+    var pass1 = $('#pwd1').val();
+    var pass2 = $('#pwd2').val();
+    var sj = $('#aaa').val();
+    if(sj !== ''){
+        $.ajax({
+            url:'/demandcode',
+            type:'post',
+            async:true,
+            data:{code:code},
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(a){
+                    if(a === 'y'){
+                        if(pass1 !== '' && pass2 !== ''){
+                            if(pass1 === pass2){
+                                $.ajax({
+                                    url:'/enroll',
+                                    type:'post',
+                                    async:true,
+                                    data:{user:sj,pwd :pass2},
+                                    headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success:function(b){
+                                        if( b === 'y'){
+                                            location.href = "/login?id="+hiddenid+"&status=1";
+                                        }
+                                    },
+                                    error:function(){
+                                            alert('ajax失败');
+                                    }
+                                });
+                            }else{
+                                $("#button").html("两次密码输入不一致");
+                            }
+                        }else{
+                            $("#button").html("请输入密码");
+                        }
+                    }else{
+                        $("#button").html("验证码错误");
+                    }
+            },
+            error:function(){
+                    alert('ajax失败');
+            }
+        })
+    }else{
+        $("#button").html("请输入手机号码");
+    }
+});
+</script>
 <script>
 
     function login(){

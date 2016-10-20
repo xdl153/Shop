@@ -153,7 +153,7 @@
                                     error:function(){
                                             alert('ajax失败');
                                     }
-                             });
+                                });
                         }
                             function login(){
                             var name = $("#lPhone").val();
