@@ -48,7 +48,7 @@
 				<!-- 这里登录退出 -->
 					<div class="member-box fs12" login-box info="loginInfo">
                                             @if(session("username"))
-                                            <a  href="{{ URL('/member_index')}}">{{session("username")}}</a>
+                                            <span>{{session("username")}}</span>
                                                 <span>|</span>                                                
                                                 <a onclick="exit();">退出</a>
                                             @else
@@ -304,7 +304,7 @@
 			<footer id="footer">
 			<div class="footer-first gray">
 				<div class="company-info clearfix fs14 gray">
-					<a href="{{ URL('/about') }}" target="_blank"  rel="nofollow">关于我们</a>
+					<a href="http://about.lamp153.top" target="_blank"  rel="nofollow">关于我们</a>
 					<a href="{{ URL('/help') }}" target="_blank"  rel="nofollow">帮助中心</a>
 					<a href="javascript:;" target="_blank"  rel="nofollow">法律声明</a>
 					<a href="{{ URL('/jobs') }}" target="_blank"  rel="nofollow">人才招聘</a>
