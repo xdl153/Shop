@@ -37,16 +37,16 @@
 		<tbody>
 			<tr>
 				<th width="30%">登录名</th>
-				<td><span id="lbServerName"></span><?php echo e(session('userid')->name); ?></td>
+				<td><span id="lbServerName"></span><?php echo e(session('businessuserid')->name); ?></td>
 			</tr>
 			<tr>
 				<td>邮箱</td>
-				<td><?php echo e(session('userid')->email); ?></td>
+				<td><?php echo e(session('businessuserid')->email); ?></td>
 			</tr>
 
 			<tr>
 				<td>手机号</td>
-				<td><?php echo e(session('userid')->phone); ?></td>
+				<td><?php echo e(session('businessuserid')->phone); ?></td>
 			</tr>
 		</tbody>
 	</table>

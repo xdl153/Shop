@@ -34,7 +34,7 @@
 	    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原电话：</label>
-			<div class="formControls col-xs-8 col-sm-9"><?php echo e($sql->name); ?></div>
+			<div class="formControls col-xs-8 col-sm-9"><?php echo e($sql->phone); ?></div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新电话：</label>

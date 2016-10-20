@@ -12,7 +12,7 @@ class ChangepasswordController extends Controller
     //更改密码视图
 	public function dealer_password(Request $request)
 	{
-		$sql= session('userid')->id;
+		$sql= session('businessuserid')->id;
 		$sql = \DB::table('dealer')->where('id',$sql)->first();
 		return view('Business.dealer-password',['sql'=>$sql]);
 	}
@@ -39,7 +39,7 @@ class ChangepasswordController extends Controller
 	//更改手机号视图
 	public function dealer_phone(Request $request)
 	{	
-		$sql= session('userid')->id;
+		$sql= session('businessuserid')->id;
 		$sql = \DB::table('dealer')->where('id',$sql)->first();
 		return view('Business.dealer-phone',['sql'=>$sql]);
 	}

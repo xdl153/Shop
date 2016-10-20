@@ -48,7 +48,7 @@
 				<!-- 这里登录退出 -->
 					<div class="member-box fs12" login-box info="loginInfo">
                                             <?php if(session("username")): ?>
-                                            <a  href="<?php echo e(URL('/member_index')); ?>"><?php echo e(session("username")); ?></a>
+                                            <span><?php echo e(session("username")); ?></span>
                                                 <span>|</span>                                                
                                                 <a onclick="exit();">退出</a>
                                             <?php else: ?>
@@ -304,7 +304,7 @@
 			<footer id="footer">
 			<div class="footer-first gray">
 				<div class="company-info clearfix fs14 gray">
-					<a href="<?php echo e(URL('/about')); ?>" target="_blank"  rel="nofollow">关于我们</a>
+					<a href="http://about.lamp153.top" target="_blank"  rel="nofollow">关于我们</a>
 					<a href="<?php echo e(URL('/help')); ?>" target="_blank"  rel="nofollow">帮助中心</a>
 					<a href="javascript:;" target="_blank"  rel="nofollow">法律声明</a>
 					<a href="<?php echo e(URL('/jobs')); ?>" target="_blank"  rel="nofollow">人才招聘</a>
@@ -354,7 +354,7 @@
 				</form>
 			</div>
 			<div class="common-dialog-footer">
-				咨询加QQ群：666666
+				咨询加QQ：732691747
 			</div>
 		</dh-dialog>
 		
