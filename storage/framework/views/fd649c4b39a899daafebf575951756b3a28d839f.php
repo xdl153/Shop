@@ -517,7 +517,7 @@
 				<div class="fl w50p">
 					<input type="text" ng-model="user.captcha" ng-focus="user.captchaMessage=''"  ng-class="{error:user.captchaMessage}" placeholder="请输入验证码">
 					<span class="vaildate-error" ng-if="user.captchaMessage">
-						<span ng-bind="user.captchaMessage"></span>
+						<!-- <span ng-bind="user.captchaMessage"></span> -->
 					</span>
 				</div>
 				<label class="fr">
