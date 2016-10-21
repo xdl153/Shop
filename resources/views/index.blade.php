@@ -32,8 +32,7 @@
 		</script>
 		<![endif]-->
 		
-		
-		<title>首页</title>
+		<title>{{ session('system')->name }}</title>
 	</head>
 	<body class="day " ng-controller="bodyCtrl"  day-or-night>
 		<section class="common-back" id="wrapBackground">
@@ -315,8 +314,8 @@
 			</div>
 			<div class="footer-last">
 				<a target="_blank" class="foot-logo-1 base-logo" href="/"></a>
-				<div class="tc fs14 light-gray mb10">
-				  ©2014 waimaichaoren.com All Rights Reserved - 沪ICP备11019908号
+				<div class="tc fs14 light-gray mb10" style="color:#ccc;font-size:20px;">
+              			©2016 {{ session('system')->banquan }} 外卖进阶攻略 - {{ session('system')->beianhao }}
 				</div>
 			</div>
 		</footer>

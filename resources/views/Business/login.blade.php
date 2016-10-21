@@ -23,7 +23,7 @@
 </head>
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value="" />
-<div class="header"></div>
+<div></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
     <form class="form form-horizontal" action="{{ URL('Business/login') }}" method="post">
@@ -69,7 +69,7 @@
     </form>
   </div>
 </div>
-<div class="footer">商家后台 一个勤劳的老板</div>
+<div style="color:#ffffff;font-size:20px;" class="footer">商家后台 一个勤劳的老板</div>
 <script type="text/javascript" src="{{ asset('Business/lib/jquery/1.9.1/jquery.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Business/static/h-ui/js/H-ui.js') }}"></script> 
 <script>

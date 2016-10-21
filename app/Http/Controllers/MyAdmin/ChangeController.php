@@ -89,15 +89,14 @@ class ChangeController extends Controller
 		$li = \DB::table('feedback')->get();
 		return view("Admin.picture-list",['li'=>$li]);
 	}
-        
-        public function picturelistdelete(Request $request)
-        {
-            $id = $request->input('id');
-            $data = \DB::table("feedback")->where("id",$id)->delete();
-            return 'y';
-        }
-
-        //商家列表
+	//执行删除反馈
+      public function picturelistdelete(Request $request)
+      {
+          $id = $request->input('id');
+          $data = \DB::table("feedback")->where("id",$id)->delete();
+          return 'y';
+      }
+	//商家列表
 	public function product_brand()
 	{
             $product = \DB::table('business')->get();

@@ -34,40 +34,36 @@
 	<form class="form form-horizontal" id="form-article-add" action="{{ URL('system') }}" method="post">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div id="tab-system" class="HuiTab">
+			@foreach($reg as $a)
 			<div class="tabBar cl"><span>基本设置</span></div>
 			<div class="tabCon">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站名称：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-title" placeholder="最好起个帅点的" value="" name="name" class="input-text">
+						<input type="text" id="website-title" placeholder="最好起个帅点的" value="{{ $a->name }}" name="name" class="input-text">
 					</div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站开关：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-					开：<input type="radio" name="kg1" value="1">
-					关：<input type="radio" name="kg2" value="2">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Logo：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="file" id="website-description" placeholder="" value="" name="file" class="input-text">
+					开：<input type="radio" name="kg" value="1">
+					关：<input type="radio" name="kg" value="2">
 					</div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>底部版权信息：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-copyright" name="banquan" placeholder="&copy; 2016 外卖超人后台管理系统" value="" class="input-text">
+						<input type="text" id="website-copyright" name="banquan" placeholder="&copy; 2016 外卖超人后台管理系统" value="{{ $a->banquan }}" class="input-text">
 					</div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2">备案号：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-icp" placeholder="京ICP备00000000号" name="beianhao" value="" class="input-text">
+						<input type="text" id="website-icp" placeholder="京ICP备00000000号" name="beianhao" value="{{ $a->beianhao }}" class="input-text">
 					</div>
 				</div>
 			</div>
+			@endforeach
 			<div class="row cl">
 				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 					<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
@@ -100,5 +96,8 @@ $(function(){
 });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
+          @if(session("msg"))
+               <span style="color:red;font-size:20px;margin-left:300px;">{{session("msg")}}</span>
+          @endif
 </body>
 </html>

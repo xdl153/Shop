@@ -73,71 +73,7 @@
 <script type="text/javascript" src="{{ asset('Admin/lib/datatables/1.10.0/jquery.dataTables.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui/js/H-ui.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('Admin/static/h-ui.admin/js/H-ui.admin.js') }}"></script> 
-<!--/*文字特效*/-->
-// <script>
-// (function(){
-// 	// 1.准备
-// 	var msg = '用户列表';
-// 	var str = '';
-// 	// 2.循环把每个字放到标签内
-// 	for(var i = 0; i < msg.length; i++){
-// 		str += '<span id="snake'+ i +'" class="snake">';
-// 			str += msg[i];
-// 		str += '</span>';
-// 	}
-// 	document.write(str);
 
-// 	window.onmousemove = function(events){
-// 		// 
-// 		document.title = 'X:' + events.clientX + 'Y:' + events.clientY;
-
-// 		var i = 0;
-// 		var timer = setInterval(function(){
-// 			if( i >= msg.length - 1){
-// 				clearInterval(timer);
-// 			}
-
-// 			// 找对象，
-// 			var span = document.getElementById('snake'+i);
-// 			span.style.left = events.clientX + i * 30 + 20 + 'px';
-// 			span.style.top  = events.clientY + 'px';
-// 			i++;
-// 		},30);
-// 	}
-// })();
-// </script>
-
-<!--/*文字特效*/-->
-<script>
-// 找对象
-var myfont = document.getElementById('myfont');
-var msg = '用户列表';
-
-function start(num,str){
-	// 截取字符串 从0到num
-	var tmp = str.substr(0,num); // 
-	// alert(tmp);
-	// <font red>j</font>
-	tmp += '<font color="red">'+ str[num] +'</font>'; 
-	tmp += str.substr(num + 1);
-	// <font>j</font>avascript文字跑马灯
-	return tmp;
-	/*
-	alert(tmp);
-	document.write(tmp);
-	*/
-}
-//start(2,msg);
-var i = 0;
-setInterval(function(){
-	// 0 	 'javascript文字跑马灯'
-	myfont.innerHTML = start(i,msg);
-	i++;
-	if( i >= msg.length){
-		i = 0;
-	}
-},50);
-</script>
 <script type="text/javascript">
 $(function(){
 	$('.table-sort').dataTable({

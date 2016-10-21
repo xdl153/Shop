@@ -23,14 +23,14 @@ class LoginController extends Controller
         //获得表单提交的用户和密码
             $name = $request->input('name');
             $password = sha1($request->input('password'));
-            // dd(sha1(123456));
+            // dd(sha1(1111));
             if($password  == ''  && $name == ''){
-
                 return back()->with("msg","请输入用户或密码");
             }
-
             $ob = \DB::table('dealer')->where("name",$name)->first();
-
+            if($ob && $ob->examine != '2'){
+                return back()->with("msg","您的帐号审核中");
+            }
             if($ob){
                 //4 判断密码是否正确
                 if($ob->password==$password){

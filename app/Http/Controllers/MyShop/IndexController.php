@@ -11,8 +11,13 @@ class IndexController extends Controller
 {
     //首页视图
 	public function index()
-	{	
-
+	{	//查询网站配置表
+		$list = \DB::table('config')->get()->toArray();
+		foreach($list as $p)
+		session()->set('system',$p);
+		if($p->kg != '1'){
+			return view('Shop.4041');
+		}
 		//若没有GET值默认为北京
 		if(!isset($_GET['id']) && empty($_GET['id'])){
 			$_GET['id']='1';
