@@ -57,14 +57,14 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>营业时间</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="" placeholder="" id="shopopen" name="shopopen">
+				<input type="text" class="input-text" value="" placeholder="格式：09:00" id="shopopen" name="shopopen">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>休息时间</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="" placeholder="" id="shopon" name="shopon">
+				<input type="text" class="input-text" value="" placeholder="格式：21:00" id="shopon" name="shopon">
 			</div>
 		</div>
 		<div class="row cl">
@@ -110,7 +110,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>电话</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="" id="phone" placeholder="常用电话号码" name="phone">
+				<input type="text" class="input-text" value="" id="phone" placeholder="常用电话号码137********" name="phone">
 			</div>
 		</div>
 		<div class="row cl">

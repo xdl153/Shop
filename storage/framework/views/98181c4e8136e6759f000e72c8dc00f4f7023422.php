@@ -219,73 +219,6 @@
                                     </li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>    
                                     
-                                    <li data-toggle="section-25311">
-                                        <a href="javascript:void(0);">饮料(12)</a>
-                                    </li>
-
-                                    <!--<li data-toggle="section-189417">
-                                        <a href="javascript:void(0);">份份减6元活动专区(8)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25305">
-                                        <a href="javascript:void(0);">冷面系列(9)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25301">
-                                        <a href="javascript:void(0);">【八五折便当区】(23)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25300">
-                                        <a href="javascript:void(0);">一品料理(22)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25302">
-                                        <a href="javascript:void(0);">盖浇饭系列(9)</a>
-                                    </li>
-
-                                    <li data-toggle="section-122476">
-                                        <a href="javascript:void(0);">日式沾沾面类(3)</a>
-                                    </li>
-
-                                    <li data-toggle="section-168983">
-                                        <a href="javascript:void(0);">寿喜锅系列(6)</a>
-                                    </li>
-
-                                    <li data-toggle="section-168984">
-                                        <a href="javascript:void(0);">寿喜锅套餐系列(4)</a>
-                                    </li>
-
-                                    <li data-toggle="section-168980">
-                                        <a href="javascript:void(0);">刺身系列(3)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25308">
-                                        <a href="javascript:void(0);">特色煎饺(3)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25299">
-                                        <a href="javascript:void(0);">特色油淋鸡/布丁(2)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25304">
-                                        <a href="javascript:void(0);">蔬菜色拉系列(5)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25306">
-                                        <a href="javascript:void(0);">炒面系列(1)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25307">
-                                        <a href="javascript:void(0);">烤物系列(5)</a>
-                                    </li>
-
-                                    <li data-toggle="section-25310">
-                                        <a href="javascript:void(0);">米饭(2)</a>
-                                    </li>
-
-                                    <li data-toggle="section-56459">
-                                        <a href="javascript:void(0);">酒水(3)</a>
-                                    </li>-->
 
                             </ul>
                             <i class="icon expand-icon fr" toogle-nav-menu="39"></i>
@@ -330,7 +263,7 @@
                                                 <span class="price"><?php echo e($m->price); ?></span>
                                                 <span ng-if="menuItemCount['<?php echo e($m->bid); ?>-<?php echo e($m->id); ?>" ng-class="{disinbl:menuItemCount['<?php echo e($m->bid); ?>-<?php echo e($m->id); ?>']}"
                                                       class="badge disnone" ng-bind="menuItemCount['<?php echo e($m->bid); ?>-<?php echo e($m->id); ?>']"></span>
-                                                <span class="fr">已售<?php echo e($m->num); ?>份</span>
+                                                <!--<span class="fr">已售<?php echo e($m->num); ?>份</span>-->
 
                                             </div>
 
@@ -346,7 +279,7 @@
                             </section>
                         </article>
                         <!-- 饮料 -->
-                        <article class="collapse section-25311">
+                        <!--<article class="collapse section-25311">
                             <header accordion>
                                 <h3 class="ellipsis" title="饮料">
                                     饮料
@@ -403,7 +336,7 @@
 
                                 </ul>
                             </section>
-                        </article>
+                        </article>-->
                             
                             
                                     

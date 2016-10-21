@@ -126,7 +126,8 @@ Route::get("/shop_list","MyShop\Shop_listController@shop_list");
  Route::post("/order_delete","MyShop\Member_OrderController@order_delete");
 //pinlun用户评论
  Route::post("/comment","MyShop\Member_OrderController@comment");
-	
+//queren订单
+Route::post("/queren","MyShop\Member_OrderController@queren");	
 //member_index账号管理视图路由
 // Route::get("/member_index","MyShop\Member_IndexController@member_index");
 	Route::get("/member_index",function(){
@@ -284,7 +285,12 @@ Route::group(["prefix"=>"Admin","middleware"=>"myauth"],function(){
  	Route::post("product-brandBusinessoff","MyAdmin\DealerlistController@product_branBusinessoff");
  //商家店铺审核通过
  	Route::post("product-brandBusinesson","MyAdmin\DealerlistController@product_branBusinesson");
-   	
+ //店铺审核
+ 	Route::get("product-business","MyAdmin\DealerlistController@product_business");
+//已通过店铺审核
+ 	Route::get("product-businesson","MyAdmin\DealerlistController@product_businesson");
+//店铺审核不通过
+ 	Route::get("product-businessoff","MyAdmin\DealerlistController@product_businessoff");			
         //加载商家审核视图
         Route::get("BusinessAudit_list","MyAdmin\ChangeController@BusinessAudit_list");
         //审核商家

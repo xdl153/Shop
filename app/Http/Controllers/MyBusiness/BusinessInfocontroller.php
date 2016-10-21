@@ -61,7 +61,7 @@ class BusinessInfocontroller extends Controller
         $id = $_POST['id'];
 
         //查询该店铺是否有未送达的订单
-        $order = \DB::select("select * from orderform where bid={$id} and not express=3");
+        $order = \DB::select("select * from orderform where bid={$id} and not express=2");
         if(empty($order)){
                 //修改数据表开启该店铺
             \DB::table("business")->where('id',$id)->delete();

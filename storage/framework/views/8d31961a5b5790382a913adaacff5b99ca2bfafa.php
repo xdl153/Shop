@@ -120,7 +120,7 @@
 			<div class="formControls col-xs-2 col-sm-2" name='div1'> 
 			<span class="select-box">
 			<select id="cid" class="select"  name="sele">
-					
+				<option value='-1'>--请选择--</option>		
 			</select>
 			</span>
 

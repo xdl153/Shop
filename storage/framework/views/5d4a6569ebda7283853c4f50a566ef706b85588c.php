@@ -91,9 +91,11 @@
 			<dt><i class="Hui-iconfont">&#xe620;</i> 商家管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>    
-                                        <li><a _href="<?php echo e(URL('BusinessAudit_list')); ?>" data-title="商家审核" href="javascript:void(0)">商家审核</a></li>
+                    <li><a _href="<?php echo e(URL('BusinessAudit_list')); ?>" data-title="商家审核" href="javascript:void(0)">商家审核</a></li>
 					<li><a _href="<?php echo e(URL('product-brand')); ?>" data-title="商家列表" href="javascript:void(0)">商家列表</a></li>
-			
+					<li><a _href="<?php echo e(URL('product-business')); ?>" data-title="店铺审核" href="javascript:void(0)">店铺待审核</a></li>
+					<li><a _href="<?php echo e(URL('product-businesson')); ?>" data-title="店铺审核已通过" href="javascript:void(0)">店铺审核已通过</a></li>
+					<li><a _href="<?php echo e(URL('product-businessoff')); ?>" data-title="店铺审核不通过" href="javascript:void(0)">店铺审核不通过</a></li>
 				</ul>
 			</dd>
 		</dl>

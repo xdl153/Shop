@@ -47,4 +47,35 @@ class DealerlistController extends Controller
 
             
     }
+
+    //店铺审核
+    public function product_business()
+    {
+        //查询待审核店铺
+
+        // $business = \DB::table("business")->where('examine','1')->get();
+        $business = \DB::select("select b.*,d.name as dname,d.phone as dphone from business as b,dealer as d where b.examine = 1 and d.id = b.did");
+
+        return view('Admin.product-business',['business'=>$business]);
+    }
+    //已审核店铺
+    public function product_businesson()
+    {
+        //查询待审核店铺
+
+        // $business = \DB::table("business")->where('examine','1')->get();
+        $business = \DB::select("select b.*,d.name as dname,d.phone as dphone from business as b,dealer as d where b.examine = 2 and d.id = b.did");
+
+        return view('Admin.product-businesson',['business'=>$business]);
+    }
+      //审核不通过店铺
+    public function product_businessoff()
+    {
+        //查询待审核店铺
+
+        // $business = \DB::table("business")->where('examine','1')->get();
+        $business = \DB::select("select b.*,d.name as dname,d.phone as dphone from business as b,dealer as d where b.examine = 3 and d.id = b.did");
+
+        return view('Admin.product-businessoff',['business'=>$business]);
+    }
 }

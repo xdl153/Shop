@@ -25,8 +25,8 @@ class OrderController extends Controller
 	details.Price,
         orderform.express,
         details.num
-FROM orderform, site, details
-WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} ");
+FROM orderform, site, details , dealer , business
+WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = business.id and business.did = dealer.id and dealer.id = {$id} ");
         return view("Business.orderform-list",['list'=>$data]);
     }
     
@@ -46,8 +46,8 @@ WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = or
 	details.Price,
         orderform.express,
         details.num
-        FROM orderform, site, details
-        WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} and orderform.express = 1");
+        FROM orderform, site, details , dealer ,business
+        WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = business.id and business.did = dealer.id and dealer.id = {$id} and orderform.express = 1");
         return view("Business.orderform-unfinished",['list'=>$data]);
     }
     
@@ -66,8 +66,8 @@ WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = or
 	details.Price,
         orderform.express,
         details.num
-        FROM orderform, site, details
-        WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = {$id} and orderform.express = 2");
+        FROM orderform, site, details , dealer , business
+        WHERE site.uid = orderform.uid and details.uid =  site.uid  and details.oid = orderform.id and orderform.bid = business.id and business.did = dealer.id and dealer.id = {$id} and orderform.express = 2");
         return view("Business.orderform-accomplish",['list'=>$data]);
     }
 

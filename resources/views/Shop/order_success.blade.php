@@ -93,8 +93,8 @@
             <div id="gift-tip" class="gift-tip">
                 <em ng-click="closeTip()"></em>
                 <div>
-                    您获得了320个氪星币！
-                    <p>您可以查看<a href="/account/gift/center/">氪星礼品站</a></p>
+                    您获得了饮料果汁一瓶！
+                    <!--<p>您可以查看<a href="/account/gift/center/">氪星礼品站</a></p>-->
                 </div>
             </div>
 

@@ -61,14 +61,14 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>营业时间</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="{{ $in->shopopen }}" placeholder=""  name="shopopen">
+				<input type="text" class="input-text" value="{{ $in->shopopen }}" placeholder="格式：09:00"  name="shopopen">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>休息时间</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="{{ $in->shopon }}" placeholder=""  name="shopon">
+				<input type="text" class="input-text" value="{{ $in->shopon }}" placeholder="格式：21:00"  name="shopon">
 			</div>
 		</div>
 		<div class="row cl">
@@ -120,7 +120,7 @@
 			<div class="formControls col-xs-2 col-sm-2" name='div1'> 
 			<span class="select-box">
 			<select id="cid" class="select"  name="sele">
-					
+				<option value='-1'>--请选择--</option>		
 			</select>
 			</span>
 
@@ -131,7 +131,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>电话</label>
 			<div class="formControls col-xs-4 col-sm-3">
-				<input type="text" class="input-text" value="{{ $in->phone }}" placeholder="常用电话号码" name="phone">
+				<input type="text" class="input-text" value="{{ $in->phone }}" placeholder="常用电话号码137********" name="phone">
 			</div>
 		</div>
 		<div class="row cl">
